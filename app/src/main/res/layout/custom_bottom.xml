@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/upp_frame"
+    android:padding="5dp"
+    android:id="@+id/bottom">
+
+    <TextView
+        android:id="@+id/buttonHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/home"
+        android:gravity="center"
+        android:textSize="8sp"
+        android:onClick="toHome"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/buttonTrub"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/trub"
+        android:gravity="center"
+        android:textSize="8sp"
+        android:onClick="toTrub"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/buttonPump"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/pump"
+        android:gravity="center"
+        android:textSize="8sp"
+        android:onClick="toPump"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/buttonDoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/doc"
+        android:gravity="center"
+        android:textSize="8sp"
+        android:onClick="toDoc"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/buttonPlus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/b_new"
+        android:gravity="center"
+        android:textSize="8sp"
+        android:onClick="toPlus"
+        android:clickable="true"/>
+
+    <TextView
+        android:id="@+id/buttonMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/menu"
+        android:gravity="center"
+        android:textSize="8sp"
+        android:onClick="toMenu"
+        android:clickable="true"/>
+
+</LinearLayout>

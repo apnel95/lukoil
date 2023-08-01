@@ -1,0 +1,400 @@
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/custom_upp"
+            android:visibility="visible">
+        </include>
+
+        <ScrollView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/toExit"
+                    android:layout_width="450dp"
+                    android:layout_height="wrap_content"
+                    android:text="Отменить и выйти"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/red_frame"
+                    android:textSize="20sp"
+                    app:cornerRadius="30dp"
+                    android:onClick="toExit"
+                    android:layout_weight="1"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Наименование:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerName"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Диаметр:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/diameter"
+                        android:layout_width="0dp"
+                        android:layout_gravity="fill"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:hint="мм"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Толщина стенки:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/wall"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:hint="мм"/>
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:text="Внутреннее покрытие:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinnerCoating"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Пикетаж:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/piketach"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="События с датами:"
+                        android:maxWidth="300dp"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/events"
+                        android:layout_width="0dp"
+                        android:layout_height="265dp"
+                        android:layout_rowSpan="5"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:inputType="textMultiLine"
+                        android:minLines="5"
+                        android:textColor="@color/black"
+                        android:gravity="top|left"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="20sp"
+                        android:hint="Список событий с датами и временем"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/buttonNewEvent"
+                        android:text="Изменить список"
+                        android:layout_gravity="right"
+                        android:layout_margin="10dp"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:background="@drawable/block_time_status_act_frame"
+                        android:textSize="20sp"
+                        app:cornerRadius="30dp"
+                        android:onClick="toEventChange"
+                        android:layout_weight="1"
+                        android:layout_row="12"
+                        android:layout_column="1"
+                        android:layout_columnSpan="2"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Характер утечки:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_leak_type"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Параметр утечки:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/leak_parameter"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:hint="размер в мм"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Место утечки:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/leak_location"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:hint="В часах по трубе (от 1 до 12)"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ответственный:"
+                        android:layout_column="0"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_who"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Перекач. среда:"
+                        android:layout_column="0"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_subst"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Площадь разлива:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/area"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:hint="м²"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Статус:"
+                        android:layout_column="0"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/spinner_status"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+                </GridLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:minWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonNewPhoto"
+                    android:text="Прикрепить фото"
+                    android:layout_gravity="right"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/block_time_status_act_frame"
+                    android:textSize="20sp"
+                    app:cornerRadius="30dp"
+                    android:onClick="toNewPhoto"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:minWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonLoadPhoto"
+                    android:text="Загрузить ранее прикрепленные фото"
+                    android:layout_gravity="right"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/block_time_status_act_frame"
+                    android:textSize="20sp"
+                    app:cornerRadius="30dp"
+                    android:onClick="toLoadPhoto"
+                    android:layout_weight="1" />
+
+                <HorizontalScrollView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="4dp"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="right"
+                        android:id="@+id/layoutPhoto">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:minWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonSave"
+                    android:text="Сохранить и выйти"
+                    android:layout_gravity="right"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/red_frame"
+                    android:textSize="20sp"
+                    app:cornerRadius="30dp"
+                    android:onClick="toSave"
+                    android:layout_weight="1" />
+
+                <include
+                    layout="@layout/custom_bottom"
+                    android:id="@+id/inv1"
+                    android:visibility="invisible">
+                </include>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <include
+            layout="@layout/custom_bottom"
+            android:visibility="visible">
+        </include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_menu"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_bottom"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="-3dp"
+        android:background="@drawable/upp_frame"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <include
+            layout="@layout/custom_block_menu"
+            android:visibility="visible">
+        </include>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_height="400dp"
+        android:layout_width="400dp"
+        android:id="@+id/img">
+    </ImageView>
+
+    <Button
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonNewEvent"
+        android:text="удалить"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:background="@drawable/red_frame"
+        android:textSize="20sp"
+        android:onClick="toDeleteFhoto"
+        android:layout_weight="1" />
+
+
+</LinearLayout>

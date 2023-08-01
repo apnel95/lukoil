@@ -1,0 +1,274 @@
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/custom_upp"
+            android:visibility="visible">
+        </include>
+
+        <ScrollView
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonExit"
+                    android:layout_width="450dp"
+                    android:layout_height="wrap_content"
+                    android:text="Отменить и выйти"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/red_frame"
+                    android:textSize="20sp"
+                    app:cornerRadius="30dp"
+                    android:onClick="toExit"
+                    android:layout_weight="1"/>
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Месторасположение:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/name"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="fill"
+                        android:text="Марка:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/mark"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="15dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Дата и время обнаружения:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/DateTime"
+                        android:enabled="true"
+                        android:gravity="top"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:text="01.01.2000"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:layout_columnSpan="2"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="3"
+                        android:orientation="horizontal">
+                        <Button
+                            android:id="@+id/dateButton"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="fill"
+                            android:onClick="setDate"
+                            android:layout_marginRight="20dp"
+                            android:text="Выбрать дату"
+                            android:layout_width="match_parent"
+                            android:backgroundTint="#707070"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:id="@+id/timeButton"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="fill"
+                            android:layout_marginLeft="20dp"
+                            android:onClick="setTime"
+                            android:backgroundTint="#707070"
+                            android:text="Выбрать время"
+                            android:layout_width="match_parent"
+                            android:layout_weight="1"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Причина остановки:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/reason_stop"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Примечание:"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/note"
+                        android:layout_width="0dp"
+                        android:layout_height="265dp"
+                        android:layout_rowSpan="5"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:text=""
+                        android:inputType="textMultiLine"
+                        android:minLines="5"
+                        android:hint="Напишите примечание или оставьте поле пустым"
+                        android:textColor="@color/black"
+                        android:gravity="top|left"
+                        android:layout_marginBottom="10dp"
+                        android:textSize="20sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Статус:"
+                        android:layout_row="14"
+                        android:layout_column="0"
+                        android:textColor="@color/black"
+                        android:textSize="20sp" />
+
+                    <Spinner
+                        android:id="@+id/status"
+                        android:layout_width="0dp"
+                        android:layout_height="39dp"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginBottom="10dp" />
+                </GridLayout>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:minWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonNewPhoto"
+                    android:text="Прикрепить фото"
+                    android:layout_gravity="right"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/block_time_status_act_frame"
+                    android:textSize="20sp"
+                    app:cornerRadius="30dp"
+                    android:onClick="toNewPhoto"
+                    android:layout_weight="1" />
+
+                <HorizontalScrollView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <LinearLayout
+                        android:id="@id/layoutPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="4dp"
+                        android:layout_margin="10dp"
+                        android:layout_gravity="right">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="wrap_content"
+                    android:minWidth="320dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/buttonSave"
+                    android:text="Сохранить и выйти"
+                    android:layout_gravity="right"
+                    android:layout_margin="10dp"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/red_frame"
+                    android:textSize="20sp"
+                    app:cornerRadius="30dp"
+                    android:onClick="toSave"
+                    android:layout_weight="1" />
+
+                <include
+                    layout="@layout/custom_bottom"
+                    android:id="@+id/inv1"
+                    android:visibility="invisible"></include>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <include
+            layout="@layout/custom_bottom"
+            android:visibility="visible">
+        </include>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_menu"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layout_bottom"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="-3dp"
+        android:background="@drawable/upp_frame"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <include
+            layout="@layout/custom_block_menu"
+            android:visibility="visible">
+        </include>
+    </LinearLayout>
+</RelativeLayout>
