@@ -4,19 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.lukoil.entity.Act_pump;
-import com.example.lukoil.entity.Act_trub;
-import com.example.lukoil.entity.Department_object;
+import com.example.lukoil.entity.PumpAct;
 import com.example.lukoil.entity.Dir;
-import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
 
 public class Pump_view extends Create_change_view_act {
 
-    Act_pump act;
+    PumpAct act;
     EditText note;
     EditText name, mark, reason_stop, status;
     TextView works, events;
@@ -27,7 +23,7 @@ public class Pump_view extends Create_change_view_act {
         setContentView(R.layout.pump_view);
 
         Bundle arguments = getIntent().getExtras();
-        act = (Act_pump) arguments.getSerializable(Act_pump.class.getSimpleName());
+        act = (PumpAct) arguments.getSerializable(PumpAct.class.getSimpleName());
         idForm = 2;
         context = this;
 
@@ -47,12 +43,12 @@ public class Pump_view extends Create_change_view_act {
         note.setText(String.valueOf(act.getNote()));
         status.setText(String.valueOf(act.getId_status()));
 
-        uppTextName.setText("Просмотр акта");
+        topTitleActivity.setText("Просмотр акта");
 
         String textForEvents = "";
         for (Event_date_time wrk : act.getEvents()) {
             //textForEvents += wrk.getId_type_event() + ": " + DateToText(wrk.getDate_time()) + "\n";
-            textForEvents += wrk.getDate_time() + ": " + wrk.getId_type_event() + "\n";
+            textForEvents += wrk.getDateTime() + ": " + wrk.getId_type_event() + "\n";
         }
         events.setText(textForEvents);
 
@@ -100,7 +96,7 @@ public class Pump_view extends Create_change_view_act {
     }
     public void toChange(View v){
         Intent Pump_change = new Intent(v.getContext(), Pump_change.class);
-        Pump_change.putExtra(Act_pump.class.getSimpleName(), act);
+        Pump_change.putExtra(PumpAct.class.getSimpleName(), act);
         startActivity(Pump_change);
     }
 }

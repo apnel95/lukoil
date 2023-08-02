@@ -8,17 +8,12 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 public class Activity {
-    int id;
     Context context;
 
     int idLayout;
     LinearLayout workplace, bottom;
     List<View> workplaceElements;
     String topTitle;
-
-    public int getId() {
-        return id;
-    }
 
     public Context getContext() {
         return context;
@@ -45,7 +40,6 @@ public class Activity {
     }
 
     public Activity(int id, Context context, int idLayout, LinearLayout workplace, List<View> workplaceElements, LinearLayout bottom, String topTitle) {
-        this.id = id;
         this.context = context;
         this.idLayout = idLayout;
         this.workplace = workplace;

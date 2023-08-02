@@ -1,21 +1,51 @@
 package com.example.lukoil.entity;
 
-import java.io.Serializable;
+import com.example.lukoil.Act;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Act_trub implements Serializable {
-    int id;
-    int id_trub;
-    int diameter;
-    int wall;
-    int id_type_coating;
-    int piketash;
-    int id_leak_type;
-    int leak_parameter;
-    int leak_position;
-    int id_substance;
-    int id_status;
+public class PipeAct extends Act {
+    int id_trub, diameter, wall, id_type_coating, piketash, id_leak_type, leak_parameter, leak_position, id_substance, id_status, id_who;
+    double spill_area;
+    ArrayList<Event_date_time> works;
+
+    public PipeAct(int id, int id_trub, int diameter, int wall, int id_type_coating, int piketash, int id_leak_type, int leak_parameter, int leak_position, int id_substance, int id_status, int id_who, double spill_area, ArrayList<Event_date_time> works) {
+        this.id = id;
+        this.id_trub = id_trub;
+        this.diameter = diameter;
+        this.wall = wall;
+        this.id_type_coating = id_type_coating;
+        this.piketash = piketash;
+        this.id_leak_type = id_leak_type;
+        this.leak_parameter = leak_parameter;
+        this.leak_position = leak_position;
+        this.id_substance = id_substance;
+        this.id_status = id_status;
+        this.id_who = id_who;
+        this.spill_area = spill_area;
+        this.works = works;
+        dateTimeStop = new Date(0,0,1);
+        for (Event_date_time wrk: works){
+            if (wrk.getId_type_event() == 0){
+                this.dateTimeStop = wrk.getDateTime();
+                break;
+            }
+        }
+    }
+
+    public PipeAct(int id, int id_trub, int id_status, Date dateTimeStop) {
+        this.id = id;
+        this.id_trub = id_trub;
+        this.id_status = id_status;
+        this.dateTimeStop = dateTimeStop;
+    }
+
+    public PipeAct(int id, int id_trub, int id_status) {
+        this.id = id;
+        this.id_trub = id_trub;
+        this.id_status = id_status;
+    }
 
     public int getId_who() {
         return id_who;
@@ -25,26 +55,7 @@ public class Act_trub implements Serializable {
         this.id_who = id_who;
     }
 
-    int id_who;
-    Date date_time_stop;
-    double spill_area;
-
-    public Act_trub(int id, int id_trub, int id_status, Date date_time_stop) {
-        this.id = id;
-        this.id_trub = id_trub;
-        this.id_status = id_status;
-        this.date_time_stop = date_time_stop;
-    }
-
-    ArrayList<Event_date_time> works;
-
-    public Act_trub(int id, int id_trub, int id_status) {
-        this.id = id;
-        this.id_trub = id_trub;
-        this.id_status = id_status;
-    }
-
-    public Act_trub() {
+    public PipeAct() {
     }
 
     public void setId(int id) {
@@ -151,45 +162,21 @@ public class Act_trub implements Serializable {
         return works;
     }
 
-    public Date getDate_time_stop() {
-        return date_time_stop;
+    public Date getDateTimeStop() {
+        return dateTimeStop;
     }
 
-    public void setDate_time_stop(Date date_time_stop) {
-        this.date_time_stop = date_time_stop;
+    public void setDateTimeStop(Date date_time_stop) {
+        this.dateTimeStop = date_time_stop;
     }
 
-    public Act_trub(int id, ArrayList<Event_date_time> works) {
+    public PipeAct(int id, ArrayList<Event_date_time> works) {
         this.id = id;
         this.works = works;
-        date_time_stop = new Date(0,0,1);
+        dateTimeStop = new Date(0,0,1);
         for (Event_date_time wrk: works){
             if (wrk.getId_type_event() == 0){
-                this.date_time_stop = wrk.getDate_time();
-                break;
-            }
-        }
-    }
-
-    public Act_trub(int id, int id_trub, int diameter, int wall, int id_type_coating, int piketash, int id_leak_type, int leak_parameter, int leak_position, int id_substance, int id_status, int id_who, double spill_area, ArrayList<Event_date_time> works) {
-        this.id = id;
-        this.id_trub = id_trub;
-        this.diameter = diameter;
-        this.wall = wall;
-        this.id_type_coating = id_type_coating;
-        this.piketash = piketash;
-        this.id_leak_type = id_leak_type;
-        this.leak_parameter = leak_parameter;
-        this.leak_position = leak_position;
-        this.id_substance = id_substance;
-        this.id_status = id_status;
-        this.id_who = id_who;
-        this.spill_area = spill_area;
-        this.works = works;
-        date_time_stop = new Date(0,0,1);
-        for (Event_date_time wrk: works){
-            if (wrk.getId_type_event() == 0){
-                this.date_time_stop = wrk.getDate_time();
+                this.dateTimeStop = wrk.getDateTime();
                 break;
             }
         }

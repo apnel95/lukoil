@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.lukoil.entity.Remark;
-
 import java.util.ArrayList;
 
 public class Work_pump_change extends GeneralClass {
@@ -27,10 +25,10 @@ public class Work_pump_change extends GeneralClass {
 
         onStartNotHome(idForm);
 
-        allEds = new ArrayList<View>();
-        linear = (LinearLayout) findViewById(R.id.layoutEvent);
+        workplaceElements = new ArrayList<View>();
+        workplace = (LinearLayout) findViewById(R.id.layoutEvent);
 
-        uppTextName.setText("Изменение списка");
+        topTitleActivity.setText("Изменение списка");
     }
 
     @Override
@@ -41,24 +39,24 @@ public class Work_pump_change extends GeneralClass {
     }
 
     private void drawEvents() {
-        linear.removeAllViews();
-        allEds.clear();
+        workplace.removeAllViews();
+        workplaceElements.clear();
         int cnt = 0;
         for (Integer wrk: works) {
             view = getLayoutInflater().inflate(R.layout.custom_event_date_time_change, null);
             TextView textName = (TextView) view.findViewById(R.id.textName);
             textName.setText(String.valueOf(wrk));
             view.setTag((int)wrk);
-            linear.addView(view);
-            allEds.add(view);
+            workplace.addView(view);
+            workplaceElements.add(view);
             cnt++;
         }
 
     }
     public void toDelete(View v){
         try {
-            linear.removeView((LinearLayout)v.getParent());
-            allEds.remove((LinearLayout)v.getParent());
+            workplace.removeView((LinearLayout)v.getParent());
+            workplaceElements.remove((LinearLayout)v.getParent());
         } catch(IndexOutOfBoundsException ex) {
             ex.printStackTrace();
         }

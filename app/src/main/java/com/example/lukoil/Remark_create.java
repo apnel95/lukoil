@@ -3,15 +3,9 @@ package com.example.lukoil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.example.lukoil.entity.Remark;
-
-import java.sql.ResultSet;
 
 public class Remark_create extends Create_change_view_act {
     EditText text;
@@ -26,7 +20,7 @@ public class Remark_create extends Create_change_view_act {
         context = this;
         onStartNotHome(idForm);
 
-        uppTextName.setText("Добавление события");
+        topTitleActivity.setText("Добавление события");
 
     }
     public void toSave(View v){

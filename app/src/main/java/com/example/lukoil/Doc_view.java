@@ -6,8 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.lukoil.entity.Act_doc;
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.Department_object;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
@@ -17,7 +16,7 @@ import com.example.lukoil.entity.Work;
 
 public class Doc_view extends Create_change_view_act {
 
-    Act_doc act;
+    DocAct act;
     EditText struct, object, employee, FIO_sending, status;
     TextView events, remarks, works;
 
@@ -27,7 +26,7 @@ public class Doc_view extends Create_change_view_act {
         setContentView(R.layout.doc_view);
 
         Bundle arguments = getIntent().getExtras();
-        act = (Act_doc) arguments.getSerializable(Act_doc.class.getSimpleName());
+        act = (DocAct) arguments.getSerializable(DocAct.class.getSimpleName());
         System.out.println(act.getId_department());
         idForm = 3;
         context = this;
@@ -50,10 +49,10 @@ public class Doc_view extends Create_change_view_act {
         remarks = findViewById(R.id.remarks);
         works = findViewById(R.id.works);
 
-        uppTextName.setText("Просмотр предписания");
+        topTitleActivity.setText("Просмотр предписания");
 
         String textForEvents = "";
-        if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDate_time()) + "\n";
+        if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         String textForWorks = "";
@@ -103,7 +102,7 @@ public class Doc_view extends Create_change_view_act {
     }
     public void toChange(View v){
         Intent Doc_change = new Intent(v.getContext(), Doc_change.class);
-        Doc_change.putExtra(Act_doc.class.getSimpleName(), act);
+        Doc_change.putExtra(DocAct.class.getSimpleName(), act);
         startActivity(Doc_change);
     }
     @Override

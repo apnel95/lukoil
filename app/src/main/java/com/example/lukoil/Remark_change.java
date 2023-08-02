@@ -4,17 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.lukoil.entity.Event_date_time;
 import com.example.lukoil.entity.Remark;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Remark_change extends GeneralClass {
     View view;
@@ -31,18 +27,18 @@ public class Remark_change extends GeneralClass {
 
         context = this;
 
-        allEds = new ArrayList<View>();
-        linear = findViewById(R.id.layoutEvent);
+        workplaceElements = new ArrayList<View>();
+        workplace = findViewById(R.id.layoutEvent);
 
         onStartNotHome(idForm);
 
         drawEvents();
 
-        uppTextName.setText("Изменение списка");
+        topTitleActivity.setText("Изменение списка");
     }
     private void drawEvents() {
-        linear.removeAllViews();
-        allEds.clear();
+        workplace.removeAllViews();
+        workplaceElements.clear();
         int cnt = 0;
         if (remarks != null) for (Remark wrk: remarks) {
             view = getLayoutInflater().inflate(R.layout.custom_remark_change, null);
@@ -50,8 +46,8 @@ public class Remark_change extends GeneralClass {
             textName.setText(String.valueOf(wrk.getText()));
             Button b = view.findViewById(R.id.b);
             b.setTag(cnt);
-            linear.addView(view);
-            allEds.add(view);
+            workplace.addView(view);
+            workplaceElements.add(view);
             cnt++;
         }
 
@@ -60,8 +56,8 @@ public class Remark_change extends GeneralClass {
         try {
             int id = (int) v.getTag();
             remarks.remove(id);
-            linear.removeView((ConstraintLayout)v.getParent());
-            allEds.remove((ConstraintLayout)v.getParent());
+            workplace.removeView((ConstraintLayout)v.getParent());
+            workplaceElements.remove((ConstraintLayout)v.getParent());
             drawEvents();
         } catch(IndexOutOfBoundsException ex) {
             ex.printStackTrace();

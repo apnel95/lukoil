@@ -35,7 +35,7 @@ public class Event_date_time implements Serializable {
         this.id_type_event = id_type_event;
     }
 
-    public Date getDate_time() {
+    public Date getDateTime() {
         return date_time;
     }
 

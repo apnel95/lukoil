@@ -4,13 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.lukoil.entity.Act_pump;
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.PumpAct;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Event_date_time;
 
@@ -25,7 +23,7 @@ import java.util.HashMap;
 
 public class Pump_change extends Create_change_view_act {
 
-    Act_pump act;
+    PumpAct act;
     EditText note;
     Spinner name, mark, reason_stop, status;
     TextView events, works;
@@ -36,16 +34,16 @@ public class Pump_change extends Create_change_view_act {
         setContentView(R.layout.pump_change);
         idForm = 2;
 
-        allEds = new ArrayList<View>();
-        linear = findViewById(R.id.layoutPhoto);
+        workplaceElements = new ArrayList<View>();
+        workplace = findViewById(R.id.layoutPhoto);
 
         Bundle arguments = getIntent().getExtras();
-        act = (Act_pump) arguments.getSerializable(Act_pump.class.getSimpleName());
+        act = (PumpAct) arguments.getSerializable(PumpAct.class.getSimpleName());
         context = this;
 
         onStartNotHome(idForm);
 
-        uppTextName.setText("Изменение акта");
+        topTitleActivity.setText("Изменение акта");
 
         name = findViewById(R.id.name);
         mark = findViewById(R.id.mark);
@@ -58,7 +56,7 @@ public class Pump_change extends Create_change_view_act {
         note.setText(String.valueOf(act.getNote()));
 
         String textForEvents = "";
-        if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDate_time()) + "\n";
+        if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         String textForWorks = "";

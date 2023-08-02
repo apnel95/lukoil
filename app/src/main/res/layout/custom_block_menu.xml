@@ -27,7 +27,7 @@
         android:gravity="left|center"
         android:text="Обновить справочники"
         android:clickable="true"
-        android:onClick="toUpdateDir"/>
+        android:onClick="getDirs"/>
 
     <TextView
         android:id="@+id/Help"

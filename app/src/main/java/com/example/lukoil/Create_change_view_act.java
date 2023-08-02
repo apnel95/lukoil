@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
@@ -49,8 +48,8 @@ public class Create_change_view_act extends GeneralClass{
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         final View view1 = getLayoutInflater().inflate(R.layout.custom_image, null);
                         ImageView img = view1.findViewById(R.id.img);
-                        allEds.add(view1);
-                        linear.addView(view1);
+                        workplaceElements.add(view1);
+                        workplace.addView(view1);
                         img.setImageBitmap(selectedImage);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
@@ -58,8 +57,8 @@ public class Create_change_view_act extends GeneralClass{
                 }
         }}
     public void toDeleteFhoto(View v) {
-        linear.removeView((LinearLayout)v.getParent());
-        allEds.remove((LinearLayout)v.getParent());
+        workplace.removeView((LinearLayout)v.getParent());
+        workplaceElements.remove((LinearLayout)v.getParent());
     }
     public void toSave(View v){
 

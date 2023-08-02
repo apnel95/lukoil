@@ -12,21 +12,16 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.lukoil.entity.Act_doc;
-import com.example.lukoil.entity.Act_pump;
+import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.Department_object;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
-import com.example.lukoil.entity.comparation.Act_doc_comparatot;
+import com.example.lukoil.entity.comparation.ActDocComparatot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Doc_acts extends List_acts {
     LinearLayout[] linearDepart = new LinearLayout[5];
@@ -44,8 +39,8 @@ public class Doc_acts extends List_acts {
         departmentNow = 31;
         departmentWas = 0;
 
-        allEds = new ArrayList<View>();
-        linear = (LinearLayout) findViewById(R.id.layoutForActs);
+        workplaceElements = new ArrayList<View>();
+        workplace = (LinearLayout) findViewById(R.id.layoutForActs);
         viewObjects = (LinearLayout) findViewById(R.id.layoutObjects);
 
         bNH1 = (Button) viewObjects.findViewById(R.id.buttonNH1);
@@ -68,7 +63,7 @@ public class Doc_acts extends List_acts {
 
         onStartThis();
 
-        uppTextName.setText("Предписания");
+        topTitleActivity.setText("Предписания");
         changeStyleButton(bToday, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
         changeStyleButton(bJob, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
 
@@ -87,8 +82,8 @@ public class Doc_acts extends List_acts {
     @Override
     public void updateList() {
         for (LinearLayout id : linearDepart){ id.setVisibility(View.GONE); id.removeAllViews();}
-        allEds.clear();
-        drawActs(acts_doc, (double)0);
+        workplaceElements.clear();
+        drawActs(docActs, (double)0);
     }
     @Override
     public void toPlus(View v){
@@ -98,7 +93,7 @@ public class Doc_acts extends List_acts {
     public void toView(View v){
         Intent Doc_view = new Intent(v.getContext(), Doc_view.class);
 
-        Doc_view.putExtra(Act_doc.class.getSimpleName(), acts_doc.get((int)v.getTag()));
+        Doc_view.putExtra(DocAct.class.getSimpleName(), docActs.get((int)v.getTag()));
 
         startActivity(Doc_view);
     }
@@ -163,16 +158,16 @@ public class Doc_acts extends List_acts {
         updateList();
     }
 
-    public void drawActs(ArrayList<Act_doc> acts, double i){
-        for (Act_doc act:acts) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
+    public void drawActs(ArrayList<DocAct> acts, double i){
+        for (DocAct act:acts) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
         ArrayList<Integer> idObjects = new ArrayList<Integer>();
         departmentWas = 0;
-        Collections.sort(acts, new Act_doc_comparatot());
+        Collections.sort(acts, new ActDocComparatot());
         Date nowDate = new Date(0,0,1);
         int cnt = 0;
-        for (Act_doc act: acts) {
+        for (DocAct act: acts) {
             int q = (int) pow(2, act.getId_department())/2;
-            if ((statusNow == 2 || statusNow == ((act.getId_status() == STATUS_JOB)?0:1) || statusNow == ((act.getId_status() == STATUS_READY)?1:0)) && ((timeNow == 3) || ((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 86400000)) || ((timeNow == 1) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 86400000 * 7)) || ((timeNow == 2) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 2678400000L)))) {
+            if ((statusNow == 2 || statusNow == ((act.getId_status() == ACT_STATUS_JOB)?0:1) || statusNow == ((act.getId_status() == STATUS_READY)?1:0)) && ((timeNow == 3) || ((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 86400000)) || ((timeNow == 1) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 86400000 * 7)) || ((timeNow == 2) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 2678400000L)))) {
                 if ((act.getId_department() == NH1 && (departmentNow&1)==1) || (act.getId_department() == NH2 && (departmentNow&2)==2) || (act.getId_department() == NH3 && (departmentNow&4)==4) || (act.getId_department() == CPPN && (departmentNow&8)==8) || (act.getId_department() == CPPD && (departmentNow&16)==16)) {
                     if ((departmentWas & q) == 0) {
                         final View view4 = getLayoutInflater().inflate(R.layout.custom_block_type_name, null);
@@ -185,7 +180,7 @@ public class Doc_acts extends List_acts {
                             }
                         textName1.setText("" + str);
                         linearDepart[act.getId_department()].setVisibility(View.VISIBLE);
-                        allEds.add(view4);
+                        workplaceElements.add(view4);
                         linearDepart[act.getId_department()].addView(view4);
                         departmentWas |= q;
                     }
@@ -197,7 +192,7 @@ public class Doc_acts extends List_acts {
                         String str = "";
                         for (Department_object obj: department_objects) if(obj.getId() == act.getId_department_object()){str = obj.getName(); break;}
                         textName2.setText(""+str);
-                        allEds.add(view5);
+                        workplaceElements.add(view5);
                         linearDepart[act.getId_department()].addView(view5);
                         idObjects.add(act.getId_department()*10000+act.getId_department_object());
                     }
@@ -208,7 +203,7 @@ public class Doc_acts extends List_acts {
                         TextView textDate = (TextView) view.findViewById(R.id.dateText);
                         nowDate = act.getDate_time_stop();
                         textDate.setText(DateToText(nowDate));
-                        allEds.add(view);
+                        workplaceElements.add(view);
                         linearDepart[act.getId_department()].addView(view);
                     }
                     nowDate = act.getDate_time_stop();
@@ -223,7 +218,7 @@ public class Doc_acts extends List_acts {
                     textName.setText("Выдано: " + str);
                     SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                     textTime.setText(formatForDate.format(nowDate));
-                    allEds.add(view1);
+                    workplaceElements.add(view1);
                     linearDepart[act.getId_department()].addView(view1);
                     cnt++;
                 }

@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.lukoil.entity.Act_doc;
+import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.Department_object;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Doc_create extends Create_change_view_act{
-    Act_doc act = new Act_doc();
+    DocAct act = new DocAct();
     EditText FIO_sending;
     Spinner struct, object, employee, status;
     TextView remarks, works;
@@ -41,14 +41,14 @@ public class Doc_create extends Create_change_view_act{
         setContentView(R.layout.doc_create);
         idForm = 13;
 
-        allEds = new ArrayList<View>();
-        linear = findViewById(R.id.layoutPhoto);
+        workplaceElements = new ArrayList<View>();
+        workplace = findViewById(R.id.layoutPhoto);
 
         context = this;
 
         onStartNotHome(idForm);
 
-        uppTextName.setText("Создание предписания");
+        topTitleActivity.setText("Создание предписания");
 
         struct = findViewById(R.id.struct);
         object = findViewById(R.id.object);

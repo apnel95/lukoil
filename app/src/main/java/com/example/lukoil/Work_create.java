@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.lukoil.entity.Remark;
 import com.example.lukoil.entity.Work;
 
 public class Work_create extends Create_change_view_act {
@@ -22,7 +21,7 @@ public class Work_create extends Create_change_view_act {
         context = this;
         onStartNotHome(idForm);
 
-        uppTextName.setText("Добавление мероприятия");
+        topTitleActivity.setText("Добавление мероприятия");
 
     }
     public void toSave(View v){

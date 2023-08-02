@@ -5,15 +5,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.lukoil.entity.Act_doc;
-import com.example.lukoil.entity.Act_pump;
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.DocAct;
+import com.example.lukoil.entity.PumpAct;
+import com.example.lukoil.entity.PipeAct;
+import com.example.lukoil.entity.Department_object;
+import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
 import com.example.lukoil.entity.Remark;
 import com.example.lukoil.entity.Work;
-import com.example.lukoil.entity.comparation.Act_trub_comparatot;
+import com.example.lukoil.entity.comparation.ActDocComparatot;
+import com.example.lukoil.entity.comparation.ActPumpComparatot;
+import com.example.lukoil.entity.comparation.ActPipeComparatot;
 
 import org.jetbrains.annotations.TestOnly;
 
@@ -31,32 +36,101 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
-public class MainActivity extends GeneralClass {
+public class MainActivity extends ActivitySet {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        acts_pump = new ArrayList<Act_pump>();
-        actsTrub = new ArrayList<Act_trub>();
-        acts_doc = new ArrayList<Act_doc>();
+        Activity activity = new Activity(ID_ACTIVITY_HOME, context, R.layout.home, findViewById(R.id.layoutBlock), new ArrayList<View>(), findViewById(R.id.layout_menu), "Главная");
+        setActivityData(activity);
+        drawActivity(activity.getIdLayout());
 
-        Activity activity = new Activity(0, context, R.layout.home, findViewById(R.id.layoutBlock), new ArrayList<View>(), findViewById(R.id.layout_menu), "Главная");
+        updateDirsAndActs();
+    }
 
-        setContentView(activity.idLayout);
+    private void updateDirsAndActs() {
+        getDirs();
+        getActs();
+        CorrectionDataActs();
+        drawActs();
+    }
 
-        toUpdateDir(new View(activity.getContext()));
+    private void CorrectionDataActs() {
+        for (PipeAct act:pipeActs) if(act.getDateTimeStop() == null) act.setDateTimeStop(new Date());
 
-        allEds = activity.workplaceElements;
-        linear = activity.workplace;
+        sortActs();
+    }
 
-        getActsTrub();
-        getActsPump();
-        getActsDoc();
+    private void sortActs() {
+        Collections.sort(pipeActs, new ActPipeComparatot());
+        Collections.sort(pumpActs, new ActPumpComparatot());
+        Collections.sort(docActs, new ActDocComparatot());
+    }
 
-        onStartThis();
+    private void getActs() {
+        getPipeActs();
+        getPupmpActs();
+        getDocActs();
+    }
 
-        uppTextName.setText(activity.getTopTitle());
+    private void drawActs() {
+        drawPipeActs();
+        drawPumpActs();
+        drawDocActs();
+    }
+
+    private void drawPipeActs() {
+        Date dateStopInLastAct = new Date(100000);
+
+        drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Трубопровод"));
+
+        for (PipeAct act : pipeActs) {
+            CheckAndDrawFields(act, dateStopInLastAct);
+            dateStopInLastAct = act.getDateTimeStop();
+        }
+
+    }
+
+    private void CheckAndDrawFields(PipeAct act, Date dateStopInLastAct) {
+        SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
+        if ((act.getId_status() == ACT_STATUS_JOB)) {
+            if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
+                drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
+            }
+            drawNewAct(new FieldAct(R.layout.custom_block_name, R.id.textName, act.getName(trubs), R.id.textTime, formatForDate.format(act.getDateTimeStop()), R.id.status, 1000 + act.getId()));
+        }
+    }
+
+    private void drawNewAct(FieldAct fieldAct) {
+        final View view = getLayoutInflater().inflate(fieldAct.getIdView(), null);
+        TextView textName = view.findViewById(fieldAct.getIdTextView());
+        TextView textTime = view.findViewById(fieldAct.getIdSecondTextView());
+        ImageView status = view.findViewById(fieldAct.getIdStatus());
+        view.setTag(fieldAct.getTag());
+        textName.setText(fieldAct.getTextForTextView()+"");
+        textTime.setText(fieldAct.getTextForSecondTextView());
+        workplaceElements.add(view);
+        workplace.addView(view);
+    }
+
+    private boolean isDatesNotEquivalent(Date dateTimeStop, Date dateStopLastAct) {
+        return (!(trim(dateTimeStop).equals(trim(dateStopLastAct))));
+    }
+
+    private void drawNewFieldForAct(Field field) {
+        final View view = getLayoutInflater().inflate(field.getIdView(), null);
+        TextView textView = view.findViewById(field.getIdTextView());
+        textView.setText(field.getTextForTextView());
+        workplaceElements.add(view);
+        workplace.addView(view);
+    }
+
+    private void drawPumpActs() {
+
+    }
+
+    private void drawDocActs() {
     }
 
     @TestOnly
@@ -67,25 +141,25 @@ public class MainActivity extends GeneralClass {
         works.add(new Event_date_time(2, 0, 1, new Date((2023-1900), 5, 10)));
         works.add(new Event_date_time(3, 0, 0, new Date((2023-1900), 4, 1, 18, 56)));
         works.add(new Event_date_time(4, 0, 5, new Date()));
-        actsTrub.add(new Act_trub(1, 1, 10, 12, 15, 40, 1, 56, 5, 12, 1, 1, 24, works ));
+        pipeActs.add(new PipeAct(1, 1, 10, 12, 15, 40, 1, 56, 5, 12, 1, 1, 24, works ));
         ArrayList<Event_date_time> works1 = new ArrayList<Event_date_time>();
         works1.add(new Event_date_time(1, 1, 2, new Date((2002-1900), 10, 23)));
         works1.add(new Event_date_time(2, 0, 1, new Date((2023-1900), 5, 10)));
         works1.add(new Event_date_time(3, 0, 0, new Date((2023-1900), 4, 24, 23, 49)));
         works1.add(new Event_date_time(4, 0, 5, new Date()));
-        actsTrub.add(new Act_trub(8, works1 ));
+        pipeActs.add(new PipeAct(8, works1 ));
         ArrayList<Event_date_time> works2 = new ArrayList<Event_date_time>();
         works2.add(new Event_date_time(1, 1, 2, new Date((2002-1900), 10, 23)));
         works2.add(new Event_date_time(2, 0, 1, new Date((2023-1900), 5, 5)));
         works2.add(new Event_date_time(3, 0, 0, new Date()));
         works2.add(new Event_date_time(4, 0, 5, new Date()));
-        actsTrub.add(new Act_trub(4, works2 ));
+        pipeActs.add(new PipeAct(4, works2 ));
         ArrayList<Event_date_time> works3 = new ArrayList<Event_date_time>();
         works3.add(new Event_date_time(1, 1, 2, new Date((2002-1900), 10, 23)));
         works3.add(new Event_date_time(2, 0, 1, new Date((2023-1900), 5, 5)));
         works3.add(new Event_date_time(3, 0, 0, new Date((2023-1900), 3, 10, 0, 3)));
         works3.add(new Event_date_time(4, 0, 5, new Date()));
-        actsTrub.add(new Act_trub(5, works3));
+        pipeActs.add(new PipeAct(5, works3));
 
         ArrayList<Integer> list_reade = new ArrayList<Integer>();
         list_reade.add(1);
@@ -102,41 +176,36 @@ public class MainActivity extends GeneralClass {
         work12.add(new Work(1, 1, "Работа Вх46", "Первый"));
         work12.add(new Work(2, 2, "Работа Вх6", "Первый3"));
 
-        acts_doc.add(new Act_doc(1, 0, 1, 1, 1, works2, new ArrayList<Remark>(), new ArrayList<Work>(), "Михалил"));
-        acts_doc.add(new Act_doc(2, 4, 1, 1, 0, works1, remarks1, work12, "Свет"));
-        acts_doc.add(new Act_doc(2, 0, 4, 1, 0, works3, remarks2, new ArrayList<Work>(), "Щило"));
+        docActs.add(new DocAct(1, 0, 1, 1, 1, works2, new ArrayList<Remark>(), new ArrayList<Work>(), "Михалил"));
+        docActs.add(new DocAct(2, 4, 1, 1, 0, works1, remarks1, work12, "Свет"));
+        docActs.add(new DocAct(2, 0, 4, 1, 0, works3, remarks2, new ArrayList<Work>(), "Щило"));
 
-        acts_pump.add(new Act_pump(1, 1,1, 1, 1, "aaa", works, list_reade));
-        acts_pump.add(new Act_pump(2, 2,5, 3, 0, "DFAfakfioajf", works2, list_reade));
+        pumpActs.add(new PumpAct(1, 1,1, 1, 1, "aaa", works, list_reade));
+        pumpActs.add(new PumpAct(2, 2,5, 3, 0, "DFAfakfioajf", works2, list_reade));
     }
-
-    protected void onStartThis() {
-        super.onStartHome(idForm);
-        drawActs(actsTrub, acts_pump, acts_doc);
-    }
-    public void drawActs(ArrayList<Act_trub> acts_trub, ArrayList<Act_pump> acts_pump, ArrayList<Act_doc> acts_doc) {
-        Collections.sort(acts_trub, new Act_trub_comparatot());
+    public void drawActs(ArrayList<PipeAct> acts_trub, ArrayList<PumpAct> acts_pump, ArrayList<DocAct> acts_doc) {
+        Collections.sort(acts_trub, new ActPipeComparatot());
         Date nowDate = new Date(0, 0, 1);
         int cnt = 0;
         if (acts_trub.size() > 0) {
-            for (Act_trub act:acts_trub) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
+            for (PipeAct act:acts_trub) if(act.getDateTimeStop() == null) act.setDateTimeStop(new Date());
             final View view2 = getLayoutInflater().inflate(R.layout.custom_block_type_name, null);
             TextView textName1 = (TextView) view2.findViewById(R.id.textName);
             textName1.setText("Трубопровод");
-            allEds.add(view2);
-            linear.addView(view2);
-            for (Act_trub act : acts_trub) {
-                if ((act.getId_status() == STATUS_JOB)) {
-                    if (trim(act.getDate_time_stop()).equals(trim(nowDate))) {
+            workplaceElements.add(view2);
+            workplace.addView(view2);
+            for (PipeAct act : acts_trub) {
+                if ((act.getId_status() == ACT_STATUS_JOB)) {
+                    if (trim(act.getDateTimeStop()).equals(trim(nowDate))) {
                     } else {
                         final View view = getLayoutInflater().inflate(R.layout.custom_block_date, null);
                         TextView textDate = (TextView) view.findViewById(R.id.dateText);
-                        nowDate = act.getDate_time_stop();
+                        nowDate = act.getDateTimeStop();
                         textDate.setText(DateToText(nowDate));
-                        allEds.add(view);
-                        linear.addView(view);
+                        workplaceElements.add(view);
+                        workplace.addView(view);
                     }
-                    nowDate = act.getDate_time_stop();
+                    nowDate = act.getDateTimeStop();
                     final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
                     TextView textTime = (TextView) view1.findViewById(R.id.textTime);
                     TextView textName = (TextView) view1.findViewById(R.id.textName);
@@ -145,22 +214,22 @@ public class MainActivity extends GeneralClass {
                     textName.setText(act.getName(trubs)+"");
                     SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                     textTime.setText(formatForDate.format(nowDate));
-                    allEds.add(view1);
-                    linear.addView(view1);
+                    workplaceElements.add(view1);
+                    workplace.addView(view1);
                     cnt++;
                 }
             }
         }
         cnt=0;
         if (acts_pump.size() > 0) {
-            for (Act_pump act:acts_pump) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
+            for (PumpAct act:acts_pump) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
             final View view2 = getLayoutInflater().inflate(R.layout.custom_block_type_name, null);
             TextView textName1 = (TextView) view2.findViewById(R.id.textName);
             textName1.setText("Насосы");
-            allEds.add(view2);
-            linear.addView(view2);
-            for (Act_pump act : acts_pump) {
-                if ((act.getId_status() == STATUS_JOB)) {
+            workplaceElements.add(view2);
+            workplace.addView(view2);
+            for (PumpAct act : acts_pump) {
+                if ((act.getId_status() == ACT_STATUS_JOB)) {
                     if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
                     if(nowDate == null) nowDate = new Date();
                     if (trim(act.getDate_time_stop()).equals(trim(nowDate))) {
@@ -169,8 +238,8 @@ public class MainActivity extends GeneralClass {
                         TextView textDate = (TextView) view.findViewById(R.id.dateText);
                         nowDate = act.getDate_time_stop();
                         textDate.setText(DateToText(nowDate));
-                        allEds.add(view);
-                        linear.addView(view);
+                        workplaceElements.add(view);
+                        workplace.addView(view);
                     }
                     nowDate = act.getDate_time_stop();
                     final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
@@ -181,30 +250,30 @@ public class MainActivity extends GeneralClass {
                     textName.setText(act.getName(positions)+"");
                     SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                     textTime.setText(formatForDate.format(nowDate));
-                    allEds.add(view1);
-                    linear.addView(view1);
+                    workplaceElements.add(view1);
+                    workplace.addView(view1);
                     cnt++;
                 }
             }
         }
         cnt=0;
         if (acts_doc.size() > 0) {
-            for (Act_doc act:acts_doc) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
+            for (DocAct act:acts_doc) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
             final View view2 = getLayoutInflater().inflate(R.layout.custom_block_type_name, null);
             TextView textName1 = (TextView) view2.findViewById(R.id.textName);
             textName1.setText("Предписания");
-            allEds.add(view2);
-            linear.addView(view2);
-            for (Act_doc act : acts_doc) {
-                if ((act.getId_status() == STATUS_JOB)) {
+            workplaceElements.add(view2);
+            workplace.addView(view2);
+            for (DocAct act : acts_doc) {
+                if ((act.getId_status() == ACT_STATUS_JOB)) {
                     if (trim(act.getDate_time_stop()).equals(trim(nowDate))) {
                     } else {
                         final View view = getLayoutInflater().inflate(R.layout.custom_block_date, null);
                         TextView textDate = (TextView) view.findViewById(R.id.dateText);
                         nowDate = act.getDate_time_stop();
                         textDate.setText(DateToText(nowDate));
-                        allEds.add(view);
-                        linear.addView(view);
+                        workplaceElements.add(view);
+                        workplace.addView(view);
                     }
                     nowDate = act.getDate_time_stop();
                     final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
@@ -217,14 +286,15 @@ public class MainActivity extends GeneralClass {
                     textName.setText("Выдано: " + str);
                     SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                     textTime.setText(formatForDate.format(nowDate));
-                    allEds.add(view1);
-                    linear.addView(view1);
+                    workplaceElements.add(view1);
+                    workplace.addView(view1);
                     cnt++;
                 }
             }
         }
     }
-    public void getActsTrub() {
+    public void getPipeActs() {
+        pipeActs = new ArrayList<PipeAct>();
         Thread thread = new Thread(() -> {
             System.out.println("Waiting for connection");
             ObjectOutputStream outgetboard;
@@ -276,7 +346,7 @@ public class MainActivity extends GeneralClass {
                 throw new RuntimeException(e);
             }
             try {
-                actsTrub = (ArrayList<Act_trub>) in.readObject();
+                pipeActs = (ArrayList<PipeAct>) in.readObject();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
@@ -291,7 +361,8 @@ public class MainActivity extends GeneralClass {
             Log.d("Clown", e.toString());
         }
     }
-    private void getActsPump() {
+    private void getPupmpActs() {
+        pumpActs = new ArrayList<PumpAct>();
         Thread thread = new Thread(() -> {
             System.out.println("Waiting for connection");
             ObjectOutputStream outgetboard;
@@ -343,7 +414,7 @@ public class MainActivity extends GeneralClass {
                 throw new RuntimeException(e);
             }
             try {
-                acts_pump = (ArrayList<Act_pump>) in.readObject();
+                pumpActs = (ArrayList<PumpAct>) in.readObject();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
@@ -358,7 +429,8 @@ public class MainActivity extends GeneralClass {
             Log.d("Clown", e.toString());
         }
     }
-    private void getActsDoc() {
+    private void getDocActs() {
+        docActs = new ArrayList<DocAct>();
         Thread thread = new Thread(() -> {
             System.out.println("Waiting for connection");
             ObjectOutputStream outgetboard;
@@ -410,7 +482,7 @@ public class MainActivity extends GeneralClass {
                 throw new RuntimeException(e);
             }
             try {
-                acts_doc = (ArrayList<Act_doc>) in.readObject();
+                docActs = (ArrayList<DocAct>) in.readObject();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
@@ -424,5 +496,160 @@ public class MainActivity extends GeneralClass {
         } catch (Exception e) {
             Log.d("Clown", e.toString());
         }
+    }
+    public void getDirs(){
+        System.out.println("Обновление списков");
+        Thread thread = new Thread(() -> {
+            System.out.println("Waiting for connection");
+            ObjectOutputStream outgetboard;
+            Socket clientSocket, upClientSocket;
+            try {
+                clientSocket = new Socket(HOST, PORT);
+                OutputStream outToServer = clientSocket.getOutputStream();
+                outgetboard = new ObjectOutputStream(outToServer);
+
+                upClientSocket = new Socket(HOST, upPORT);
+                OutputStream outToUpdateServer = upClientSocket.getOutputStream();
+                ObjectOutputStream outUpdate = new ObjectOutputStream(outToUpdateServer);
+
+                System.out.println("Client connected to socket");
+                Runtime.getRuntime().addShutdownHook(new Thread( () -> {
+                    try {
+                        HashMap.Entry<String, Object> output2 = new AbstractMap.SimpleEntry<>("QUIT", null);
+                        outgetboard.writeObject(output2);
+                        clientSocket.close();
+                        outUpdate.writeObject(output2);
+                        upClientSocket.close();
+                        System.out.println("Closing the connection");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }));
+            } catch (UnknownHostException ex) {
+                throw new RuntimeException(ex);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+            HashMap.Entry<String, Object> output;
+            output = new AbstractMap.SimpleEntry<>("GETALLDIR", 0);
+            try {
+                outgetboard.writeObject(output);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            InputStream inputStream;
+            try {
+                inputStream = clientSocket.getInputStream();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            ObjectInputStream in;
+            try {
+                in = new ObjectInputStream(inputStream);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                departments = (ArrayList<Dir>) in.readObject();
+                for (Dir dir: departments){
+                    if(dir.getName().equals("НШ№1")) NH1 = dir.getId();
+                    else if(dir.getName().equals("НШ№2")) NH2 = dir.getId();
+                    else if(dir.getName().equals("НШ№3")) NH3 = dir.getId();
+                    else if(dir.getName().equals("ЦППН")) CPPN = dir.getId();
+                    else if(dir.getName().equals("ЦППД")) CPPD = dir.getId();
+                }
+                System.out.println(departments.size()+": 1");
+                department_objects = (ArrayList<Department_object>) in.readObject();
+                System.out.println(department_objects.size()+": 2");
+                employees = (ArrayList<Employee>) in.readObject();
+                System.out.println(employees.size()+": 3");
+                event_types = (ArrayList<Dir>) in.readObject();
+                System.out.println(event_types.size()+": 4");
+                event_statuses = (ArrayList<Dir>) in.readObject();
+                for (Dir dir: event_statuses){
+                    if(dir.getName().equals("Выдача предписания")) idDateTimeStopWorkDoc = dir.getId();
+                    else if(dir.getName().equals("Обнаружение неисправности")) idDateTimeStopWork = dir.getId();
+                }
+                System.out.println("New idDateTimeStopWork - " + idDateTimeStopWork);
+                System.out.println(event_statuses.size()+": 5");
+                marks = (ArrayList<Dir>) in.readObject();
+                System.out.println(marks.size()+": 6");
+                trubs = (ArrayList<Dir>) in.readObject();
+                System.out.println(trubs.size()+": 7");
+//              pumps = (ArrayList<Dir>) in.readObject();
+//              System.out.println(pumps.size()+": 8");
+                positions = (ArrayList<Dir>) in.readObject();
+                System.out.println(positions.size()+": 9");
+                posts = (ArrayList<Dir>) in.readObject();
+                System.out.println(posts.size()+": 10");
+                reasons_stop_pump = (ArrayList<Dir>) in.readObject();
+                System.out.println(reasons_stop_pump.size()+": 11");
+                statuses_employee = (ArrayList<Dir>) in.readObject();
+                System.out.println(statuses_employee.size()+": 12");
+                statuses_act = (ArrayList<Dir>) in.readObject();
+                for (Dir dir: statuses_act){
+                    if(dir.getName().equals("В работе")) ACT_STATUS_JOB = dir.getId();
+                    else if(dir.getName().equals("Готово")) STATUS_READY = dir.getId();
+                }
+                System.out.println("New STATUS_READY - " + STATUS_READY);
+                System.out.println(statuses_act.size()+": 13");
+                substances = (ArrayList<Dir>) in.readObject();
+                System.out.println(substances.size()+": 14");
+                types_leak = (ArrayList<Dir>) in.readObject();
+                System.out.println(types_leak.size()+": 15");
+                types_coating = (ArrayList<Dir>) in.readObject();
+                System.out.println(types_coating.size()+": 16");
+                types_work_pump = (ArrayList<Dir>) in.readObject();
+                System.out.println(types_work_pump.size()+": 17");
+
+
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (Exception e) {
+            Log.d("Clown", e.toString());
+        }
+        Toast toast = Toast.makeText(getApplicationContext(), "Обновление списков успешно завершено", Toast.LENGTH_LONG);
+        toast.show();
+        updateArrayString();
+    }
+    private void updateArrayString() {
+        Sdepartments = new ArrayList<>();
+        Sdepartment_objects = new ArrayList<>();
+        Semployees = new ArrayList<>();
+        Sevent_types = new ArrayList<>();
+        Sevent_statuses = new ArrayList<>();
+        Smarks = new ArrayList<>();
+        Strubs = new ArrayList<>();
+        Spositions = new ArrayList<>();
+        Sreasons_stop_pump = new ArrayList<>();
+        Sposts = new ArrayList<>();
+        Stypes_coating = new ArrayList<>();
+        Stypes_work_pump = new ArrayList<>();
+        Sstatuses_employee = new ArrayList<>();
+        Sstatuses_act = new ArrayList<>();
+        Ssubstances = new ArrayList<>();
+        Stypes_leak = new ArrayList<>();
+
+        for (Dir dir: departments) Sdepartments.add(dir.getName());
+        for (Department_object dir: department_objects) Sdepartment_objects.add(dir.getName());
+        for (Dir dir: event_types) Sevent_types.add(dir.getName());
+        for (Dir dir: event_statuses) Sevent_statuses.add(dir.getName());
+        for (Dir dir: marks) Smarks.add(dir.getName());
+        for (Dir dir: trubs) Strubs.add(dir.getName());
+        for (Dir dir: posts) Sposts.add(dir.getName());
+        for (Employee emp: employees) for (Dir dir: posts) if(dir.getId() == emp.getId_post()) Semployees.add(emp.getFIO()+", "+dir.getName());
+        for (Dir dir: reasons_stop_pump) Sreasons_stop_pump.add(dir.getName());
+        for (Dir dir: types_coating) Stypes_coating.add(dir.getName());
+        for (Dir dir: types_work_pump) Stypes_work_pump.add(dir.getName());
+        for (Dir dir: statuses_employee) Sstatuses_employee.add(dir.getName());
+        for (Dir dir: statuses_act) Sstatuses_act.add(dir.getName());
+        for (Dir dir: substances) Ssubstances.add(dir.getName());
+        for (Dir dir: types_leak) Stypes_leak.add(dir.getName());
+        for (Dir dir: positions) Spositions.add(dir.getName());
     }
 }

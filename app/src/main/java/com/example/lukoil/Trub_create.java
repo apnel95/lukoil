@@ -7,31 +7,23 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
-import com.example.lukoil.entity.Act_pump;
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.PipeAct;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 public class Trub_create extends Create_change_view_act {
-    Act_trub act;
+    PipeAct act;
     EditText diameter, wall, piketach, leak_parameter, leak_location, area;
     Spinner name, coating, leak_type, subst, who, status;
 
@@ -41,14 +33,14 @@ public class Trub_create extends Create_change_view_act {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.trub_create);
         context = this;
-        act = new Act_trub();
+        act = new PipeAct();
 
-        allEds = new ArrayList<View>();
-        linear = findViewById(R.id.layoutPhoto);
+        workplaceElements = new ArrayList<View>();
+        workplace = findViewById(R.id.layoutPhoto);
 
         onStartNotHome(idForm);
 
-        uppTextName.setText("Создание акта");
+        topTitleActivity.setText("Создание акта");
 
         name = findViewById(R.id.name);
         diameter = findViewById(R.id.diameter);

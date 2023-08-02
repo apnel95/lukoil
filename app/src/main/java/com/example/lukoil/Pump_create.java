@@ -7,11 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.lukoil.entity.Act_pump;
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.PumpAct;
 import com.example.lukoil.entity.Dir;
-import com.example.lukoil.entity.Employee;
-import com.example.lukoil.entity.Event_date_time;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -21,10 +18,9 @@ import java.net.UnknownHostException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Stack;
 
 public class Pump_create extends Create_change_view_act {
-    Act_pump act;
+    PumpAct act;
     EditText note;
     Spinner name, mark, reason_stop, status;
 
@@ -34,14 +30,14 @@ public class Pump_create extends Create_change_view_act {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pump_create);
         context = this;
-        act = new Act_pump();
+        act = new PumpAct();
 
-        allEds = new ArrayList<View>();
-        linear = findViewById(R.id.layoutPhoto);
+        workplaceElements = new ArrayList<View>();
+        workplace = findViewById(R.id.layoutPhoto);
 
         onStartNotHome(idForm);
 
-        uppTextName.setText("Создание акта");
+        topTitleActivity.setText("Создание акта");
 
         name = findViewById(R.id.name);
         mark = findViewById(R.id.mark);

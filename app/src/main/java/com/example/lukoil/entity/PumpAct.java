@@ -2,16 +2,16 @@ package com.example.lukoil.entity;
 
 import static com.example.lukoil.GeneralClass.idDateTimeStopWork;
 
-import java.io.Serializable;
+import com.example.lukoil.Act;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Act_pump implements Serializable {
-    int id, id_pump, id_mark, id_reason_stop, id_status;
-    Date date_time_stop;
+public class PumpAct extends Act {
+    int id_pump, id_mark, id_reason_stop, id_status;
     String note;
 
-    public Act_pump() {
+    public PumpAct() {
     }
 
     public void setId_pump(int id_pump) {
@@ -22,14 +22,14 @@ public class Act_pump implements Serializable {
         return id_pump;
     }
 
-    public Act_pump(int id, int id_pump, int id_status, Date date_time_stop) {
+    public PumpAct(int id, int id_pump, int id_status, Date dateTimeStop) {
         this.id = id;
         this.id_pump = id_pump;
         this.id_status = id_status;
-        this.date_time_stop = date_time_stop;
+        this.dateTimeStop = dateTimeStop;
     }
 
-    public Act_pump(int id, int id_pump, int id_mark, int id_reason_stop, int id_status, String note, ArrayList<Event_date_time> events, ArrayList<Integer> works_ready) {
+    public PumpAct(int id, int id_pump, int id_mark, int id_reason_stop, int id_status, String note, ArrayList<Event_date_time> events, ArrayList<Integer> works_ready) {
         this.id = id;
         this.id_mark = id_mark;
         this.id_reason_stop = id_reason_stop;
@@ -40,7 +40,7 @@ public class Act_pump implements Serializable {
         this.works_ready = works_ready;
         for (Event_date_time wrk: events){
             if (wrk.getId_type_event() == idDateTimeStopWork){
-                this.date_time_stop = wrk.getDate_time();
+                this.dateTimeStop = wrk.getDateTime();
                 break;
             }
         }
@@ -61,11 +61,11 @@ public class Act_pump implements Serializable {
         return id;
     }
     public Date getDate_time_stop() {
-        return date_time_stop;
+        return dateTimeStop;
     }
 
     public void setDate_time_stop(Date date_time_stop) {
-        this.date_time_stop = date_time_stop;
+        this.dateTimeStop = date_time_stop;
     }
 
     public void setId(int id) {

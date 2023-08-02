@@ -1,8 +1,8 @@
 package com.example.lukoil;
 
-import com.example.lukoil.entity.Act_doc;
-import com.example.lukoil.entity.Act_pump;
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.DocAct;
+import com.example.lukoil.entity.PumpAct;
+import com.example.lukoil.entity.PipeAct;
 import com.example.lukoil.entity.Department_object;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
@@ -13,9 +13,9 @@ import com.example.lukoil.entity.Work;
 import java.util.ArrayList;
 
 public class ListsDirectoryPipe {
-    ArrayList<Act_trub> pipeActs;
-    ArrayList<Act_pump> pumpActs;
-    ArrayList<Act_doc> docActs;
+    ArrayList<PipeAct> pipeActs;
+    ArrayList<PumpAct> pumpActs;
+    ArrayList<DocAct> docActs;
     ArrayList<Event_date_time> actEvents;
     ArrayList<Work> DocWorks;
     ArrayList<Remark> docRemarks;

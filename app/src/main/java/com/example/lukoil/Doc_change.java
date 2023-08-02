@@ -10,8 +10,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.lukoil.entity.Act_doc;
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.Department_object;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
@@ -29,7 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Doc_change extends Create_change_view_act{
-    Act_doc act;
+    DocAct act;
     EditText FIO_sending;
     Spinner struct, object, employee, status;
     TextView events, remarks, works;
@@ -42,16 +41,16 @@ public class Doc_change extends Create_change_view_act{
         setContentView(R.layout.doc_change);
         idForm = 3;
 
-        allEds = new ArrayList<View>();
-        linear = findViewById(R.id.layoutPhoto);
+        workplaceElements = new ArrayList<View>();
+        workplace = findViewById(R.id.layoutPhoto);
 
         Bundle arguments = getIntent().getExtras();
-        act = (Act_doc) arguments.getSerializable(Act_doc.class.getSimpleName());
+        act = (DocAct) arguments.getSerializable(DocAct.class.getSimpleName());
         context = this;
 
         onStartNotHome(idForm);
 
-        uppTextName.setText("Изменение предписания");
+        topTitleActivity.setText("Изменение предписания");
 
         struct = findViewById(R.id.struct);
         object = findViewById(R.id.object);
@@ -63,7 +62,7 @@ public class Doc_change extends Create_change_view_act{
         FIO_sending = findViewById(R.id.FIO_sending);
 
         String textForEvents = "";
-        if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDate_time()) + "\n";
+        if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         String textForWorks = "";
@@ -189,7 +188,7 @@ public class Doc_change extends Create_change_view_act{
             if(requestCode == 3){
                 act.setEvents((ArrayList<Event_date_time>) data.getExtras().getSerializable(ArrayList.class.getSimpleName()));
                 String textForEvents = "";
-                if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getId_type_event() + ": " + DateToText(wrk.getDate_time()) + "\n";
+                if (act.getEvents() != null) for (Event_date_time wrk : act.getEvents()) textForEvents += wrk.getId_type_event() + ": " + DateToText(wrk.getDateTime()) + "\n";
                 events.setText(textForEvents);
             }
         }

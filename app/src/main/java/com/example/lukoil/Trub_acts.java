@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.PipeAct;
 
 import java.util.ArrayList;
 
@@ -19,14 +19,14 @@ public class Trub_acts extends List_acts {
         setContentView(R.layout.trub_acts);
         idForm = 1;
 
-        allEds = new ArrayList<View>();
-        linear = (LinearLayout) findViewById(R.id.layoutForActs);
+        workplaceElements = new ArrayList<View>();
+        workplace = (LinearLayout) findViewById(R.id.layoutForActs);
 
         onStartThis();
 
         context = this;
 
-        uppTextName.setText("Акты - трубопровод");
+        topTitleActivity.setText("Акты - трубопровод");
         changeStyleButton(bToday, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
         changeStyleButton(bJob, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
 
@@ -34,17 +34,17 @@ public class Trub_acts extends List_acts {
         protected void onStartThis() {
         super.onStart_list(idForm);
 
-        drawActs(actsTrub);
+        drawActs(pipeActs);
     }
     @Override
     public void updateList() {
-        linear.removeAllViews();
-        allEds.clear();
-        drawActs(actsTrub);
+        workplace.removeAllViews();
+        workplaceElements.clear();
+        drawActs(pipeActs);
     }
     public void toView(View v){
             Intent Trub_view = new Intent(v.getContext(), Trub_view.class);
-            Trub_view.putExtra(Act_trub.class.getSimpleName(), actsTrub.get((int)v.getTag()));
+            Trub_view.putExtra(PipeAct.class.getSimpleName(), pipeActs.get((int)v.getTag()));
             startActivity(Trub_view);
         }
     @Override

@@ -1,31 +1,19 @@
 package com.example.lukoil;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
-import com.example.lukoil.entity.Act_trub;
+import com.example.lukoil.entity.PipeAct;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 public class Trub_view extends Create_change_view_act {
 
-    Act_trub act;
+    PipeAct act;
     EditText name, diameter, wall, coating, piketach, leak_type, leak_parameter, leak_location, subst, who, area, status;
     TextView events;
 
@@ -35,7 +23,7 @@ public class Trub_view extends Create_change_view_act {
         setContentView(R.layout.trub_view);
 
         Bundle arguments = getIntent().getExtras();
-        act = (Act_trub) arguments.getSerializable(Act_trub.class.getSimpleName());
+        act = (PipeAct) arguments.getSerializable(PipeAct.class.getSimpleName());
         idForm = 1;
         context = this;
 
@@ -69,11 +57,11 @@ public class Trub_view extends Create_change_view_act {
         subst.setText(String.valueOf(act.getId_substance()));
         status.setText(String.valueOf(act.getId_status()));
 
-        uppTextName.setText("Просмотр акта");
+        topTitleActivity.setText("Просмотр акта");
 
 
         String textForEvents = "";
-        if (act.getWorks() != null) for (Event_date_time wrk : act.getWorks()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDate_time()) + "\n";
+        if (act.getWorks() != null) for (Event_date_time wrk : act.getWorks()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         int cnt=0;
@@ -129,7 +117,7 @@ public class Trub_view extends Create_change_view_act {
     }
     public void toChange(View v){
         Intent Trub_change = new Intent(context, Trub_change.class);
-        Trub_change.putExtra(Act_trub.class.getSimpleName(), act);
+        Trub_change.putExtra(PipeAct.class.getSimpleName(), act);
         startActivity(Trub_change);
     }
 }

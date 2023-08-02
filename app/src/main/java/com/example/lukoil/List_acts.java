@@ -1,23 +1,17 @@
 package com.example.lukoil;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 
-import com.example.lukoil.entity.Act_doc;
-import com.example.lukoil.entity.Act_pump;
-import com.example.lukoil.entity.Act_trub;
-import com.example.lukoil.entity.comparation.Act_doc_comparatot;
-import com.example.lukoil.entity.comparation.Act_pump_comparatot;
-import com.example.lukoil.entity.comparation.Act_trub_comparatot;
+import com.example.lukoil.entity.PumpAct;
+import com.example.lukoil.entity.PipeAct;
+import com.example.lukoil.entity.comparation.ActPumpComparatot;
+import com.example.lukoil.entity.comparation.ActPipeComparatot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -134,26 +128,26 @@ public class List_acts extends GeneralClass {
         button.setBackground(colorBack);
     }
     public void updateList() {
-        linear.removeAllViews();
-        allEds.clear();
+        workplace.removeAllViews();
+        workplaceElements.clear();
     }
 
-    public void drawActs(ArrayList<Act_trub> acts){
-        Collections.sort(acts, new Act_trub_comparatot());
+    public void drawActs(ArrayList<PipeAct> acts){
+        Collections.sort(acts, new ActPipeComparatot());
         Date nowDate = new Date(0,0,1);
         int cnt = 0;
-        for (Act_trub act: acts) {
-            if ((statusNow == 2 || statusNow == ((act.getId_status() == STATUS_JOB)?0:1) || statusNow == ((act.getId_status() == STATUS_READY)?1:0)) && ((timeNow == 3) || ((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<86400000)) || ((timeNow == 1) && ((long)((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<86400000*7))||((timeNow == 2) && ((long)((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<2678400000L)))) {
-                if (trim(act.getDate_time_stop()).equals(trim(nowDate))) {
+        for (PipeAct act: acts) {
+            if ((statusNow == 2 || statusNow == ((act.getId_status() == ACT_STATUS_JOB)?0:1) || statusNow == ((act.getId_status() == STATUS_READY)?1:0)) && ((timeNow == 3) || ((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000)) || ((timeNow == 1) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000*7))||((timeNow == 2) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<2678400000L)))) {
+                if (trim(act.getDateTimeStop()).equals(trim(nowDate))) {
                 } else {
                     final View view = getLayoutInflater().inflate(R.layout.custom_block_date, null);
                     TextView textDate = (TextView) view.findViewById(R.id.dateText);
-                    nowDate = act.getDate_time_stop();
+                    nowDate = act.getDateTimeStop();
                     textDate.setText(DateToText(nowDate));
-                    allEds.add(view);
-                    linear.addView(view);
+                    workplaceElements.add(view);
+                    workplace.addView(view);
                 }
-                nowDate = act.getDate_time_stop();
+                nowDate = act.getDateTimeStop();
                 final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
                 TextView textTime = (TextView) view1.findViewById(R.id.textTime);
                 TextView textName = (TextView) view1.findViewById(R.id.textName);
@@ -163,27 +157,27 @@ public class List_acts extends GeneralClass {
                 textName.setText(act.getName(trubs)+"");
                 SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                 textTime.setText(formatForDate.format(nowDate));
-                allEds.add(view1);
-                linear.addView(view1);
+                workplaceElements.add(view1);
+                workplace.addView(view1);
                 cnt++;
             }
         }
     }
-    public void drawActs(ArrayList<Act_pump> acts, int i){
-        for (Act_pump act:acts) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
-        Collections.sort(acts, new Act_pump_comparatot());
+    public void drawActs(ArrayList<PumpAct> acts, int i){
+        for (PumpAct act:acts) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
+        Collections.sort(acts, new ActPumpComparatot());
         Date nowDate = new Date(0,0,1);
         int cnt = 0;
-        for (Act_pump act: acts) {
-            if ((statusNow == 2 || statusNow == ((act.getId_status() == STATUS_JOB)?0:1) || statusNow == ((act.getId_status() == STATUS_READY)?1:0)) && ((timeNow==3)||((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<86400000)) || ((timeNow == 1) && ((long)((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<86400000*7))||((timeNow == 2) && ((long)((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<2678400000L)))) {
+        for (PumpAct act: acts) {
+            if ((statusNow == 2 || statusNow == ((act.getId_status() == ACT_STATUS_JOB)?0:1) || statusNow == ((act.getId_status() == STATUS_READY)?1:0)) && ((timeNow==3)||((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<86400000)) || ((timeNow == 1) && ((long)((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<86400000*7))||((timeNow == 2) && ((long)((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime())<2678400000L)))) {
                 if (trim(act.getDate_time_stop()).equals(trim(nowDate))) {
                 } else {
                     final View view = getLayoutInflater().inflate(R.layout.custom_block_date, null);
                     TextView textDate = (TextView) view.findViewById(R.id.dateText);
                     nowDate = act.getDate_time_stop();
                     textDate.setText(DateToText(nowDate));
-                    allEds.add(view);
-                    linear.addView(view);
+                    workplaceElements.add(view);
+                    workplace.addView(view);
                 }
                 nowDate = act.getDate_time_stop();
                 final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
@@ -195,8 +189,8 @@ public class List_acts extends GeneralClass {
                 textName.setText(act.getName(positions)+"");
                 SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                 textTime.setText(formatForDate.format(nowDate));
-                allEds.add(view1);
-                linear.addView(view1);
+                workplaceElements.add(view1);
+                workplace.addView(view1);
                 cnt++;
             }
         }
