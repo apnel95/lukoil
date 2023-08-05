@@ -7,7 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.lukoil.entity.DocAct;
-import com.example.lukoil.entity.departmentObject;
+import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
@@ -73,7 +73,7 @@ public class Doc_view extends Create_change_view_act {
         }
 
         cnt=0;
-        for(departmentObject dir: departmentObjects){
+        for(DepartmentObject dir: DepartmentObjects){
             if(dir.getId() == act.getId_department_object()){
                 object.setText(dir.getName());
                 break;

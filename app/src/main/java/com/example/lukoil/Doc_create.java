@@ -11,7 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.lukoil.entity.DocAct;
-import com.example.lukoil.entity.departmentObject;
+import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
@@ -87,7 +87,7 @@ public class Doc_create extends Create_change_view_act{
         for(Dir dep: departments) if(dep.getName().equals(struct.getSelectedItem().toString())){ id = dep.getId();break;}
         System.out.println(id);
         new_Sdepartment_objects = new ArrayList<>();
-        for (departmentObject dir: departmentObjects) if(dir.getId_dep() ==  id) new_Sdepartment_objects.add(dir.getName());
+        for (DepartmentObject dir: DepartmentObjects) if(dir.getId_dep() ==  id) new_Sdepartment_objects.add(dir.getName());
         System.out.println(new_Sdepartment_objects);
         objectA.clear();
         objectA.addAll(new_Sdepartment_objects);
@@ -135,7 +135,7 @@ public class Doc_create extends Create_change_view_act{
     }
 
     private void getIds() {
-        for (departmentObject dir: departmentObjects) if(dir.getName() == object.getSelectedItem()) act.setId_department_object(dir.getId());
+        for (DepartmentObject dir: DepartmentObjects) if(dir.getName() == object.getSelectedItem()) act.setId_department_object(dir.getId());
         for (Dir dir: statuses_act) if(dir.getName().equals(status.getSelectedItem().toString())) act.setId_status(dir.getId());
         for (Employee dir: employees) if(dir.getFIO().equals(employee.getSelectedItem().toString().substring(0 , employee.getSelectedItem().toString().indexOf(",")))) act.setId_employee(dir.getId());
     }

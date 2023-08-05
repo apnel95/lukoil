@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.example.lukoil.entity.DocAct;
-import com.example.lukoil.entity.departmentObject;
+import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.comparation.ActDocComparatot;
@@ -190,7 +190,7 @@ public class Doc_acts extends List_acts {
                         final View view5 = getLayoutInflater().inflate(R.layout.custom_block_object, null);
                         TextView textName2 = (TextView) view5.findViewById(R.id.textName1);
                         String str = "";
-                        for (departmentObject obj: departmentObjects) if(obj.getId() == act.getId_department_object()){str = obj.getName(); break;}
+                        for (DepartmentObject obj: DepartmentObjects) if(obj.getId() == act.getId_department_object()){str = obj.getName(); break;}
                         textName2.setText(""+str);
                         workplaceElements.add(view5);
                         linearDepart[act.getId_department()].addView(view5);

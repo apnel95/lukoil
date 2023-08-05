@@ -2,11 +2,11 @@ package com.example.lukoil.entity;
 
 import java.io.Serializable;
 
-public class departmentObject implements Serializable {
+public class DepartmentObject implements Serializable {
     int id, id_dep;
     String name;
 
-    public departmentObject() {
+    public DepartmentObject() {
     }
 
     public int getId_dep() {
@@ -33,7 +33,7 @@ public class departmentObject implements Serializable {
         this.id = id;
     }
 
-    public departmentObject(int id, int id_dep, String name) {
+    public DepartmentObject(int id, int id_dep, String name) {
         this.id = id;
         this.id_dep = id_dep;
         this.name = name;

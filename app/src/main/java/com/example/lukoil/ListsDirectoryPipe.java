@@ -3,7 +3,7 @@ package com.example.lukoil;
 import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.PumpAct;
 import com.example.lukoil.entity.PipeAct;
-import com.example.lukoil.entity.departmentObject;
+import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
@@ -21,7 +21,7 @@ public class ListsDirectoryPipe {
     ArrayList<Remark> docRemarks;
     ArrayList<Integer> pumpWorks;
     ArrayList<Dir> docDepartments;
-    ArrayList<departmentObject> docDepartmentObjects;
+    ArrayList<DepartmentObject> docDepartmentObjects;
     ArrayList<Employee> employees;
     ArrayList<Dir> actEventTypes;
     ArrayList<Dir> actEventStatuses;

@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.PumpAct;
 import com.example.lukoil.entity.PipeAct;
-import com.example.lukoil.entity.departmentObject;
+import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
@@ -36,13 +36,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 
-public class MainActivity extends ActivitySet {
+public class MainActivity extends GeneralClassActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Activity activity = new Activity(ID_ACTIVITY_HOME, context, R.layout.home, findViewById(R.id.layoutBlock), new ArrayList<View>(), findViewById(R.id.layout_menu), "Главная");
+        Activity activity = new Activity(ID_ACTIVITY_HOME, getApplicationContext(), R.layout.home, findViewById(R.id.layoutBlock), new ArrayList<View>(), findViewById(R.id.layout_menu), "Главная");
         initializationMainActivity(activity);
 
         updateDirsAndActs();
@@ -85,14 +85,33 @@ public class MainActivity extends ActivitySet {
 
     private void drawPipeActs() {
         Date dateStopInLastAct = new Date(100000);
-
         drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Трубопровод"));
-
         for (PipeAct act : pipeActs) {
             CheckAndDrawFields(act, dateStopInLastAct);
             dateStopInLastAct = act.getDateTimeStop();
         }
+    }
 
+    private void drawPumpActs() {
+        Date dateStopInLastAct = new Date(100000);
+
+        drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Насосы"));
+
+        for (PumpAct act : pumpActs) {
+            CheckAndDrawFields(act, dateStopInLastAct);
+            dateStopInLastAct = act.getDateTimeStop();
+        }
+    }
+
+    private void drawDocActs() {
+        Date dateStopInLastAct = new Date(100000);
+
+        drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Насосы"));
+
+        for (DocAct act : docActs) {
+            CheckAndDrawFields(act, dateStopInLastAct);
+            dateStopInLastAct = act.getDateTimeStop();
+        }
     }
 
     private void CheckAndDrawFields(PipeAct act, Date dateStopInLastAct) {
@@ -119,7 +138,7 @@ public class MainActivity extends ActivitySet {
             if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
                 drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
             }
-            String str = getNameById(employees, act.getId_employee());
+            String str = dictionary.getDirValueByDirNameAndKey("employee", act.getId_employee());
             drawNewAct(new FieldAct(R.layout.custom_block_name, R.id.textName, ("Выдано: " + str), R.id.textTime, formatForDate.format(act.getDateTimeStop()), R.id.status, 2000 + act.getId()));
         }
     }
@@ -155,29 +174,6 @@ public class MainActivity extends ActivitySet {
         workplaceElements.add(view);
         workplace.addView(view);
     }
-
-    private void drawPumpActs() {
-        Date dateStopInLastAct = new Date(100000);
-
-        drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Насосы"));
-
-        for (PumpAct act : pumpActs) {
-            CheckAndDrawFields(act, dateStopInLastAct);
-            dateStopInLastAct = act.getDateTimeStop();
-        }
-    }
-
-    private void drawDocActs() {
-        Date dateStopInLastAct = new Date(100000);
-
-        drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Насосы"));
-
-        for (DocAct act : docActs) {
-            CheckAndDrawFields(act, dateStopInLastAct);
-            dateStopInLastAct = act.getDateTimeStop();
-        }
-    }
-
     @TestOnly
     private void createTestData() {
 
@@ -604,8 +600,8 @@ public class MainActivity extends ActivitySet {
                     else if(dir.getName().equals("ЦППД")) CPPD = dir.getId();
                 }
                 System.out.println(departments.size()+": 1");
-                departmentObjects = (ArrayList<departmentObject>) in.readObject();
-                System.out.println(departmentObjects.size()+": 2");
+                DepartmentObjects = (ArrayList<DepartmentObject>) in.readObject();
+                System.out.println(DepartmentObjects.size()+": 2");
                 employees = (ArrayList<Employee>) in.readObject();
                 System.out.println(employees.size()+": 3");
                 event_types = (ArrayList<Dir>) in.readObject();
@@ -681,7 +677,7 @@ public class MainActivity extends ActivitySet {
         Stypes_leak = new ArrayList<>();
 
         for (Dir dir: departments) Sdepartments.add(dir.getName());
-        for (departmentObject dir: departmentObjects) Sdepartment_objects.add(dir.getName());
+        for (DepartmentObject dir: DepartmentObjects) Sdepartment_objects.add(dir.getName());
         for (Dir dir: event_types) Sevent_types.add(dir.getName());
         for (Dir dir: event_statuses) Sevent_statuses.add(dir.getName());
         for (Dir dir: marks) Smarks.add(dir.getName());
