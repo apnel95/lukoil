@@ -154,7 +154,7 @@ public class List_acts extends GeneralClass {
                 ImageView status = (ImageView) view1.findViewById(R.id.status);
                 view1.setTag((int) cnt);
                 if (act.getId_status() == STATUS_READY) status.setImageResource(R.drawable.job_green);
-                textName.setText(act.getName(trubs)+"");
+                textName.setText(act.getName(pipes)+"");
                 SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                 textTime.setText(formatForDate.format(nowDate));
                 workplaceElements.add(view1);

@@ -1,12 +1,22 @@
 package com.example.lukoil;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
-public class ActivitySet extends GeneralClass {
+import java.util.List;
 
+public class ActivitySet extends GeneralClass {
+    Drawable topHome, topTrub, topPump, topDoc, topMenu;
+    boolean statusMenu;
+    LinearLayout workplace, linearLayoutMenu;
+    List<View> workplaceElements;
+    View viewUpp, viewBottom;
+    TextView topTitleActivity;
+    TextView home, trub, pump, doc, menu, plus;
 
     public void setActivityData(Activity activity){
         setContentView(activity.idLayout);
@@ -15,7 +25,7 @@ public class ActivitySet extends GeneralClass {
         topTitleActivity.setText(activity.getTopTitle());
     }
 
-    public void drawActivity(int i) {
+    public void initializationMainActivity(Activity activity) {
         super.onStart();
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         statusMenu = false;
@@ -25,11 +35,11 @@ public class ActivitySet extends GeneralClass {
         viewBottom = findViewById(R.id.bottom_home);
         topTitleActivity = viewUpp.findViewById(R.id.textName);
 
-        home = (TextView) viewBottom.findViewById(R.id.buttonHome);
-        trub = (TextView) viewBottom.findViewById(R.id.buttonTrub);
-        pump = (TextView) viewBottom.findViewById(R.id.buttonPump);
-        doc = (TextView) viewBottom.findViewById(R.id.buttonDoc);
-        menu = (TextView) viewBottom.findViewById(R.id.buttonMenu);
+        home = viewBottom.findViewById(R.id.buttonHome);
+        trub = viewBottom.findViewById(R.id.buttonTrub);
+        pump = viewBottom.findViewById(R.id.buttonPump);
+        doc = viewBottom.findViewById(R.id.buttonDoc);
+        menu = viewBottom.findViewById(R.id.buttonMenu);
 
         topHome = getResources().getDrawable(R.drawable.home);
         topTrub = getResources().getDrawable(R.drawable.trub);
@@ -37,15 +47,17 @@ public class ActivitySet extends GeneralClass {
         topDoc = getResources().getDrawable(R.drawable.doc);
         topMenu = getResources().getDrawable(R.drawable.menu);
 
-        if (i == 0) topHome = getResources().getDrawable(R.drawable.home_red);
-        else if (i == 1) topTrub = getResources().getDrawable(R.drawable.trub_red);
-        else if (i == 2) topPump = getResources().getDrawable(R.drawable.pump_red);
-        else if (i == 3) topDoc = getResources().getDrawable(R.drawable.doc_red);
+        if (activity.getIdLayout() == ID_ACTIVITY_HOME) topHome = getResources().getDrawable(R.drawable.home_red);
+        else if (activity.getIdLayout() == ID_ACTIVITY_PIPE) topTrub = getResources().getDrawable(R.drawable.trub_red);
+        else if (activity.getIdLayout() == ID_ACTIVITY_PUMP) topPump = getResources().getDrawable(R.drawable.pump_red);
+        else if (activity.getIdLayout() == ID_ACTIVITY_DOC) topDoc = getResources().getDrawable(R.drawable.doc_red);
 
         home.setCompoundDrawablesWithIntrinsicBounds(null, topHome, null, null);
         trub.setCompoundDrawablesWithIntrinsicBounds(null, topTrub, null, null);
         pump.setCompoundDrawablesWithIntrinsicBounds(null, topPump, null, null);
         doc.setCompoundDrawablesWithIntrinsicBounds(null, topDoc, null, null);
         menu.setCompoundDrawablesWithIntrinsicBounds(null, topMenu, null, null);
+
+        setActivityData(activity);
     }
 }

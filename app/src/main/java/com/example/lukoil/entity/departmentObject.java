@@ -1,14 +1,12 @@
 package com.example.lukoil.entity;
 
-import static com.example.lukoil.GeneralClass.posts;
-
 import java.io.Serializable;
 
-public class Department_object implements Serializable {
+public class departmentObject implements Serializable {
     int id, id_dep;
     String name;
 
-    public Department_object() {
+    public departmentObject() {
     }
 
     public int getId_dep() {
@@ -35,7 +33,7 @@ public class Department_object implements Serializable {
         this.id = id;
     }
 
-    public Department_object(int id, int id_dep, String name) {
+    public departmentObject(int id, int id_dep, String name) {
         this.id = id;
         this.id_dep = id_dep;
         this.name = name;

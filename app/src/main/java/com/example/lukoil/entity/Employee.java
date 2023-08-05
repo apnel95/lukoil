@@ -3,10 +3,9 @@ package com.example.lukoil.entity;
 import static com.example.lukoil.GeneralClass.posts;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public class Employee implements Serializable {
-    int id, id_post, id_status;
+    int id, idPost, idStatus;
     String FIO;
 
     public int getId() {
@@ -17,20 +16,20 @@ public class Employee implements Serializable {
         this.id = id;
     }
 
-    public int getId_post() {
-        return id_post;
+    public int getIdPost() {
+        return idPost;
     }
 
-    public void setId_post(int id_post) {
-        this.id_post = id_post;
+    public void setIdPost(int idPost) {
+        this.idPost = idPost;
     }
 
-    public int getId_status() {
-        return id_status;
+    public int getIdStatus() {
+        return idStatus;
     }
 
-    public void setId_status(int id_status) {
-        this.id_status = id_status;
+    public void setIdStatus(int idStatus) {
+        this.idStatus = idStatus;
     }
 
     public String getFIO() {
@@ -44,15 +43,15 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(int id, int id_post, int id_status, String FIO) {
+    public Employee(int id, int idPost, int idStatus, String FIO) {
         this.id = id;
-        this.id_post = id_post;
-        this.id_status = id_status;
+        this.idPost = idPost;
+        this.idStatus = idStatus;
         this.FIO = FIO;
     }
 
     @Override
     public String toString(){
-        return (getFIO()+", "+posts.get(posts.indexOf(getId_post())).getName());
+        return (getFIO()+", "+posts.get(posts.indexOf(getIdPost())).getName());
     }
 }

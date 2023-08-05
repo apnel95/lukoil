@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.PumpAct;
 import com.example.lukoil.entity.PipeAct;
-import com.example.lukoil.entity.Department_object;
+import com.example.lukoil.entity.departmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
@@ -41,9 +41,9 @@ public class GeneralClass extends AppCompatActivity {
     public static ArrayList<PipeAct> pipeActs; public static ArrayList<PumpAct> pumpActs; public static ArrayList<DocAct> docActs;
     public static ArrayList<Event_date_time> this_events; public static ArrayList<Work> this_works; public static ArrayList<Remark> this_remarks; public static ArrayList<Integer> this_works_pump;
 
-    public static ArrayList<Dir> departments; public static ArrayList<Department_object> department_objects; public static ArrayList<Employee> employees;
+    public static ArrayList<Dir> departments; public static ArrayList<departmentObject> departmentObjects; public static ArrayList<Employee> employees;
     public static ArrayList<Dir> event_types; public static ArrayList<Dir> event_statuses; public static ArrayList<Dir> marks;
-    public static ArrayList<Dir> trubs; public static ArrayList<Dir> positions; public static ArrayList<Dir> posts;
+    public static ArrayList<Dir> pipes; public static ArrayList<Dir> positions; public static ArrayList<Dir> posts;
     public static ArrayList<Dir> reasons_stop_pump; public static ArrayList<Dir> types_coating; public static ArrayList<Dir> types_work_pump;
     public static ArrayList<Dir> statuses_employee; public static ArrayList<Dir> statuses_act; public static ArrayList<Dir> substances;
     public static ArrayList<Dir> types_leak; public static ArrayList<Dir> pumps; //= positions
@@ -60,7 +60,7 @@ public class GeneralClass extends AppCompatActivity {
 
     public static int ID_ACTIVITY_HOME = 0, ID_ACTIVITY_PIPE = 1, ID_ACTIVITY_PUMP = 2, ID_ACTIVITY_DOC = 3, ID_ACTIVITY_PIPE_PLUS = 11, ID_ACTIVITY_PUMP_PLUS = 12, ID_ACTIVITY_DOC_PLUS = 13;
     public static int idDateTimeStopWork = 2, idDateTimeStopWorkDoc = 3;
-    public static boolean AutoUpdateDir = true;
+    public static boolean AUTO_UPDATE_DIRS = true;
     LinearLayout workplace, linearLayoutMenu;
     List<View> workplaceElements;
     EditText dateTime;

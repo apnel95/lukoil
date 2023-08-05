@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.example.lukoil.entity.DocAct;
 import com.example.lukoil.entity.PumpAct;
 import com.example.lukoil.entity.PipeAct;
-import com.example.lukoil.entity.Department_object;
+import com.example.lukoil.entity.departmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.Event_date_time;
@@ -43,14 +43,13 @@ public class MainActivity extends ActivitySet {
         super.onCreate(savedInstanceState);
 
         Activity activity = new Activity(ID_ACTIVITY_HOME, context, R.layout.home, findViewById(R.id.layoutBlock), new ArrayList<View>(), findViewById(R.id.layout_menu), "Главная");
-        setActivityData(activity);
-        drawActivity(activity.getIdLayout());
+        initializationMainActivity(activity);
 
         updateDirsAndActs();
     }
 
     private void updateDirsAndActs() {
-        getDirs();
+        if (AUTO_UPDATE_DIRS) getDirs();
         getActs();
         CorrectionDataActs();
         drawActs();
@@ -69,9 +68,13 @@ public class MainActivity extends ActivitySet {
     }
 
     private void getActs() {
-        getPipeActs();
-        getPupmpActs();
-        getDocActs();
+        ActsOnServer actsOnServer = new ActsOnServer();
+        actsOnServer.getPipeActsMin();
+        pipeActs = actsOnServer.getActs();
+        actsOnServer.getPumpActsMin();
+        pumpActs = actsOnServer.getActs();
+        actsOnServer.getDocActsMin();
+        docActs = actsOnServer.getActs();
     }
 
     private void drawActs() {
@@ -98,18 +101,45 @@ public class MainActivity extends ActivitySet {
             if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
                 drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
             }
-            drawNewAct(new FieldAct(R.layout.custom_block_name, R.id.textName, act.getName(trubs), R.id.textTime, formatForDate.format(act.getDateTimeStop()), R.id.status, 1000 + act.getId()));
+            drawNewAct(new FieldAct(R.layout.custom_block_name, R.id.textName, act.getName(pipes), R.id.textTime, formatForDate.format(act.getDateTimeStop()), R.id.status, 1000 + act.getId()));
         }
+    }
+    private void CheckAndDrawFields(PumpAct act, Date dateStopInLastAct) {
+        SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
+        if ((act.getId_status() == ACT_STATUS_JOB)) {
+            if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
+                drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
+            }
+            drawNewAct(new FieldAct(R.layout.custom_block_name, R.id.textName, act.getName(pumps), R.id.textTime, formatForDate.format(act.getDateTimeStop()), R.id.status, 2000 + act.getId()));
+        }
+    }
+    private void CheckAndDrawFields(DocAct act, Date dateStopInLastAct) {
+        SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
+        if ((act.getId_status() == ACT_STATUS_JOB)) {
+            if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
+                drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
+            }
+            String str = getNameById(employees, act.getId_employee());
+            drawNewAct(new FieldAct(R.layout.custom_block_name, R.id.textName, ("Выдано: " + str), R.id.textTime, formatForDate.format(act.getDateTimeStop()), R.id.status, 2000 + act.getId()));
+        }
+    }
+
+    private String getNameById(ArrayList<Employee> employees, int idEmployee) {
+        for (Employee emp: employees)
+            if(emp.getId() == idEmployee)
+                return emp.getFIO();
+        System.out.println("Не найден id "+ idEmployee + " в списке employees");
+        return "";
     }
 
     private void drawNewAct(FieldAct fieldAct) {
         final View view = getLayoutInflater().inflate(fieldAct.getIdView(), null);
         TextView textName = view.findViewById(fieldAct.getIdTextView());
-        TextView textTime = view.findViewById(fieldAct.getIdSecondTextView());
+        TextView textSecond = view.findViewById(fieldAct.getIdSecondTextView());
         ImageView status = view.findViewById(fieldAct.getIdStatus());
         view.setTag(fieldAct.getTag());
         textName.setText(fieldAct.getTextForTextView()+"");
-        textTime.setText(fieldAct.getTextForSecondTextView());
+        textSecond.setText(fieldAct.getTextForSecondTextView());
         workplaceElements.add(view);
         workplace.addView(view);
     }
@@ -127,10 +157,25 @@ public class MainActivity extends ActivitySet {
     }
 
     private void drawPumpActs() {
+        Date dateStopInLastAct = new Date(100000);
 
+        drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Насосы"));
+
+        for (PumpAct act : pumpActs) {
+            CheckAndDrawFields(act, dateStopInLastAct);
+            dateStopInLastAct = act.getDateTimeStop();
+        }
     }
 
     private void drawDocActs() {
+        Date dateStopInLastAct = new Date(100000);
+
+        drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, "Насосы"));
+
+        for (DocAct act : docActs) {
+            CheckAndDrawFields(act, dateStopInLastAct);
+            dateStopInLastAct = act.getDateTimeStop();
+        }
     }
 
     @TestOnly
@@ -211,7 +256,7 @@ public class MainActivity extends ActivitySet {
                     TextView textName = (TextView) view1.findViewById(R.id.textName);
                     ImageView status = (ImageView) view1.findViewById(R.id.status);
                     view1.setTag((int) 1000 + act.getId());
-                    textName.setText(act.getName(trubs)+"");
+                    textName.setText(act.getName(pipes)+"");
                     SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                     textTime.setText(formatForDate.format(nowDate));
                     workplaceElements.add(view1);
@@ -282,7 +327,7 @@ public class MainActivity extends ActivitySet {
                     ImageView status = (ImageView) view1.findViewById(R.id.status);
                     view1.setTag((int) 3000 + act.getId());
                     String str = "";
-                    if (trubs != null) for (Employee emp: employees) if(emp.getId() == act.getId_employee()){str = emp.getFIO(); break;}
+                    if (pipes != null) for (Employee emp: employees) if(emp.getId() == act.getId_employee()){str = emp.getFIO(); break;}
                     textName.setText("Выдано: " + str);
                     SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                     textTime.setText(formatForDate.format(nowDate));
@@ -559,8 +604,8 @@ public class MainActivity extends ActivitySet {
                     else if(dir.getName().equals("ЦППД")) CPPD = dir.getId();
                 }
                 System.out.println(departments.size()+": 1");
-                department_objects = (ArrayList<Department_object>) in.readObject();
-                System.out.println(department_objects.size()+": 2");
+                departmentObjects = (ArrayList<departmentObject>) in.readObject();
+                System.out.println(departmentObjects.size()+": 2");
                 employees = (ArrayList<Employee>) in.readObject();
                 System.out.println(employees.size()+": 3");
                 event_types = (ArrayList<Dir>) in.readObject();
@@ -574,8 +619,8 @@ public class MainActivity extends ActivitySet {
                 System.out.println(event_statuses.size()+": 5");
                 marks = (ArrayList<Dir>) in.readObject();
                 System.out.println(marks.size()+": 6");
-                trubs = (ArrayList<Dir>) in.readObject();
-                System.out.println(trubs.size()+": 7");
+                pipes = (ArrayList<Dir>) in.readObject();
+                System.out.println(pipes.size()+": 7");
 //              pumps = (ArrayList<Dir>) in.readObject();
 //              System.out.println(pumps.size()+": 8");
                 positions = (ArrayList<Dir>) in.readObject();
@@ -636,13 +681,13 @@ public class MainActivity extends ActivitySet {
         Stypes_leak = new ArrayList<>();
 
         for (Dir dir: departments) Sdepartments.add(dir.getName());
-        for (Department_object dir: department_objects) Sdepartment_objects.add(dir.getName());
+        for (departmentObject dir: departmentObjects) Sdepartment_objects.add(dir.getName());
         for (Dir dir: event_types) Sevent_types.add(dir.getName());
         for (Dir dir: event_statuses) Sevent_statuses.add(dir.getName());
         for (Dir dir: marks) Smarks.add(dir.getName());
-        for (Dir dir: trubs) Strubs.add(dir.getName());
+        for (Dir dir: pipes) Strubs.add(dir.getName());
         for (Dir dir: posts) Sposts.add(dir.getName());
-        for (Employee emp: employees) for (Dir dir: posts) if(dir.getId() == emp.getId_post()) Semployees.add(emp.getFIO()+", "+dir.getName());
+        for (Employee emp: employees) for (Dir dir: posts) if(dir.getId() == emp.getIdPost()) Semployees.add(emp.getFIO()+", "+dir.getName());
         for (Dir dir: reasons_stop_pump) Sreasons_stop_pump.add(dir.getName());
         for (Dir dir: types_coating) Stypes_coating.add(dir.getName());
         for (Dir dir: types_work_pump) Stypes_work_pump.add(dir.getName());

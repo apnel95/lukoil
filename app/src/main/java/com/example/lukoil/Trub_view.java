@@ -65,7 +65,7 @@ public class Trub_view extends Create_change_view_act {
         events.setText(textForEvents);
 
         int cnt=0;
-        for(Dir dir: trubs){
+        for(Dir dir: pipes){
             if(dir.getId() == act.getId_trub()){
                 name.setText(dir.getName());
                 break;

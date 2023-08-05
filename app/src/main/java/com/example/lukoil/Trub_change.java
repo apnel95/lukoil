@@ -97,7 +97,7 @@ public class Trub_change extends Create_change_view_act {
         status.setAdapter(statusA);
 
         int cnt=0;
-        for(Dir dir: trubs){
+        for(Dir dir: pipes){
             if(dir.getId() == act.getId_trub()){
                 name.setSelection(cnt);
                 break;
@@ -173,7 +173,7 @@ public class Trub_change extends Create_change_view_act {
         finish();
     }
     private void getIds() {
-        for (Dir dir: trubs) if(dir.getName() == name.getSelectedItem()) act.setId_trub(dir.getId());
+        for (Dir dir: pipes) if(dir.getName() == name.getSelectedItem()) act.setId_trub(dir.getId());
         for (Dir dir: types_coating) if(dir.getName().equals(coating.getSelectedItem().toString())) act.setId_type_coating(dir.getId());
         for (Dir dir: types_leak) if(dir.getName().equals(leak_type.getSelectedItem().toString())) act.setId_leak_type(dir.getId());
         for (Dir dir: substances) if(dir.getName().equals(subst.getSelectedItem().toString())) act.setId_substance(dir.getId());
