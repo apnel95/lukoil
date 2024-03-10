@@ -10,10 +10,10 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Lukoil"
+        android:theme="@style/Theme.Lukoil1"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,83 +22,80 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Trub_acts"
+            android:name=".activity.pipe.PipeActs"
             android:label="trub_acts">
         </activity>
         <activity
-            android:name=".Pump_acts"
+            android:name=".activity.pump.PumpActs"
             android:label="pump_acts">
         </activity>
         <activity
-            android:name=".Doc_acts"
+            android:name=".activity.doc.DocActs"
             android:label="doc_acts">
         </activity>
         <activity
-            android:name=".Remark_view"
+            android:name=".activity.remark.RemarkView"
             android:label="remak_view">
         </activity>
         <activity
-            android:name=".Trub_view"
+            android:name=".activity.pipe.PipeView"
             android:label="trub_view">
         </activity>
         <activity
-            android:name=".Trub_change"
+            android:name=".activity.pipe.PipeChange"
             android:label="trub_change">
         </activity>
         <activity
-            android:name=".Trub_create"
+            android:name=".activity.pipe.PipeCreate"
             android:label="trub_create">
         </activity>
         <activity
-            android:name=".Event_date_time_change"
+            android:name=".activity.event.EventDateTimeChange"
             android:label="event_date_time_change">
         </activity>
         <activity
-            android:name=".Event_date_time_create"
+            android:name=".activity.event.EventDateTimeCreate"
             android:label="event_date_time_create">
         </activity>
         <activity
-            android:name=".Doc_view"
+            android:name=".activity.doc.DocView"
             android:label="doc_view">
         </activity>
         <activity
-            android:name=".Doc_change"
+            android:name=".activity.doc.DocChange"
             android:label="doc_change">
         </activity>
         <activity
-            android:name=".Pump_view"
+            android:name=".activity.pump.PumpView"
             android:label="pump_view">
         </activity>
         <activity
-            android:name=".Pump_create"
+            android:name=".activity.pump.PumpCreate"
             android:label="pump_create">
         </activity>
         <activity
-            android:name=".Pump_change"
+            android:name=".activity.pump.PumpChange"
             android:label="pump_change">
         </activity>
         <activity
-            android:name=".Doc_create"
+            android:name=".activity.doc.DocCreate"
             android:label="doc_create">
         </activity>
+
         <activity
-            android:name=".Remark_change"
-            android:label="remark_change">
-        </activity>
-        <activity
-            android:name=".Work_pump_change"
+            android:name=".activity.workPump.WorkPumpChange"
             android:label="work_pump_change">
         </activity>
         <activity
-            android:name=".Work_change"
+            android:name=".activity.work.WorkChange"
             android:label="work_change">
         </activity>
         <activity
-            android:name=".Work_create"
+            android:name=".activity.work.WorkCreate"
             android:label="work_create">
         </activity>
         <activity
-            android:name=".Remark_create"
+            android:name=".activity.remark.RemarkCreate"
             android:label="remark_create">
         </activity>
     </application>

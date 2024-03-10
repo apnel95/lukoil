@@ -1,41 +1,15 @@
 package com.example.lukoil;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.lukoil.entity.DocAct;
-import com.example.lukoil.entity.PumpAct;
-import com.example.lukoil.entity.PipeAct;
-import com.example.lukoil.entity.DepartmentObject;
-import com.example.lukoil.entity.Dir;
-import com.example.lukoil.entity.Employee;
-import com.example.lukoil.entity.Event_date_time;
-import com.example.lukoil.entity.Remark;
-import com.example.lukoil.entity.Work;
+import com.example.lukoil.entity.act.ActDoc;
+import com.example.lukoil.entity.act.ActPump;
+import com.example.lukoil.entity.act.ActPipe;
+import com.example.lukoil.server.Dictionary;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.net.Socket;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 public class GeneralClass extends AppCompatActivity {
 
@@ -48,9 +22,9 @@ public class GeneralClass extends AppCompatActivity {
     public static int PORT = 29170;
     public static int upPORT = 29171;
     public static String HOST = "192.168.0.16";
-    public ArrayList<PumpAct> pumpActs;
-    public ArrayList<DocAct> docActs;
-    public ArrayList<PipeAct> pipeActs;
+    public ArrayList<ActPump> pumpActs;
+    public ArrayList<ActDoc> docActs;
+    public ArrayList<ActPipe> pipeActs;
 
     Dictionary dictionary;
 

@@ -2,6 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Lukoil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
+
+
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
@@ -11,6 +13,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
     </style>
     <style name="custom_button_1" parent="@android:style/Widget.Button">
@@ -26,4 +29,5 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@drawable/custom_button_1_click</item>
     </style>
+
 </resources>
