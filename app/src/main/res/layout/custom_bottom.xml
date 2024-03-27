@@ -8,7 +8,7 @@
     android:id="@+id/bottom">
 
     <TextView
-        android:id="@+id/buttonHome"
+        android:id="@+id/buttonHome1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -19,14 +19,14 @@
         android:clickable="true"/>
 
     <TextView
-        android:id="@+id/buttonTrub"
+        android:id="@+id/buttonPipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:drawableTop="@drawable/trub"
+        android:drawableTop="@drawable/pipe"
         android:gravity="center"
         android:textSize="8sp"
-        android:onClick="toTrub"
+        android:onClick="toPipe"
         android:clickable="true"/>
 
     <TextView
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:drawableTop="@drawable/b_new"
+        android:drawableTop="@drawable/plus"
         android:gravity="center"
         android:textSize="8sp"
         android:onClick="toPlus"

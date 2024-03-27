@@ -1,5 +1,14 @@
 package com.example.lukoil.activity.pump;
 
+import static com.example.lukoil.ListData.actStatuses;
+import static com.example.lukoil.ListData.pumpMarks;
+import static com.example.lukoil.ListData.pumpPositions;
+import static com.example.lukoil.ListData.pumpStopReasons;
+import static com.example.lukoil.ListData.sActStatuses;
+import static com.example.lukoil.ListData.sPumpMarks;
+import static com.example.lukoil.ListData.sPumpPositions;
+import static com.example.lukoil.ListData.sPumpStopReasons;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,7 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.lukoil.activity.CreateChangeViewAct;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.General;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.Dir;
@@ -21,25 +32,18 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PumpCreate extends CreateChangeViewAct {
+public class PumpCreate extends GeneralCreateChangeViewAct {
     ActPump act;
     EditText note;
     Spinner name, mark, reason_stop, status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        idForm = 12;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pump_create);
-        context = this;
         act = new ActPump();
 
-        workplaceElements = new ArrayList<View>();
-        workplace = findViewById(R.id.layoutPhoto);
-
-        onStartNotHome(idForm);
-
-        topTitleActivity.setText("Создание акта");
+        Activity activity = new Activity(General.ID_ACTIVITY_PUMP_PLUS, this, R.layout.pump_create, R.id.layoutPhoto, new ArrayList<View>(), R.id.layout_menu, "Создание акта");
+        super.onStartList(activity);
 
         name = findViewById(R.id.name);
         mark = findViewById(R.id.mark);
@@ -47,19 +51,19 @@ public class PumpCreate extends CreateChangeViewAct {
         note = findViewById(R.id.note);
         status = findViewById(R.id.status);
 
-        ArrayAdapter<String> nameA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Spositions);
+        ArrayAdapter<String> nameA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPumpPositions);
         nameA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         name.setAdapter(nameA);
 
-        ArrayAdapter<String> markA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Smarks);
+        ArrayAdapter<String> markA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPumpMarks);
         markA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mark.setAdapter(markA);
 
-        ArrayAdapter<String> reason_stopA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Sreasons_stop_pump);
+        ArrayAdapter<String> reason_stopA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPumpStopReasons);
         reason_stopA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         reason_stop.setAdapter(reason_stopA);
 
-        ArrayAdapter<String> statusA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Sstatuses_act);
+        ArrayAdapter<String> statusA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sActStatuses);
         statusA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         status.setAdapter(statusA);
     }
@@ -76,10 +80,10 @@ public class PumpCreate extends CreateChangeViewAct {
         finish();
     }
     private void getIds() {
-        for (Dir dir: positions) if(dir.getName() == name.getSelectedItem()) act.setId_pump(dir.getId());
-        for (Dir dir: marks) if(dir.getName().equals(mark.getSelectedItem().toString())) act.setId_mark(dir.getId());
-        for (Dir dir: reasons_stop_pump) if(dir.getName().equals(reason_stop.getSelectedItem().toString())) act.setId_reason_stop(dir.getId());
-        for (Dir dir: statuses_act) if(dir.getName().equals(status.getSelectedItem().toString())) act.setId_status(dir.getId());
+        for (Dir dir: pumpPositions) if(dir.getName() == name.getSelectedItem()) act.setId_pump(dir.getId());
+        for (Dir dir: pumpMarks) if(dir.getName().equals(mark.getSelectedItem().toString())) act.setId_mark(dir.getId());
+        for (Dir dir: pumpStopReasons) if(dir.getName().equals(reason_stop.getSelectedItem().toString())) act.setId_reason_stop(dir.getId());
+        for (Dir dir: actStatuses) if(dir.getName().equals(status.getSelectedItem().toString())) act.setIdStatus(dir.getId());
     }
     private void getNewActPump() {
         Thread thread = new Thread(() -> {
@@ -91,7 +95,7 @@ public class PumpCreate extends CreateChangeViewAct {
                 OutputStream outToServer = clientSocket.getOutputStream();
                 outgetboard = new ObjectOutputStream(outToServer);
 
-                upClientSocket = new Socket(HOST, upPORT);
+                upClientSocket = new Socket(HOST, UP_PORT);
                 OutputStream outToUpdateServer = upClientSocket.getOutputStream();
                 ObjectOutputStream outUpdate = new ObjectOutputStream(outToUpdateServer);
 

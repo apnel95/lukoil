@@ -6,12 +6,13 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.lukoil.GeneralClass;
+import com.example.lukoil.activity.Activity;
 import com.example.lukoil.R;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 
 import java.util.ArrayList;
 
-public class WorkPumpChange extends GeneralClass {
+public class WorkPumpChange extends GeneralCreateChangeViewAct {
     View view;
     ArrayList<Integer> works;
 
@@ -22,16 +23,9 @@ public class WorkPumpChange extends GeneralClass {
 
         Bundle arguments = getIntent().getExtras();
         works = (ArrayList<Integer>) arguments.getSerializable(ArrayList.class.getSimpleName());
-        idForm = 4;
 
-        context = this;
-
-        onStartNotHome(idForm);
-
-        workplaceElements = new ArrayList<View>();
-        workplace = (LinearLayout) findViewById(R.id.layoutEvent);
-
-        topTitleActivity.setText("Изменение списка");
+        Activity activity = new Activity(ID_ACTIVITY_EVENT, this, R.layout.remark_change, R.id.layoutEvent, new ArrayList<View>(), R.id.layout_menu, "Изменение списка");
+        super.onStartList(activity);
     }
 
     @Override
@@ -42,24 +36,24 @@ public class WorkPumpChange extends GeneralClass {
     }
 
     private void drawEvents() {
-        workplace.removeAllViews();
-        workplaceElements.clear();
+        WORKPLACE.removeAllViews();
+        WORK_PLACE_ELEMENTS.clear();
         int cnt = 0;
         for (Integer wrk: works) {
             view = getLayoutInflater().inflate(R.layout.custom_event_date_time_change, null);
             TextView textName = (TextView) view.findViewById(R.id.textName);
             textName.setText(String.valueOf(wrk));
             view.setTag((int)wrk);
-            workplace.addView(view);
-            workplaceElements.add(view);
+            WORKPLACE.addView(view);
+            WORK_PLACE_ELEMENTS.add(view);
             cnt++;
         }
 
     }
     public void toDelete(View v){
         try {
-            workplace.removeView((LinearLayout)v.getParent());
-            workplaceElements.remove((LinearLayout)v.getParent());
+            WORKPLACE.removeView((LinearLayout)v.getParent());
+            WORK_PLACE_ELEMENTS.remove((LinearLayout)v.getParent());
         } catch(IndexOutOfBoundsException ex) {
             ex.printStackTrace();
         }

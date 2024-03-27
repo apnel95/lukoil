@@ -1,14 +1,30 @@
 package com.example.lukoil.activity.pipe;
 
+import static com.example.lukoil.ListData.actStatuses;
+import static com.example.lukoil.ListData.employees;
+import static com.example.lukoil.ListData.pipeCoatingTypes;
+import static com.example.lukoil.ListData.pipeLeakTypes;
+import static com.example.lukoil.ListData.pipeNames;
+import static com.example.lukoil.ListData.pipeSubstances;
+import static com.example.lukoil.ListData.sActStatuses;
+import static com.example.lukoil.ListData.sEmployees;
+import static com.example.lukoil.ListData.sPipeCoatingTypes;
+import static com.example.lukoil.ListData.sPipeLeakTypes;
+import static com.example.lukoil.ListData.sPipeNames;
+import static com.example.lukoil.ListData.sPipeSubstances;
+
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.example.lukoil.activity.CreateChangeViewAct;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.General;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActPipe;
 import com.example.lukoil.entity.Dir;
@@ -24,25 +40,17 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PipeCreate extends CreateChangeViewAct {
+public class PipeCreate extends GeneralCreateChangeViewAct {
     ActPipe act;
     EditText diameter, wall, piketach, leak_parameter, leak_location, area;
     Spinner name, coating, leak_type, subst, who, status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        idForm = 11;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trub_create);
-        context = this;
-        act = new ActPipe();
 
-        workplaceElements = new ArrayList<View>();
-        workplace = findViewById(R.id.layoutPhoto);
-
-        onStartNotHome(idForm);
-
-        topTitleActivity.setText("Создание акта");
+        Activity activity = new Activity(General.ID_ACTIVITY_PIPE_PLUS, this, R.layout.trub_create, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Создание акта");
+        super.onStartList(activity);
 
         name = findViewById(R.id.name);
         diameter = findViewById(R.id.diameter);
@@ -57,27 +65,29 @@ public class PipeCreate extends CreateChangeViewAct {
         subst = findViewById(R.id.subst);
         status = findViewById(R.id.status);
 
-        ArrayAdapter<String> nameA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Strubs);
+        EditText dateTime = findViewById(R.id.dateTime);
+
+        ArrayAdapter<String> nameA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeNames);
         nameA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         name.setAdapter(nameA);
 
-        ArrayAdapter<String> coatingA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Stypes_coating);
+        ArrayAdapter<String> coatingA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeCoatingTypes);
         coatingA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         coating.setAdapter(coatingA);
 
-        ArrayAdapter<String> leak_typeA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Stypes_leak);
+        ArrayAdapter<String> leak_typeA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeLeakTypes);
         leak_typeA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         leak_type.setAdapter(leak_typeA);
 
-        ArrayAdapter<String> substA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Ssubstances);
+        ArrayAdapter<String> substA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeSubstances);
         substA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         subst.setAdapter(substA);
 
-        ArrayAdapter<String> whoA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Semployees);
+        ArrayAdapter<String> whoA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sEmployees);
         whoA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         who.setAdapter(whoA);
 
-        ArrayAdapter<String> statusA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Sstatuses_act);
+        ArrayAdapter<String> statusA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sActStatuses);
         statusA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         status.setAdapter(statusA);
 
@@ -98,18 +108,18 @@ public class PipeCreate extends CreateChangeViewAct {
         act.setLeak_position(Integer.parseInt(leak_location.getText().toString()));
         act.setSpill_area(Double.parseDouble(area.getText().toString()));
         ArrayList<EventDateTime> events = new ArrayList<>();
-        events.add( new EventDateTime(0,0, idDateTimeStopWork, dateAndTime.getTime()));
+        events.add( new EventDateTime(0,0, ID_DATE_TIME_STOP_WORK, dateAndTime.getTime()));
         act.setWorks(events);
         getNewActTrub();
         finish();
     }
 
     private void getIds() {
-        for (Dir dir: pipes) if(dir.getName() == name.getSelectedItem()) act.setId_trub(dir.getId());
-        for (Dir dir: types_coating) if(dir.getName().equals(coating.getSelectedItem().toString())) act.setId_type_coating(dir.getId());
-        for (Dir dir: types_leak) if(dir.getName().equals(leak_type.getSelectedItem().toString())) act.setId_leak_type(dir.getId());
-        for (Dir dir: substances) if(dir.getName().equals(subst.getSelectedItem().toString())) act.setId_substance(dir.getId());
-        for (Dir dir: statuses_act) if(dir.getName().equals(status.getSelectedItem().toString())) act.setId_status(dir.getId());
+        for (Dir dir: pipeNames) if(dir.getName() == name.getSelectedItem()) act.setIdPipe(dir.getId());
+        for (Dir dir: pipeCoatingTypes) if(dir.getName().equals(coating.getSelectedItem().toString())) act.setId_type_coating(dir.getId());
+        for (Dir dir: pipeLeakTypes) if(dir.getName().equals(leak_type.getSelectedItem().toString())) act.setId_leak_type(dir.getId());
+        for (Dir dir: pipeSubstances) if(dir.getName().equals(subst.getSelectedItem().toString())) act.setId_substance(dir.getId());
+        for (Dir dir: actStatuses) if(dir.getName().equals(status.getSelectedItem().toString())) act.setIdStatus(dir.getId());
         for (Employee dir: employees) if(dir.getFIO().equals(who.getSelectedItem().toString().substring(0 , who.getSelectedItem().toString().indexOf(",")))) act.setId_who(dir.getId());
     }
 
@@ -123,7 +133,7 @@ public class PipeCreate extends CreateChangeViewAct {
                 OutputStream outToServer = clientSocket.getOutputStream();
                 outgetboard = new ObjectOutputStream(outToServer);
 
-                upClientSocket = new Socket(HOST, upPORT);
+                upClientSocket = new Socket(HOST, UP_PORT);
                 OutputStream outToUpdateServer = upClientSocket.getOutputStream();
                 ObjectOutputStream outUpdate = new ObjectOutputStream(outToUpdateServer);
 

@@ -1,17 +1,29 @@
 package com.example.lukoil.entity.field;
 
+import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.field.Field;
 
-public class ActField extends Field {
+import java.util.HashMap;
+import java.util.Map;
 
-    protected int idSecondTextView, idStatus, tag;
+public class ActField extends Field {
+    protected int idSecondTextView, idStatus;
+    Dir tag;
     protected String textForSecondTextView;
 
-    public ActField(int idView, int idTextView, String textForTextView, int idSecondTextView, String textForSecondTextView, int idStatus, int tag) {
+    public ActField(int idView, int idTextView, String textForTextView, int idSecondTextView, String textForSecondTextView, int idStatus, Dir tag) {
         super(idView, idTextView, textForTextView);
         this.idSecondTextView = idSecondTextView;
         this.textForSecondTextView = textForSecondTextView;
         this.idStatus = idStatus;
+        this.tag = tag;
+    }
+
+    public Dir getTag() {
+        return tag;
+    }
+
+    public void setTag(Dir tag) {
         this.tag = tag;
     }
 
@@ -21,10 +33,6 @@ public class ActField extends Field {
 
     public int getIdStatus() {
         return idStatus;
-    }
-
-    public int getTag() {
-        return tag;
     }
 
     public String getTextForSecondTextView() {

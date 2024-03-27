@@ -1,8 +1,10 @@
 package com.example.lukoil.server;
 
-import static com.example.lukoil.GeneralClass.OPEN_APPLICATION_NOW;
+import static com.example.lukoil.activity.General.CONTEXT_NOW;
 
 import android.widget.Toast;
+
+import com.example.lukoil.entity.Dictionary;
 
 import java.io.IOException;
 
@@ -10,16 +12,18 @@ public class DirsOnServer extends ServerConnection {
     Dictionary dictionary;
 
     public Dictionary getDirectory(){
+        final Dictionary[] dictionary1 = new Dictionary[1];
         System.out.println("Обновление списков");
         Thread thread = new Thread(() -> {
             tryConnection();
             trySendRequest("GET_ALL_DIRS");
-            getDictionary();
+            dictionary1[0] = getDictionary();
         });
         thread.start();
         tryStopMainThread();
-        Toast toast = Toast.makeText(OPEN_APPLICATION_NOW, "Обновление списков успешно завершено", Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(CONTEXT_NOW, "Обновление списков успешно завершено", Toast.LENGTH_LONG);
         toast.show();
+        return dictionary1[0];
     }
 
     private Dictionary getDictionary() {

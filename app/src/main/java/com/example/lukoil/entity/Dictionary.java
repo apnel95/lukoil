@@ -1,4 +1,4 @@
-package com.example.lukoil.server;
+package com.example.lukoil.entity;
 
 import com.example.lukoil.entity.work.Work;
 import com.example.lukoil.entity.DepartmentObject;

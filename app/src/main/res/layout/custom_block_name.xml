@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:clickable="true"
-    android:onClick="toView">
+    android:onClick="toViewAct">
 
     <TextView
         android:id="@+id/textTime"

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Lukoil" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Lukoil" parent="Theme.AppCompat">
         <!-- Primary brand color. -->
 
 

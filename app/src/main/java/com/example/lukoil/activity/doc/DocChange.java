@@ -1,5 +1,14 @@
 package com.example.lukoil.activity.doc;
 
+import static com.example.lukoil.ListData.actEventTypes;
+import static com.example.lukoil.ListData.actStatuses;
+import static com.example.lukoil.ListData.docDepartmentObjects;
+import static com.example.lukoil.ListData.docDepartments;
+import static com.example.lukoil.ListData.employees;
+import static com.example.lukoil.ListData.sActStatuses;
+import static com.example.lukoil.ListData.sDocDepartments;
+import static com.example.lukoil.ListData.sEmployees;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,7 +19,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.example.lukoil.activity.CreateChangeViewAct;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.activity.event.EventDateTimeChange;
 import com.example.lukoil.R;
 import com.example.lukoil.activity.remark.RemarkChange;
@@ -32,7 +42,7 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DocChange extends CreateChangeViewAct {
+public class DocChange extends GeneralCreateChangeViewAct {
     ActDoc act;
     EditText FIO_sending;
     Spinner struct, object, employee, status;
@@ -43,19 +53,12 @@ public class DocChange extends CreateChangeViewAct {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.doc_change);
-        idForm = 3;
-
-        workplaceElements = new ArrayList<View>();
-        workplace = findViewById(R.id.layoutPhoto);
 
         Bundle arguments = getIntent().getExtras();
         act = (ActDoc) arguments.getSerializable(ActDoc.class.getSimpleName());
-        context = this;
 
-        onStartNotHome(idForm);
-
-        topTitleActivity.setText("Изменение предписания");
+        Activity activity = new Activity(ID_ACTIVITY_DOC, this, R.layout.doc_change, R.id.layoutPhoto, new ArrayList<View>(), R.id.layout_menu, "Изменение предписания");
+        super.onStartList(activity);
 
         struct = findViewById(R.id.struct);
         object = findViewById(R.id.object);
@@ -67,7 +70,7 @@ public class DocChange extends CreateChangeViewAct {
         FIO_sending = findViewById(R.id.FIO_sending);
 
         String textForEvents = "";
-        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getName(event_types) + ": " + DateToText(wrk.getDateTime()) + "\n";
+        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getName(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         String textForWorks = "";
@@ -78,9 +81,9 @@ public class DocChange extends CreateChangeViewAct {
         if (act.getRemarks() != null) for (Remark rmk : act.getRemarks()) textForRemark +=(rmk.getText()) + "\n";
         remarks.setText(textForRemark);
 
-        FIO_sending.setText(String.valueOf(act.getFIO_senging()));
+        FIO_sending.setText(String.valueOf(act.getFIOSending()));
 
-        ArrayAdapter<String> structA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Sdepartments);
+        ArrayAdapter<String> structA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sDocDepartments);
         structA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         struct.setAdapter(structA);
 
@@ -95,19 +98,19 @@ public class DocChange extends CreateChangeViewAct {
         objectA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         object.setAdapter(objectA);
 
-        ArrayAdapter<String> employeeA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Semployees);
+        ArrayAdapter<String> employeeA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sEmployees);
         employeeA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         employee.setAdapter(employeeA);
 
-        ArrayAdapter<String> statusA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, Sstatuses_act);
+        ArrayAdapter<String> statusA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sActStatuses);
         statusA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         status.setAdapter(statusA);
 
         int cnt=0;
-        for(Dir dir: departments){
-            if(dir.getId() == act.getId_department()){
+        for(Dir dir: docDepartments){
+            if(dir.getId() == act.getIdDepartment()){
                 struct.setSelection(cnt);
-                System.out.println(cnt);
+//                System.out.println(cnt);
                 break;
             }
             cnt++;
@@ -115,8 +118,8 @@ public class DocChange extends CreateChangeViewAct {
         setNewString();
 
         cnt=0;
-        for(DepartmentObject dir: DepartmentObjects){
-            if(dir.getId() == act.getId_department_object()){
+        for(DepartmentObject dir: docDepartmentObjects){
+            if(dir.getId() == act.getIdDepartmentObject()){
                 for (String str: new_Sdepartment_objects){
                     if (str.equals(dir.getName())){ object.setSelection(cnt); break;}
                     cnt++;
@@ -126,15 +129,15 @@ public class DocChange extends CreateChangeViewAct {
         }
         cnt=0;
         for(Employee dir: employees){
-            if(dir.getId() == act.getId_employee()){
+            if(dir.getId() == act.getIdEmployee()){
                 employee.setSelection(cnt);
                 break;
             }
             cnt++;
         }
         cnt=0;
-        for(Dir dir: statuses_act){
-            if(dir.getId() == act.getId_status()){
+        for(Dir dir: actStatuses){
+            if(dir.getId() == act.getIdStatus()){
                 status.setSelection(cnt);
                 break;
             }
@@ -148,10 +151,10 @@ public class DocChange extends CreateChangeViewAct {
     }
     private void setNewString() {
         int id = -1;
-        for(Dir dep: departments) if(dep.getName().equals(struct.getSelectedItem().toString())){ id = dep.getId();break;}
+        for(Dir dep: docDepartments) if(dep.getName().equals(struct.getSelectedItem().toString())){ id = dep.getId();break;}
         System.out.println(id);
         new_Sdepartment_objects = new ArrayList<>();
-        for (DepartmentObject dir: DepartmentObjects) if(dir.getId_dep() ==  id) new_Sdepartment_objects.add(dir.getName());
+        for (DepartmentObject dir: docDepartmentObjects) if(dir.getId_dep() ==  id) new_Sdepartment_objects.add(dir.getName());
         System.out.println(new_Sdepartment_objects);
         objectA.clear();
         objectA.addAll(new_Sdepartment_objects);
@@ -203,16 +206,16 @@ public class DocChange extends CreateChangeViewAct {
         getIds();
         act.setFIO_senging(FIO_sending.getText().toString());
         ArrayList<EventDateTime> events1 = new ArrayList<>();
-        events1.add( new EventDateTime(0,0, idDateTimeStopWork, dateAndTime.getTime()));
+        events1.add( new EventDateTime(0,0, ID_DATE_TIME_STOP_WORK, dateAndTime.getTime()));
         act.setEvents(events1);
         updateAct();
         finish();
     }
 
     private void getIds() {
-        for (DepartmentObject dir: DepartmentObjects) if(dir.getName() == object.getSelectedItem()) act.setId_department_object(dir.getId());
-        for (Dir dir: statuses_act) if(dir.getName().equals(status.getSelectedItem().toString())) act.setId_status(dir.getId());
-        for (Employee dir: employees) if(dir.getFIO().equals(employee.getSelectedItem().toString().substring(0 , employee.getSelectedItem().toString().indexOf(",")))) act.setId_employee(dir.getId());
+        for (DepartmentObject dir: docDepartmentObjects) if(dir.getName() == object.getSelectedItem()) act.setIdDepartmentObject(dir.getId());
+        for (Dir dir: actStatuses) if(dir.getName().equals(status.getSelectedItem().toString())) act.setIdStatus(dir.getId());
+        for (Employee dir: employees) if(dir.getFIO().equals(employee.getSelectedItem().toString().substring(0 , employee.getSelectedItem().toString().indexOf(",")))) act.setIdEmployee(dir.getId());
     }
 
     private void updateAct() {
@@ -225,7 +228,7 @@ public class DocChange extends CreateChangeViewAct {
                 OutputStream outToServer = clientSocket.getOutputStream();
                 outgetboard = new ObjectOutputStream(outToServer);
 
-                upClientSocket = new Socket(HOST, upPORT);
+                upClientSocket = new Socket(HOST, UP_PORT);
                 OutputStream outToUpdateServer = upClientSocket.getOutputStream();
                 ObjectOutputStream outUpdate = new ObjectOutputStream(outToUpdateServer);
 

@@ -5,24 +5,24 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.lukoil.activity.CreateChangeViewAct;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.remark.Remark;
 
-public class RemarkCreate extends CreateChangeViewAct {
+import java.util.ArrayList;
+
+public class RemarkCreate extends GeneralCreateChangeViewAct {
     EditText text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.remark_create);
-        idForm = 4;
+
+        Activity activity = new Activity(ID_ACTIVITY_EVENT,this, R.layout.remark_create, R.id.layoutBlock, new ArrayList<View>(), R.id.layout_menu, "Добавление списка");
+        super.onStartList(activity);
 
         text = findViewById(R.id.text);
-        context = this;
-        onStartNotHome(idForm);
-
-        topTitleActivity.setText("Добавление события");
 
     }
     public void toSave(View v){

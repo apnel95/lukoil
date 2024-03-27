@@ -1,37 +1,31 @@
 package com.example.lukoil.activity.event;
 
+import static com.example.lukoil.ListData.actEvents;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.lukoil.GeneralClass;
+import com.example.lukoil.activity.Activity;
 import com.example.lukoil.R;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.entity.event.EventDateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EventDateTimeChange extends GeneralClass {
+public class EventDateTimeChange extends GeneralCreateChangeViewAct {
     View view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.event_date_time_change);
-        
-        idForm = 4;
 
-        context = this;
-
-        onStartNotHome(idForm);
-
-        workplaceElements = new ArrayList<View>();
-        workplace = (LinearLayout) findViewById(R.id.layoutEvent);
-
-        topTitleActivity.setText("Изменение списка");
+        Activity activity = new Activity(4, this, R.layout.event_date_time_change, R.id.layoutEvent, new ArrayList<View>(), R.id.layout_menu, "Изменение списка");
+        super.onStartList(activity);
     }
 
     @Override
@@ -41,10 +35,10 @@ public class EventDateTimeChange extends GeneralClass {
     }
 
     private void drawEvents() {
-        workplace.removeAllViews();
-        workplaceElements.clear();
+        WORKPLACE.removeAllViews();
+        WORK_PLACE_ELEMENTS.clear();
         int cnt = 0;
-        if (this_events != null) for (EventDateTime wrk: this_events) {
+        if (actEvents != null) for (EventDateTime wrk: actEvents) {
             view = getLayoutInflater().inflate(R.layout.custom_event_date_time_change, null);
             TextView textDate = (TextView) view.findViewById(R.id.textDateTime);
             TextView textName = (TextView) view.findViewById(R.id.textName);
@@ -54,16 +48,16 @@ public class EventDateTimeChange extends GeneralClass {
             String date = DateToText(nowDate);
             SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
             textDate.setText(String.valueOf(date+", "+formatForDate.format(nowDate)));
-            workplace.addView(view);
-            workplaceElements.add(view);
+            WORKPLACE.addView(view);
+            WORK_PLACE_ELEMENTS.add(view);
             cnt++;
         }
 
     }
     public void toDelete(View v){
         try {
-            workplace.removeView((LinearLayout)v.getParent());
-            workplaceElements.remove((LinearLayout)v.getParent());
+            WORKPLACE.removeView((LinearLayout)v.getParent());
+            WORK_PLACE_ELEMENTS.remove((LinearLayout)v.getParent());
         } catch(IndexOutOfBoundsException ex) {
             ex.printStackTrace();
         }

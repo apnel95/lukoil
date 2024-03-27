@@ -1,5 +1,9 @@
 package com.example.lukoil.activity.doc;
 
+import static com.example.lukoil.GeneraActList.trim;
+import static com.example.lukoil.ListData.docDepartmentObjects;
+import static com.example.lukoil.ListData.docDepartments;
+import static com.example.lukoil.ListData.employees;
 import static java.lang.Math.pow;
 
 import android.content.Intent;
@@ -12,7 +16,8 @@ import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.lukoil.server.ListActs;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.ListActs;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActDoc;
 import com.example.lukoil.entity.DepartmentObject;
@@ -35,15 +40,14 @@ public class DocActs extends ListActs {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.doc_acts);
-        idForm = 3;
-        context = this;
+
+        Activity activity = new Activity(ID_ACTIVITY_DOC, this, R.layout.doc_acts, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Список предписаний");
+        super.onStartList(activity);
+
         departmentNow = 31;
         departmentWas = 0;
 
-        workplaceElements = new ArrayList<View>();
-        workplace = (LinearLayout) findViewById(R.id.layoutForActs);
-        viewObjects = (LinearLayout) findViewById(R.id.layoutObjects);
+        viewObjects = findViewById(R.id.layoutObjects);
 
         bNH1 = (Button) viewObjects.findViewById(R.id.buttonNH1);
         bNH2 = (Button) viewObjects.findViewById(R.id.buttonNH2);
@@ -63,29 +67,23 @@ public class DocActs extends ListActs {
         linearDepart[3] = viewCPPN;
         linearDepart[4] = viewCPPD;
 
-        onStartThis();
-
-        topTitleActivity.setText("Предписания");
-        changeStyleButton(bToday, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-        changeStyleButton(bJob, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-
-        changeStyleButton(bNH1, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-        changeStyleButton(bNH2, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-        changeStyleButton(bNH3, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-        changeStyleButton(bCPPN, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-        changeStyleButton(bCPPD, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-
-    }
-
-    protected void onStartThis() {
-        super.onStart_list(idForm);
         updateList();
+
+        changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+
+        changeStyleButton(bNH1, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleButton(bNH2, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleButton(bNH3, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleButton(bCPPN, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleButton(bCPPD, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+
     }
     @Override
     public void updateList() {
         for (LinearLayout id : linearDepart){ id.setVisibility(View.GONE); id.removeAllViews();}
-        workplaceElements.clear();
-        drawActs(docActs, (double)0);
+        WORK_PLACE_ELEMENTS.clear();
+//        drawActs(docActs, (double)0);
     }
     @Override
     public void toPlus(View v){
@@ -95,7 +93,7 @@ public class DocActs extends ListActs {
     public void toView(View v){
         Intent Doc_view = new Intent(v.getContext(), DocView.class);
 
-        Doc_view.putExtra(ActDoc.class.getSimpleName(), docActs.get((int)v.getTag()));
+        Doc_view.putExtra(ActDoc.class.getSimpleName(), LIST_ACT_DOC.get((int)v.getTag()));
 
         startActivity(Doc_view);
     }
@@ -106,7 +104,7 @@ public class DocActs extends ListActs {
             departmentNow &=0b11110;
         }
         else{
-            changeStyleButton(bNH1, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
+            changeStyleButton(bNH1, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=1;
         }
         updateList();
@@ -118,7 +116,7 @@ public class DocActs extends ListActs {
             departmentNow &=0b11101;
         }
         else{
-            changeStyleButton(bNH2, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
+            changeStyleButton(bNH2, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=2;
         }
         updateList();
@@ -130,7 +128,7 @@ public class DocActs extends ListActs {
             departmentNow &=0b11011;
         }
         else{
-            changeStyleButton(bNH3, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
+            changeStyleButton(bNH3, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=4;
         }
         updateList();
@@ -142,7 +140,7 @@ public class DocActs extends ListActs {
             departmentNow &=0b10111;
         }
         else{
-            changeStyleButton(bCPPN, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
+            changeStyleButton(bCPPN, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=8;
         }
         updateList();
@@ -154,74 +152,73 @@ public class DocActs extends ListActs {
             departmentNow &=0b01111;
         }
         else{
-            changeStyleButton(bCPPD, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
+            changeStyleButton(bCPPD, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=16;
         }
         updateList();
     }
-
     public void drawActs(ArrayList<ActDoc> acts, double i){
-        for (ActDoc act:acts) if(act.getDate_time_stop() == null) act.setDate_time_stop(new Date());
+        for (ActDoc act:acts) if(act.getDateTimeStop() == null) act.setDateTimeStop(new Date());
         ArrayList<Integer> idObjects = new ArrayList<Integer>();
         departmentWas = 0;
         Collections.sort(acts, new ActDocComparatot());
         Date nowDate = new Date(0,0,1);
         int cnt = 0;
         for (ActDoc act: acts) {
-            int q = (int) pow(2, act.getId_department())/2;
-            if ((statusNow == 2 || statusNow == ((act.getId_status() == ACT_STATUS_JOB)?0:1) || statusNow == ((act.getId_status() == STATUS_READY)?1:0)) && ((timeNow == 3) || ((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 86400000)) || ((timeNow == 1) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 86400000 * 7)) || ((timeNow == 2) && ((long) ((trim(new Date())).getTime() - trim(act.getDate_time_stop()).getTime()) < 2678400000L)))) {
-                if ((act.getId_department() == NH1 && (departmentNow&1)==1) || (act.getId_department() == NH2 && (departmentNow&2)==2) || (act.getId_department() == NH3 && (departmentNow&4)==4) || (act.getId_department() == CPPN && (departmentNow&8)==8) || (act.getId_department() == CPPD && (departmentNow&16)==16)) {
+            int q = (int) pow(2, act.getIdDepartment())/2;
+            if ((statusNow == 2 || statusNow == ((act.getIdStatus() == ACT_STATUS_JOB)?0:1) || statusNow == ((act.getIdStatus() == ACT_STATUS_READY)?1:0)) && ((timeNow == 3) || ((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime()) < 86400000)) || ((timeNow == 1) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime()) < 86400000 * 7)) || ((timeNow == 2) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime()) < 2678400000L)))) {
+                if ((act.getIdDepartment() == NH1 && (departmentNow&1)==1) || (act.getIdDepartment() == NH2 && (departmentNow&2)==2) || (act.getIdDepartment() == NH3 && (departmentNow&4)==4) || (act.getIdDepartment() == CPPN && (departmentNow&8)==8) || (act.getIdDepartment() == CPPD && (departmentNow&16)==16)) {
                     if ((departmentWas & q) == 0) {
                         final View view4 = getLayoutInflater().inflate(R.layout.custom_block_type_name, null);
                         TextView textName1 = (TextView) view4.findViewById(R.id.textName);
                         String str = "";
-                        for (Dir dir : departments)
-                            if (dir.getId() == act.getId_department()) {
+                        for (Dir dir : docDepartments)
+                            if (dir.getId() == act.getIdDepartment()) {
                                 str = dir.getName();
                                 break;
                             }
                         textName1.setText("" + str);
-                        linearDepart[act.getId_department()].setVisibility(View.VISIBLE);
-                        workplaceElements.add(view4);
-                        linearDepart[act.getId_department()].addView(view4);
+                        linearDepart[act.getIdDepartment()].setVisibility(View.VISIBLE);
+                        WORK_PLACE_ELEMENTS.add(view4);
+                        linearDepart[act.getIdDepartment()].addView(view4);
                         departmentWas |= q;
                     }
-                    if(idObjects.contains(act.getId_department()*10000+act.getId_department_object())){
+                    if(idObjects.contains(act.getIdDepartment()*10000+act.getIdDepartmentObject())){
                     }
                     else{
                         final View view5 = getLayoutInflater().inflate(R.layout.custom_block_object, null);
                         TextView textName2 = (TextView) view5.findViewById(R.id.textName1);
                         String str = "";
-                        for (DepartmentObject obj: DepartmentObjects) if(obj.getId() == act.getId_department_object()){str = obj.getName(); break;}
+                        for (DepartmentObject obj: docDepartmentObjects) if(obj.getId() == act.getIdDepartmentObject()){str = obj.getName(); break;}
                         textName2.setText(""+str);
-                        workplaceElements.add(view5);
-                        linearDepart[act.getId_department()].addView(view5);
-                        idObjects.add(act.getId_department()*10000+act.getId_department_object());
+                        WORK_PLACE_ELEMENTS.add(view5);
+                        linearDepart[act.getIdDepartment()].addView(view5);
+                        idObjects.add(act.getIdDepartment()*10000+act.getIdDepartmentObject());
                     }
 
-                    if (trim(act.getDate_time_stop()).equals(trim(nowDate))) {
+                    if (trim(act.getDateTimeStop()).equals(trim(nowDate))) {
                     } else {
                         final View view = getLayoutInflater().inflate(R.layout.custom_block_date, null);
                         TextView textDate = (TextView) view.findViewById(R.id.dateText);
-                        nowDate = act.getDate_time_stop();
+                        nowDate = act.getDateTimeStop();
                         textDate.setText(DateToText(nowDate));
-                        workplaceElements.add(view);
-                        linearDepart[act.getId_department()].addView(view);
+                        WORK_PLACE_ELEMENTS.add(view);
+                        linearDepart[act.getIdDepartment()].addView(view);
                     }
-                    nowDate = act.getDate_time_stop();
+                    nowDate = act.getDateTimeStop();
                     final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
                     TextView textTime = (TextView) view1.findViewById(R.id.textTime);
                     TextView textName = (TextView) view1.findViewById(R.id.textName);
                     ImageView status = (ImageView) view1.findViewById(R.id.status);
                     view1.setTag((int) cnt);
-                    if (act.getId_status() == STATUS_READY) status.setImageResource(R.drawable.job_green);
+                    if (act.getIdStatus() == ACT_STATUS_READY) status.setImageResource(R.drawable.job_green);
                     String str = "";
-                    for (Employee emp: employees) if(emp.getId() == act.getId_employee()){str = emp.getFIO(); break;}
+                    for (Employee emp: employees) if(emp.getId() == act.getIdEmployee()){str = emp.getFIO(); break;}
                     textName.setText("Выдано: " + str);
                     SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
                     textTime.setText(formatForDate.format(nowDate));
-                    workplaceElements.add(view1);
-                    linearDepart[act.getId_department()].addView(view1);
+                    WORK_PLACE_ELEMENTS.add(view1);
+                    linearDepart[act.getIdDepartment()].addView(view1);
                     cnt++;
                 }
             }

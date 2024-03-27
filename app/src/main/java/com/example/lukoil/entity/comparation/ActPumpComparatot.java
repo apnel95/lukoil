@@ -8,6 +8,6 @@ public class ActPumpComparatot implements Comparator<ActPump> {
 
     @Override
     public int compare(ActPump left, ActPump right) {
-        return right.getDate_time_stop().compareTo(left.getDate_time_stop());
+        return right.getDateTimeStop().compareTo(left.getDateTimeStop());
     }
 }

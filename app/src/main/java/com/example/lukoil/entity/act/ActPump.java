@@ -1,6 +1,6 @@
 package com.example.lukoil.entity.act;
 
-import static com.example.lukoil.GeneralClass.idDateTimeStopWork;
+import static com.example.lukoil.activity.General.ID_DATE_TIME_STOP_WORK;
 
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.event.EventDateTime;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ActPump extends Act {
-    int id_pump, id_mark, id_reason_stop, id_status;
+    int id_pump, id_mark, id_reason_stop;
     String note;
 
     public ActPump() {
@@ -26,7 +26,7 @@ public class ActPump extends Act {
     public ActPump(int id, int id_pump, int id_status, Date dateTimeStop) {
         this.id = id;
         this.id_pump = id_pump;
-        this.id_status = id_status;
+        this.idStatus = id_status;
         this.dateTimeStop = dateTimeStop;
     }
 
@@ -34,13 +34,13 @@ public class ActPump extends Act {
         this.id = id;
         this.id_mark = id_mark;
         this.id_reason_stop = id_reason_stop;
-        this.id_status = id_status;
+        this.idStatus = id_status;
         this.note = note;
         this.events = events;
         this.id_pump = id_pump;
         this.works_ready = works_ready;
         for (EventDateTime wrk: events){
-            if (wrk.getId_type_event() == idDateTimeStopWork){
+            if (wrk.getId_type_event() == ID_DATE_TIME_STOP_WORK){
                 this.dateTimeStop = wrk.getDateTime();
                 break;
             }
@@ -58,21 +58,6 @@ public class ActPump extends Act {
     ArrayList<EventDateTime> events;
     ArrayList<Integer> works_ready;
 
-    public int getId() {
-        return id;
-    }
-    public Date getDate_time_stop() {
-        return dateTimeStop;
-    }
-
-    public void setDate_time_stop(Date date_time_stop) {
-        this.dateTimeStop = date_time_stop;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getId_mark() {
         return id_mark;
     }
@@ -87,14 +72,6 @@ public class ActPump extends Act {
 
     public void setId_reason_stop(int id_reason_stop) {
         this.id_reason_stop = id_reason_stop;
-    }
-
-    public int getId_status() {
-        return id_status;
-    }
-
-    public void setId_status(int id_status) {
-        this.id_status = id_status;
     }
 
     public ArrayList<EventDateTime> getEvents() {

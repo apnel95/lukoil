@@ -5,26 +5,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.lukoil.activity.CreateChangeViewAct;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.General;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.work.Work;
 
-public class WorkCreate extends CreateChangeViewAct {
+import java.util.ArrayList;
+
+public class WorkCreate extends GeneralCreateChangeViewAct {
     EditText text, name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.work_create);
-        idForm = 4;
+
+        Activity activity = new Activity(General.ID_ACTIVITY_EVENT, this, R.layout.work_create, R.id.layoutBlock, new ArrayList<View>(), R.id.layout_menu, "Добавление мероприятия");
+        super.onStartList(activity);
+
 
         text = findViewById(R.id.text);
         name = findViewById(R.id.name);
-        context = this;
-        onStartNotHome(idForm);
-
-        topTitleActivity.setText("Добавление мероприятия");
-
+        CONTEXT = this;
     }
     public void toSave(View v){
         Intent intent = new Intent();

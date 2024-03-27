@@ -7,7 +7,9 @@ import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.lukoil.server.ListActs;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.General;
+import com.example.lukoil.activity.ListActs;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActPump;
 
@@ -18,34 +20,23 @@ public class PumpActs extends ListActs {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pump_acts);
-        idForm = 2;
 
-        workplaceElements = new ArrayList<View>();
-        workplace = (LinearLayout) findViewById(R.id.layoutForActs);
+        Activity activity = new Activity(General.ID_ACTIVITY_PUMP, this, R.layout.pump_acts, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Акты - насосы");
+        super.onStartList(activity);
 
-        onStartThis();
+        changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
 
-        context = this;
-
-        topTitleActivity.setText("Акты - насосы");
-        changeStyleButton(bToday, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-        changeStyleButton(bJob, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-
-    }
-    protected void onStartThis() {
-        super.onStart_list(idForm);
-        updateList();
     }
     @Override
     public void updateList() {
-        workplace.removeAllViews();
-        workplaceElements.clear();
-        drawActs(pumpActs, (int)0);
+        WORKPLACE.removeAllViews();
+        WORK_PLACE_ELEMENTS.clear();
+        drawActs(LIST_ACT_PUMP, (int)0);
     }
     public void toView(View v){
         Intent Pump_view = new Intent(v.getContext(), PumpView.class);
-        Pump_view.putExtra(ActPump.class.getSimpleName(), pumpActs.get((int)v.getTag()));
+        Pump_view.putExtra(ActPump.class.getSimpleName(), LIST_ACT_PUMP.get((int)v.getTag()));
         startActivity(Pump_view);
     }
     @Override

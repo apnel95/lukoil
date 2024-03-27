@@ -1,7 +1,7 @@
 package com.example.lukoil.server;
 
-import static com.example.lukoil.GeneralClass.HOST;
-import static com.example.lukoil.GeneralClass.PORT;
+import static com.example.lukoil.activity.General.HOST;
+import static com.example.lukoil.activity.General.PORT;
 
 import java.io.IOException;
 import java.io.InputStream;

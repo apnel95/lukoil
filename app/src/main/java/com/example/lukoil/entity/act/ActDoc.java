@@ -1,6 +1,6 @@
 package com.example.lukoil.entity.act;
 
-import static com.example.lukoil.GeneralClass.idDateTimeStopWorkDoc;
+import static com.example.lukoil.activity.General.ID_DATE_TIME_STOP_WORK_DOC;
 
 import com.example.lukoil.entity.event.EventDateTime;
 import com.example.lukoil.entity.remark.Remark;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ActDoc extends Act {
-    int id_department, id_department_object, id_employee, id_status;
+    int idDepartment, idDepartmentObject, idEmployee, idStatus;
     ArrayList<EventDateTime> events;
     ArrayList<Remark> remarks;
 
@@ -18,79 +18,65 @@ public class ActDoc extends Act {
     String FIO_senging;
 
     public ActDoc() {
+        this.dateTimeStop = new Date();
     }
 
-    public ActDoc(int id, int id_employee, int id_status, Date date_time_stop) {
+    public ActDoc(int id, int idEmployee, int idStatus, Date dateTimeStop) {
         this.id = id;
-        this.id_employee = id_employee;
-        this.id_status = id_status;
-        this.dateTimeStop = date_time_stop;
+        this.idEmployee = idEmployee;
+        this.idStatus = idStatus;
+        this.dateTimeStop = dateTimeStop;
     }
 
-    public ActDoc(int id, int id_department, int id_department_object, int id_employee, int id_status, ArrayList<EventDateTime> events, ArrayList<Remark> remarks, ArrayList<Work> works, String FIO_senging) {
+    public ActDoc(int id, int id_department, int idDepartmentObject, int idEmployee, int idStatus, ArrayList<EventDateTime> events, ArrayList<Remark> remarks, ArrayList<Work> works, String FIO_senging) {
         this.id = id;
-        this.id_department = id_department;
-        this.id_department_object = id_department_object;
-        this.id_employee = id_employee;
-        this.id_status = id_status;
+        this.idDepartment = id_department;
+        this.idDepartmentObject = idDepartmentObject;
+        this.idEmployee = idEmployee;
+        this.idStatus = idStatus;
         this.events = events;
         this.remarks = remarks;
         this.works = works;
         this.FIO_senging = FIO_senging;
+        this.dateTimeStop = new Date();
         for (EventDateTime wrk: events){
-            if (wrk.getId_type_event() ==  idDateTimeStopWorkDoc){
+            if (wrk.getId_type_event() == ID_DATE_TIME_STOP_WORK_DOC){
                 this.dateTimeStop = wrk.getDateTime();
                 break;
             }
         }
     }
 
-    public Date getDate_time_stop() {
-        return dateTimeStop;
+    public int getIdDepartment() {
+        return idDepartment;
     }
 
-    public void setDate_time_stop(Date date_time_stop) {
-        this.dateTimeStop = date_time_stop;
+    public void setIdDepartment(int idDepartment) {
+        this.idDepartment = idDepartment;
     }
 
-    public int getId() {
-        return id;
+    public int getIdDepartmentObject() {
+        return idDepartmentObject;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdDepartmentObject(int idDepartmentObject) {
+        this.idDepartmentObject = idDepartmentObject;
     }
 
-    public int getId_department() {
-        return id_department;
+    public int getIdEmployee() {
+        return idEmployee;
     }
 
-    public void setId_department(int id_department) {
-        this.id_department = id_department;
+    public void setIdEmployee(int idEmployee) {
+        this.idEmployee = idEmployee;
     }
 
-    public int getId_department_object() {
-        return id_department_object;
+    public int getIdStatus() {
+        return idStatus;
     }
 
-    public void setId_department_object(int id_department_object) {
-        this.id_department_object = id_department_object;
-    }
-
-    public int getId_employee() {
-        return id_employee;
-    }
-
-    public void setId_employee(int id_employee) {
-        this.id_employee = id_employee;
-    }
-
-    public int getId_status() {
-        return id_status;
-    }
-
-    public void setId_status(int id_status) {
-        this.id_status = id_status;
+    public void setIdStatus(int idStatus) {
+        this.idStatus = idStatus;
     }
 
     public ArrayList<EventDateTime> getEvents() {
@@ -117,7 +103,7 @@ public class ActDoc extends Act {
         this.works = works;
     }
 
-    public String getFIO_senging() {
+    public String getFIOSending() {
         return FIO_senging;
     }
 

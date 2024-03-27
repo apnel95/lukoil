@@ -7,7 +7,8 @@ import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 
-import com.example.lukoil.server.ListActs;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.ListActs;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActPipe;
 
@@ -18,35 +19,25 @@ public class PipeActs extends ListActs {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.trub_acts);
-        idForm = 1;
 
-        workplaceElements = new ArrayList<View>();
-        workplace = (LinearLayout) findViewById(R.id.layoutForActs);
+        Activity activity = new Activity(ID_ACTIVITY_PIPE, this, R.layout.trub_acts, R.id.layoutEvent, new ArrayList<View>(), R.id.layout_menu, "Акты - трубопровод");
+        super.onStartList(activity);
 
-        onStartThis();
+        drawActs(LIST_ACT_PIPE);
 
-        context = this;
+        changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
 
-        topTitleActivity.setText("Акты - трубопровод");
-        changeStyleButton(bToday, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-        changeStyleButton(bJob, ContextCompat.getColor(context, R.color.white), ContextCompat.getDrawable(context, R.drawable.custom_button_1_click));
-
-    }
-        protected void onStartThis() {
-        super.onStart_list(idForm);
-
-        drawActs(pipeActs);
     }
     @Override
     public void updateList() {
-        workplace.removeAllViews();
-        workplaceElements.clear();
-        drawActs(pipeActs);
+        WORKPLACE.removeAllViews();
+        WORK_PLACE_ELEMENTS.clear();
+        drawActs(LIST_ACT_PIPE);
     }
     public void toView(View v){
             Intent Trub_view = new Intent(v.getContext(), PipeView.class);
-            Trub_view.putExtra(ActPipe.class.getSimpleName(), pipeActs.get((int)v.getTag()));
+            Trub_view.putExtra(ActPipe.class.getSimpleName(), LIST_ACT_PIPE.get((int)v.getTag()));
             startActivity(Trub_view);
         }
     @Override

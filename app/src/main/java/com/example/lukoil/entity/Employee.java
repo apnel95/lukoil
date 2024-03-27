@@ -1,7 +1,5 @@
 package com.example.lukoil.entity;
 
-import static com.example.lukoil.GeneralClass.posts;
-
 import java.io.Serializable;
 
 public class Employee implements Serializable {
@@ -50,8 +48,11 @@ public class Employee implements Serializable {
         this.FIO = FIO;
     }
 
+    /*
     @Override
     public String toString(){
         return (getFIO()+", "+posts.get(posts.indexOf(getIdPost())).getName());
     }
+
+     */
 }

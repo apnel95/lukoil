@@ -1,18 +1,27 @@
 package com.example.lukoil.activity.pump;
 
+import static com.example.lukoil.ListData.actStatuses;
+import static com.example.lukoil.ListData.pumpMarks;
+import static com.example.lukoil.ListData.pumpPositions;
+import static com.example.lukoil.ListData.pumpStopReasons;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.lukoil.activity.CreateChangeViewAct;
+import com.example.lukoil.activity.Activity;
+import com.example.lukoil.activity.General;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.event.EventDateTime;
 
-public class PumpView extends CreateChangeViewAct {
+import java.util.ArrayList;
+
+public class PumpView extends GeneralCreateChangeViewAct {
 
     ActPump act;
     EditText note;
@@ -22,14 +31,12 @@ public class PumpView extends CreateChangeViewAct {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.pump_view);
 
         Bundle arguments = getIntent().getExtras();
         act = (ActPump) arguments.getSerializable(ActPump.class.getSimpleName());
-        idForm = 2;
-        context = this;
 
-        onStartNotHome(idForm);
+        Activity activity = new Activity(General.ID_ACTIVITY_PUMP, this, R.layout.pump_view, R.id.layoutBlock, new ArrayList<View>(), R.id.layout_menu, "Просмотр акта");
+        super.onStartList(activity);
 
         name = findViewById(R.id.name);
         mark = findViewById(R.id.mark);
@@ -43,9 +50,7 @@ public class PumpView extends CreateChangeViewAct {
         mark.setText(String.valueOf(act.getId_mark()));
         reason_stop.setText(String.valueOf(act.getId_reason_stop()));
         note.setText(String.valueOf(act.getNote()));
-        status.setText(String.valueOf(act.getId_status()));
-
-        topTitleActivity.setText("Просмотр акта");
+        status.setText(String.valueOf(act.getIdStatus()));
 
         String textForEvents = "";
         for (EventDateTime wrk : act.getEvents()) {
@@ -61,7 +66,7 @@ public class PumpView extends CreateChangeViewAct {
         works.setText(textForWorks);
 
         int cnt=0;
-        for(Dir dir: positions){
+        for(Dir dir: pumpPositions){
             if(dir.getId() == act.getId_pump()){
                 name.setText(dir.getName());
                 break;
@@ -70,7 +75,7 @@ public class PumpView extends CreateChangeViewAct {
         }
 
         cnt=0;
-        for(Dir dir: marks){
+        for(Dir dir: pumpMarks){
             if(dir.getId() == act.getId_mark()){
                 mark.setText(dir.getName());
                 break;
@@ -79,7 +84,7 @@ public class PumpView extends CreateChangeViewAct {
         }
 
         cnt=0;
-        for(Dir dir: reasons_stop_pump){
+        for(Dir dir: pumpStopReasons){
             if(dir.getId() == act.getId_reason_stop()){
                 reason_stop.setText(dir.getName());
                 break;
@@ -87,8 +92,8 @@ public class PumpView extends CreateChangeViewAct {
             cnt++;
         }
         cnt=0;
-        for(Dir dir: statuses_act){
-            if(dir.getId() == act.getId_status()){
+        for(Dir dir: actStatuses){
+            if(dir.getId() == act.getIdStatus()){
                 status.setText(dir.getName());
                 break;
             }

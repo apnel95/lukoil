@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ActPipe extends Act {
-    int id_trub, diameter, wall, id_type_coating, piketash, id_leak_type, leak_parameter, leak_position, id_substance, id_status, id_who;
+    int id_trub, diameter, wall, id_type_coating, piketash, id_leak_type, leak_parameter, leak_position, id_substance, id_who;
     double spill_area;
     ArrayList<EventDateTime> works;
 
-    public ActPipe(int id, int id_trub, int diameter, int wall, int id_type_coating, int piketash, int id_leak_type, int leak_parameter, int leak_position, int id_substance, int id_status, int id_who, double spill_area, ArrayList<EventDateTime> works) {
+    public ActPipe(int id, int id_trub, int diameter, int wall, int id_type_coating, int piketash, int id_leak_type, int leak_parameter, int leak_position, int id_substance, int idStatus, int id_who, double spill_area, ArrayList<EventDateTime> works) {
         this.id = id;
         this.id_trub = id_trub;
         this.diameter = diameter;
@@ -22,11 +22,10 @@ public class ActPipe extends Act {
         this.leak_parameter = leak_parameter;
         this.leak_position = leak_position;
         this.id_substance = id_substance;
-        this.id_status = id_status;
+        this.idStatus = idStatus;
         this.id_who = id_who;
         this.spill_area = spill_area;
         this.works = works;
-        dateTimeStop = new Date(0,0,1);
         for (EventDateTime wrk: works){
             if (wrk.getId_type_event() == 0){
                 this.dateTimeStop = wrk.getDateTime();
@@ -38,14 +37,14 @@ public class ActPipe extends Act {
     public ActPipe(int id, int id_trub, int id_status, Date dateTimeStop) {
         this.id = id;
         this.id_trub = id_trub;
-        this.id_status = id_status;
+        this.idStatus = id_status;
         this.dateTimeStop = dateTimeStop;
     }
 
     public ActPipe(int id, int id_trub, int id_status) {
         this.id = id;
         this.id_trub = id_trub;
-        this.id_status = id_status;
+        this.idStatus = id_status;
     }
 
     public int getId_who() {
@@ -57,13 +56,10 @@ public class ActPipe extends Act {
     }
 
     public ActPipe() {
+        this.dateTimeStop = new Date();
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setId_trub(int id_trub) {
+    public void setIdPipe(int id_trub) {
         this.id_trub = id_trub;
     }
 
@@ -99,9 +95,6 @@ public class ActPipe extends Act {
         this.id_substance = id_substance;
     }
 
-    public void setId_status(int id_status) {
-        this.id_status = id_status;
-    }
 
     public void setSpill_area(double spill_area) {
         this.spill_area = spill_area;
@@ -111,11 +104,7 @@ public class ActPipe extends Act {
         this.works = works;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public int getId_trub() {
+    public int getIdPipe() {
         return id_trub;
     }
 
@@ -151,10 +140,6 @@ public class ActPipe extends Act {
         return id_substance;
     }
 
-    public int getId_status() {
-        return id_status;
-    }
-
     public double getSpill_area() {
         return spill_area;
     }
@@ -163,18 +148,10 @@ public class ActPipe extends Act {
         return works;
     }
 
-    public Date getDateTimeStop() {
-        return dateTimeStop;
-    }
-
-    public void setDateTimeStop(Date date_time_stop) {
-        this.dateTimeStop = date_time_stop;
-    }
-
     public ActPipe(int id, ArrayList<EventDateTime> works) {
         this.id = id;
         this.works = works;
-        dateTimeStop = new Date(0,0,1);
+        this.dateTimeStop = new Date();
         for (EventDateTime wrk: works){
             if (wrk.getId_type_event() == 0){
                 this.dateTimeStop = wrk.getDateTime();

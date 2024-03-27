@@ -8,39 +8,32 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.lukoil.GeneralClass;
+import com.example.lukoil.activity.Activity;
 import com.example.lukoil.R;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.entity.remark.Remark;
 
 import java.util.ArrayList;
 
-public class Remark_change extends GeneralClass {
+public class RemarkChange extends GeneralCreateChangeViewAct {
     View view;
     ArrayList<Remark> remarks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.remark_change);
 
         Bundle arguments = getIntent().getExtras();
         remarks = (ArrayList<Remark>) arguments.getSerializable(ArrayList.class.getSimpleName());
-        idForm = 4;
 
-        context = this;
-
-        workplaceElements = new ArrayList<View>();
-        workplace = findViewById(R.id.layoutEvent);
-
-        onStartNotHome(idForm);
+        Activity activity = new Activity(ID_ACTIVITY_EVENT, this, R.layout.remark_change, R.id.layoutEvent, new ArrayList<View>(), R.id.layout_menu, "Изменение списка");
+        super.onStartList(activity);
 
         drawEvents();
-
-        topTitleActivity.setText("Изменение списка");
     }
     private void drawEvents() {
-        workplace.removeAllViews();
-        workplaceElements.clear();
+        WORKPLACE.removeAllViews();
+        WORK_PLACE_ELEMENTS.clear();
         int cnt = 0;
         if (remarks != null) for (Remark wrk: remarks) {
             view = getLayoutInflater().inflate(R.layout.custom_remark_change, null);
@@ -48,8 +41,8 @@ public class Remark_change extends GeneralClass {
             textName.setText(String.valueOf(wrk.getText()));
             Button b = view.findViewById(R.id.b);
             b.setTag(cnt);
-            workplace.addView(view);
-            workplaceElements.add(view);
+            WORKPLACE.addView(view);
+            WORK_PLACE_ELEMENTS.add(view);
             cnt++;
         }
 
@@ -58,8 +51,8 @@ public class Remark_change extends GeneralClass {
         try {
             int id = (int) v.getTag();
             remarks.remove(id);
-            workplace.removeView((ConstraintLayout)v.getParent());
-            workplaceElements.remove((ConstraintLayout)v.getParent());
+            WORKPLACE.removeView((ConstraintLayout)v.getParent());
+            WORK_PLACE_ELEMENTS.remove((ConstraintLayout)v.getParent());
             drawEvents();
         } catch(IndexOutOfBoundsException ex) {
             ex.printStackTrace();

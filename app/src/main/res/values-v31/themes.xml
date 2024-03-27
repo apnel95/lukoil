@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Lukoil1" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Lukoil1" parent="Theme.AppCompat">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -12,9 +12,6 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-
-        <item name="android:windowSplashScreenBackground">@color/dark_lukoil</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/logo</item>
         <!-- Customize your theme here. -->
     </style>
 

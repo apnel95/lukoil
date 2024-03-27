@@ -8,39 +8,37 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.lukoil.GeneralClass;
+import com.example.lukoil.activity.Activity;
 import com.example.lukoil.R;
+import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.entity.work.Work;
 
 import java.util.ArrayList;
 
-public class WorkChange extends GeneralClass {
+public class WorkChange extends GeneralCreateChangeViewAct {
     View view;
     ArrayList<Work> works;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.work_change);
 
         Bundle arguments = getIntent().getExtras();
         works = (ArrayList<Work>) arguments.getSerializable(ArrayList.class.getSimpleName());
-        idForm = 4;
 
-        context = this;
+        Activity activity = new Activity(ID_ACTIVITY_EVENT, this, R.layout.work_change, R.id.layoutBlock, new ArrayList<View>(), R.id.layout_menu, "Изменение списка");
+        super.onStartList(activity);
 
-        workplaceElements = new ArrayList<View>();
-        workplace = findViewById(R.id.layoutEvent);
+        WORK_PLACE_ELEMENTS = new ArrayList<View>();
+        WORKPLACE = findViewById(R.id.layoutEvent);
 
-        onStartNotHome(idForm);
+
 
         drawEvents();
-
-        topTitleActivity.setText("Изменение списка");
     }
     private void drawEvents() {
-        workplace.removeAllViews();
-        workplaceElements.clear();
+        WORKPLACE.removeAllViews();
+        WORK_PLACE_ELEMENTS.clear();
         int cnt = 0;
         if (works != null) for (Work wrk: works) {
             view = getLayoutInflater().inflate(R.layout.custom_event_date_time_change, null);
@@ -50,8 +48,8 @@ public class WorkChange extends GeneralClass {
             text.setText(String.valueOf(wrk.getText()));
             Button b = view.findViewById(R.id.toDelete);
             b.setTag(cnt);
-            workplace.addView(view);
-            workplaceElements.add(view);
+            WORKPLACE.addView(view);
+            WORK_PLACE_ELEMENTS.add(view);
             cnt++;
         }
 
@@ -60,8 +58,8 @@ public class WorkChange extends GeneralClass {
         try {
             int id = (int) v.getTag();
             works.remove(id);
-            workplace.removeView((ConstraintLayout)v.getParent());
-            workplaceElements.remove((ConstraintLayout)v.getParent());
+            WORKPLACE.removeView((ConstraintLayout)v.getParent());
+            WORK_PLACE_ELEMENTS.remove((ConstraintLayout)v.getParent());
             drawEvents();
         } catch(IndexOutOfBoundsException ex) {
             ex.printStackTrace();

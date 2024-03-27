@@ -1,28 +1,36 @@
 package com.example.lukoil.activity;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.text.Layout;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.List;
 
-public class Activity {
+public class Activity extends General {
     Context context;
     int idLayout;
-    LinearLayout workplace, bottom;
+    int idWorkplace;
+    int idBottom;
     List<View> workplaceElements;
     String topTitle;
+    int idTypeLayout;
 
-    public Activity(int id, Context context, int idLayout, LinearLayout workplace, List<View> workplaceElements, LinearLayout bottom, String topTitle) {
+
+    public int getIdTypeLayout() {
+        return idTypeLayout;
+    }
+
+    public void setIdTypeLayout(int idTypeLayout) {
+        this.idTypeLayout = idTypeLayout;
+    }
+
+    public Activity(int idTypeLayout, Context context, int idLayout, int idWorkplace, List<View> workplaceElements, int idBottom, String topTitle) {
+        this.idTypeLayout = idTypeLayout;
         this.context = context;
         this.idLayout = idLayout;
-        this.workplace = workplace;
+        this.idWorkplace = idWorkplace;
         this.workplaceElements = workplaceElements;
-        this.bottom = bottom;
+        this.idBottom = idBottom;
         this.topTitle = topTitle;
     }
 
@@ -30,12 +38,12 @@ public class Activity {
         return context;
     }
 
-    public LinearLayout getWorkplace() {
-        return workplace;
+    public int getIdWorkplace() {
+        return idWorkplace;
     }
 
-    public LinearLayout getBottom() {
-        return bottom;
+    public int getIdBottom() {
+        return idBottom;
     }
 
     public List<View> getWorkplaceElements() {

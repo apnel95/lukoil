@@ -6,23 +6,26 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
-import com.example.lukoil.GeneralClass;
 import com.example.lukoil.R;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Calendar;
 
-public class CreateChangeViewAct extends GeneralClass {
+public class GeneralCreateChangeViewAct extends General {
 
-    Calendar dateAndTime=Calendar.getInstance();
+    protected void onStartList(Activity activity) {
+        super.initializationActivity(activity);
+    }
+
+
+    public Calendar dateAndTime=Calendar.getInstance();
     public void toChange(View v){
     }
     public void toLoadPhoto(View v){
@@ -51,17 +54,17 @@ public class CreateChangeViewAct extends GeneralClass {
                         final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                         final View view1 = getLayoutInflater().inflate(R.layout.custom_image, null);
                         ImageView img = view1.findViewById(R.id.img);
-                        workplaceElements.add(view1);
-                        workplace.addView(view1);
+                        WORK_PLACE_ELEMENTS.add(view1);
+                        WORKPLACE.addView(view1);
                         img.setImageBitmap(selectedImage);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                 }
         }}
-    public void toDeleteFhoto(View v) {
-        workplace.removeView((LinearLayout)v.getParent());
-        workplaceElements.remove((LinearLayout)v.getParent());
+    public void toDeletePhoto(View v) {
+        WORKPLACE.removeView((LinearLayout)v.getParent());
+        LIST_ACT_DOC.remove((LinearLayout)v.getParent());
     }
     public void toSave(View v){
 
@@ -75,7 +78,7 @@ public class CreateChangeViewAct extends GeneralClass {
         new TimePickerDialog(v.getContext(), t, dateAndTime.get(Calendar.HOUR_OF_DAY), dateAndTime.get(Calendar.MINUTE), true).show();
     }
     private void setInitialDateTime() {
-        dateTime.setText(DateUtils.formatDateTime(this, dateAndTime.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_TIME));
+//!!!!!!!!!        dateTime.setText(DateUtils.formatDateTime(this, dateAndTime.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_TIME));
     }
     TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
