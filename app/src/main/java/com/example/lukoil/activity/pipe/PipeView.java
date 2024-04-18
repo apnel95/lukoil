@@ -38,7 +38,7 @@ public class PipeView extends GeneralCreateChangeViewAct {
         Bundle arguments = getIntent().getExtras();
         act = (ActPipe) Objects.requireNonNull(arguments).getSerializable(ActPipe.class.getSimpleName());
 
-        Activity activity = new Activity(ID_ACTIVITY_PIPE, getApplicationContext(), R.layout.pipe_view, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Просмотр акта");
+        Activity activity = new Activity(ID_ACTIVITY_PIPE, getApplicationContext(), R.layout.pipe_view, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, getResources().getString(R.string.viewAct));
         super.onStartList(activity);
 
         name = findViewById(R.id.name);
@@ -63,7 +63,7 @@ public class PipeView extends GeneralCreateChangeViewAct {
         leak_type.setText(String.valueOf(act.getId_leak_type()));
         leak_parameter.setText(String.valueOf(act.getLeak_parameter()));
         leak_location.setText(String.valueOf(act.getLeak_position()));
-        who.setText(String.valueOf(act.getId_who()));
+        who.setText(String.valueOf(act.getIdWho()));
         leak_location.setText(String.valueOf(act.getLeak_position()));
         area.setText(String.valueOf(act.getSpill_area()));
         subst.setText(String.valueOf(act.getId_substance()));
@@ -98,7 +98,7 @@ public class PipeView extends GeneralCreateChangeViewAct {
             }
         }
         for(Employee dir: employees){
-            if(dir.getId() == act.getId_who()){
+            if(dir.getId() == act.getIdWho()){
                 who.setText(dir.getFIO());
                 break;
             }
@@ -111,8 +111,9 @@ public class PipeView extends GeneralCreateChangeViewAct {
         }
     }
     public void toChange(View v){
-        Intent Trub_change = new Intent(CONTEXT, PipeChange.class);
-        Trub_change.putExtra(ActPipe.class.getSimpleName(), act);
-        startActivity(Trub_change);
+        Intent pipeChange = new Intent(CONTEXT, PipeChange.class);
+        pipeChange.putExtra(ActPipe.class.getSimpleName(), act);
+        pipeChange.putExtra("nameActivity",getResources().getString(R.string.changeAct));
+        startActivity(pipeChange);
     }
 }

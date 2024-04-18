@@ -1,6 +1,7 @@
 package com.example.lukoil.activity.doc;
 
 import static com.example.lukoil.GeneraActList.trim;
+import static com.example.lukoil.ListData.docActs;
 import static com.example.lukoil.ListData.docDepartmentObjects;
 import static com.example.lukoil.ListData.docDepartments;
 import static com.example.lukoil.ListData.employees;
@@ -85,7 +86,7 @@ public class DocActs extends ListActs {
     public void updateList() {
         for (LinearLayout id : linearDepart){ id.setVisibility(View.GONE); id.removeAllViews();}
         WORK_PLACE_ELEMENTS.clear();
-        drawDocs(LIST_ACT_DOC);
+        drawDocs(docActs);
     }
     @Override
     public void toPlus(View v){
@@ -96,7 +97,7 @@ public class DocActs extends ListActs {
     public void toView(View v){
         Intent Doc_view = new Intent(v.getContext(), DocView.class);
 
-        Doc_view.putExtra(ActDoc.class.getSimpleName(), LIST_ACT_DOC.get((int)v.getTag()));
+        Doc_view.putExtra(ActDoc.class.getSimpleName(), docActs.get((int)v.getTag()));
 
         startActivity(Doc_view);
     }

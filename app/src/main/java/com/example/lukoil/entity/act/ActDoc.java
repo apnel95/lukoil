@@ -1,10 +1,18 @@
 package com.example.lukoil.entity.act;
 
+import static com.example.lukoil.ListData.actEventsDoc;
+import static com.example.lukoil.ListData.actEventsPump;
+import static com.example.lukoil.ListData.docDepartmentObjects;
+import static com.example.lukoil.ListData.docRemarks;
+import static com.example.lukoil.ListData.docWorks;
+import static com.example.lukoil.ListData.pumpWorks;
 import static com.example.lukoil.activity.General.ID_DATE_TIME_STOP_WORK_DOC;
 
+import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.event.EventDateTime;
 import com.example.lukoil.entity.remark.Remark;
-import com.example.lukoil.entity.work.Work;
+import com.example.lukoil.entity.work.WorkDoc;
+import com.example.lukoil.entity.work.WorkPump;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +21,7 @@ public class ActDoc extends Act {
     int idDepartment, idDepartmentObject, idEmployee, idStatus;
     ArrayList<Remark> remarks;
 
-    ArrayList<Work> works;
+    ArrayList<WorkDoc> works;
     String FIO_senging;
 
     public ActDoc() {
@@ -27,7 +35,7 @@ public class ActDoc extends Act {
         this.dateTimeStop = dateTimeStop;
     }
 
-    public ActDoc(int id, int id_department, int idDepartmentObject, int idEmployee, int idStatus, ArrayList<EventDateTime> events, ArrayList<Remark> remarks, ArrayList<Work> works, String FIO_senging) {
+    public ActDoc(int id, int id_department, int idDepartmentObject, int idEmployee, int idStatus, ArrayList<EventDateTime> events, ArrayList<Remark> remarks, ArrayList<WorkDoc> works, String FIO_senging) {
         this.id = id;
         this.idDepartment = id_department;
         this.idDepartmentObject = idDepartmentObject;
@@ -45,6 +53,58 @@ public class ActDoc extends Act {
             }
         }
     }
+    public ActDoc(int id, int idDepartmentObject, int idEmployee, int idStatus, ArrayList<EventDateTime> events, ArrayList<Remark> remarks, ArrayList<WorkDoc> works, String FIO_senging) {
+        this.id = id;
+        this.idDepartmentObject = idDepartmentObject;
+
+        this.idDepartment = 0;
+        for (DepartmentObject departmentObject: docDepartmentObjects) if (departmentObject.getId() == idDepartmentObject) this.idDepartment = departmentObject.getId_dep();
+
+        this.idEmployee = idEmployee;
+        this.idStatus = idStatus;
+        this.events = events;
+        this.remarks = remarks;
+        this.works = works;
+        this.FIO_senging = FIO_senging;
+        this.dateTimeStop = new Date();
+        for (EventDateTime wrk: events){
+            if (wrk.getId_type_event() == ID_DATE_TIME_STOP_WORK_DOC){
+                this.dateTimeStop = wrk.getDateTime();
+                break;
+            }
+        }
+    }
+
+    public ActDoc(int id, int idDepartmentObject, int idEmployee, int idStatus, String FIO_senging) {
+        this.id = id;
+        this.idDepartmentObject = idDepartmentObject;
+
+        this.idDepartment = 0;
+        for (DepartmentObject departmentObject: docDepartmentObjects) if (departmentObject.getId() == idDepartmentObject) this.idDepartment = departmentObject.getId_dep();
+
+        this.idEmployee = idEmployee;
+        this.idStatus = idStatus;
+        this.FIO_senging = FIO_senging;
+
+        this.events = new ArrayList<>();
+        this.works = new ArrayList<>();
+        this.remarks = new ArrayList<>();
+
+        for (EventDateTime evd: actEventsDoc) if (evd.getId_act() == id) this.events.add(evd);
+
+        for (WorkDoc dw: docWorks) if (dw.getId_Doc() == id) this.works.add(dw);
+
+        for (Remark rd: docRemarks) if (rd.getId_Doc() == id) this.remarks.add(rd);
+
+        this.dateTimeStop = new Date();
+        for (EventDateTime wrk: events){
+            if (wrk.getId_type_event() == ID_DATE_TIME_STOP_WORK_DOC){
+                this.dateTimeStop = wrk.getDateTime();
+                break;
+            }
+        }
+    }
+
 
     public int getIdDepartment() {
         return idDepartment;
@@ -94,11 +154,11 @@ public class ActDoc extends Act {
         this.remarks = remarks;
     }
 
-    public ArrayList<Work> getWorks() {
+    public ArrayList<WorkDoc> getWorks() {
         return works;
     }
 
-    public void setWorks(ArrayList<Work> works) {
+    public void setWorks(ArrayList<WorkDoc> works) {
         this.works = works;
     }
 
@@ -137,7 +197,7 @@ public class ActDoc extends Act {
             System.out.println("Id_Doc " +remark.getId_Doc());
             System.out.println("Text " +remark.getText());
         }
-        for (Work work: this.works) {
+        for (WorkDoc work: this.works) {
             System.out.println("work" );
             System.out.println("id " +work.getId());
             System.out.println("Id_Doc " +work.getId_Doc());

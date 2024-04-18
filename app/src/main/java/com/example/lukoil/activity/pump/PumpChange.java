@@ -23,6 +23,7 @@ import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.activity.event.EventDateTimeChange;
 import com.example.lukoil.entity.event.EventDateTime;
+import com.example.lukoil.entity.work.WorkPump;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -65,14 +66,14 @@ public class PumpChange extends GeneralCreateChangeViewAct {
         events.setText(textForEvents);
 
         String textForWorks = "";
-        for (Integer wrk : act.getWorks_ready()) {
-            textForWorks += wrk + "\n";
+        for (WorkPump wrk : act.getWorks_ready()) {
+            textForWorks += wrk.getIdTypeWork() + "\n";
         }
         works.setText(textForWorks);
 
         int cnt=0;
         for(Dir dir: pumpPositions){
-            if(dir.getId() == act.getId_pump()){
+            if(dir.getId() == act.getIdPump()){
                 name.setSelection(cnt);
                 break;
             }
@@ -81,7 +82,7 @@ public class PumpChange extends GeneralCreateChangeViewAct {
 
         cnt=0;
         for(Dir dir: pumpMarks){
-            if(dir.getId() == act.getId_mark()){
+            if(dir.getId() == act.getIdMark()){
                 mark.setSelection(cnt);
                 break;
             }
@@ -90,7 +91,7 @@ public class PumpChange extends GeneralCreateChangeViewAct {
 
         cnt=0;
         for(Dir dir: pumpStopReasons){
-            if(dir.getId() == act.getId_reason_stop()){
+            if(dir.getId() == act.getIdReasonStop()){
                 reason_stop.setSelection(cnt);
                 break;
             }

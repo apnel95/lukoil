@@ -71,7 +71,7 @@
                         android:textSize="@dimen/text_name_parameter_size" />
 
                     <EditText
-                        android:id="@+id/object"
+                        android:id="@+id/mark"
                         android:enabled="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                         android:textSize="@dimen/text_name_parameter_size" />
 
                     <EditText
-                        android:id="@+id/employee"
+                        android:id="@+id/reason_stop"
                         android:enabled="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

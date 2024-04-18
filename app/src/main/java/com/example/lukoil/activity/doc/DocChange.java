@@ -1,7 +1,7 @@
 package com.example.lukoil.activity.doc;
 
 import static com.example.lukoil.ListData.actEventTypes;
-import static com.example.lukoil.ListData.actEvents;
+import static com.example.lukoil.ListData.actEventsDoc;
 import static com.example.lukoil.ListData.actStatuses;
 import static com.example.lukoil.ListData.docDepartmentObjects;
 import static com.example.lukoil.ListData.docDepartments;
@@ -32,7 +32,7 @@ import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.event.EventDateTime;
 import com.example.lukoil.entity.remark.Remark;
-import com.example.lukoil.entity.work.Work;
+import com.example.lukoil.entity.work.WorkDoc;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -75,7 +75,7 @@ public class DocChange extends GeneralCreateChangeViewAct {
         events.setText(textForEvents);
 
         String textForWorks = "";
-        if (act.getWorks() != null) for (Work wrks : act.getWorks()) textForWorks += wrks.getName() + ": " + (wrks.getText()) + "\n";
+        if (act.getWorks() != null) for (WorkDoc wrks : act.getWorks()) textForWorks += wrks.getName() + ": " + (wrks.getText()) + "\n";
         works.setText(textForWorks);
 
         String textForRemark = "";
@@ -163,7 +163,7 @@ public class DocChange extends GeneralCreateChangeViewAct {
 
     public void toEventChange(View v) {
         Intent events_change = new Intent(v.getContext(), EventDateTimeChange.class);
-        actEvents = act.getEvents();
+        actEventsDoc = act.getEvents();
         //startActivityForResult(events_change, 3);
         startActivity(events_change);
     }
@@ -189,9 +189,9 @@ public class DocChange extends GeneralCreateChangeViewAct {
                 remarks.setText(textForRemark);
             }
             if(requestCode == 2){
-                act.setWorks((ArrayList<Work>) data.getExtras().getSerializable(ArrayList.class.getSimpleName()));
+                act.setWorks((ArrayList<WorkDoc>) data.getExtras().getSerializable(ArrayList.class.getSimpleName()));
                 String textForWorks = "";
-                if (act.getWorks() != null) for (Work wrks : act.getWorks()) textForWorks += wrks.getName() + ": " + (wrks.getText()) + "\n";
+                if (act.getWorks() != null) for (WorkDoc wrks : act.getWorks()) textForWorks += wrks.getName() + ": " + (wrks.getText()) + "\n";
                 works.setText(textForWorks);
             }
             if(requestCode == 3){

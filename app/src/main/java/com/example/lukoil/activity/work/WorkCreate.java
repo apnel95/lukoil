@@ -9,7 +9,7 @@ import com.example.lukoil.activity.Activity;
 import com.example.lukoil.activity.General;
 import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.R;
-import com.example.lukoil.entity.work.Work;
+import com.example.lukoil.entity.work.WorkDoc;
 
 import java.util.ArrayList;
 
@@ -31,7 +31,7 @@ public class WorkCreate extends GeneralCreateChangeViewAct {
     public void toSave(View v){
         Intent intent = new Intent();
         if (text.getText().toString() != null &&  name.getText().toString() != null){
-            intent.putExtra(Work.class.getSimpleName(), new Work(0,0, name.getText().toString(), text.getText().toString()));
+            intent.putExtra(WorkDoc.class.getSimpleName(), new WorkDoc(0,0, name.getText().toString(), text.getText().toString()));
             setResult(RESULT_OK, intent);
             finish();
         }

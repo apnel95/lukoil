@@ -1,7 +1,6 @@
 package com.example.lukoil.entity;
 
-import com.example.lukoil.entity.work.Work;
-import com.example.lukoil.entity.DepartmentObject;
+import com.example.lukoil.entity.work.WorkDoc;
 
 import java.util.HashMap;
 
@@ -12,7 +11,7 @@ public class Dictionary {
     final int ID_WORKS_IN_DICTIONARIES = 1;
     final int ID_DIRS_IN_DICTIONARIES = 2;
     public Dictionary() {
-        dictionaries = new HashMap[]{new HashMap<Integer, DepartmentObject>(), new HashMap<Integer, Work>(), new HashMap<String, HashMap<Integer, String>>()};
+        dictionaries = new HashMap[]{new HashMap<Integer, DepartmentObject>(), new HashMap<Integer, WorkDoc>(), new HashMap<String, HashMap<Integer, String>>()};
     }
 
     public HashMap[] getDictionaries() {
@@ -23,8 +22,8 @@ public class Dictionary {
         return  (DepartmentObject) dictionaries[ID_DEPARTMENT_OBJECTS_IN_DICTIONARIES].get(key);
     }
 
-    public Work getWorkByKey(int key) {
-        return  (Work) dictionaries[ID_WORKS_IN_DICTIONARIES].get(key);
+    public WorkDoc getWorkByKey(int key) {
+        return  (WorkDoc) dictionaries[ID_WORKS_IN_DICTIONARIES].get(key);
     }
 
     public String getDirValueByDirNameAndKey(String name, int key) {
@@ -39,7 +38,7 @@ public class Dictionary {
         this.dictionaries = dictionaries;
     }
 
-    public void setDictionaries(int key, Work work) {
+    public void setDictionaries(int key, WorkDoc work) {
         dictionaries[ID_WORKS_IN_DICTIONARIES].put(key, work);
     }
 

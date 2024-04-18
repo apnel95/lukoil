@@ -1,5 +1,6 @@
 package com.example.lukoil.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.lukoil.ListData;
 import com.example.lukoil.R;
 import com.example.lukoil.activity.doc.DocActs;
 import com.example.lukoil.activity.pipe.PipeActs;
@@ -33,15 +35,12 @@ public class General extends AppCompatActivity {
     final public static int ID_DATE_TIME_STOP_WORK = 2, ID_DATE_TIME_STOP_WORK_DOC = 3;
     public static boolean AUTO_UPDATE_DIRS = true;
 
+    final public static int  ID_DATETIMESTOP = 3;
     public final static int ONLINE_STATUS = 1, OFFLINE_STATUS = 2;
     public static int LINE_STATUS = 2;
     final public static int PORT = 29170;
     final public static int UP_PORT = 29171;
     final public static String HOST = "192.168.0.16";
-    public static ArrayList<ActPump> LIST_ACT_PUMP = new ArrayList<>();
-    public static ArrayList<ActDoc> LIST_ACT_DOC = new ArrayList<>();
-    public static ArrayList<ActPipe> LIST_ACT_PIPE = new ArrayList<>();
-
     public Context CONTEXT;
     public Dictionary DICTIONARY;
 
@@ -63,6 +62,7 @@ public class General extends AppCompatActivity {
         topTitleActivity.setText(activity.getTopTitle());
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void initializationActivity(Activity activity) {
         //setTheme(R.style.Theme_Lukoil1);
 
@@ -152,7 +152,10 @@ public class General extends AppCompatActivity {
     public void toPlus(View v) {
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void toMenu(View v) {
+        ListData listData = new ListData();
+        listData.saveToSQL();
         if (!statusMenu) {
             menu.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.menu_red), null, null);
             linearLayoutMenu.setVisibility(View.VISIBLE);

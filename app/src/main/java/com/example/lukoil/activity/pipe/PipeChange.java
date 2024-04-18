@@ -1,7 +1,6 @@
 package com.example.lukoil.activity.pipe;
 
 import static com.example.lukoil.ListData.actEventTypes;
-import static com.example.lukoil.ListData.actEvents;
 import static com.example.lukoil.ListData.actStatuses;
 import static com.example.lukoil.ListData.employees;
 import static com.example.lukoil.ListData.pipeCoatingTypes;
@@ -15,7 +14,6 @@ import static com.example.lukoil.ListData.sPipeLeakTypes;
 import static com.example.lukoil.ListData.sPipeNames;
 import static com.example.lukoil.ListData.sPipeSubstances;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +28,6 @@ import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActPipe;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
-import com.example.lukoil.activity.event.EventDateTimeChange;
 import com.example.lukoil.entity.event.EventDateTime;
 
 import java.io.IOException;
@@ -41,6 +38,7 @@ import java.net.UnknownHostException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class PipeChange extends GeneralCreateChangeViewAct {
 
@@ -54,9 +52,10 @@ public class PipeChange extends GeneralCreateChangeViewAct {
         super.onCreate(savedInstanceState);
 
         Bundle arguments = getIntent().getExtras();
-        act = (ActPipe) arguments.getSerializable(ActPipe.class.getSimpleName());
+        act = (ActPipe) Objects.requireNonNull(arguments).getSerializable(ActPipe.class.getSimpleName());
+        String nameActivity = arguments.getString("nameActivity");
 
-        Activity activity = new Activity(ID_ACTIVITY_PIPE, this, R.layout.pipe_change, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Изменение акта");
+        Activity activity = new Activity(ID_ACTIVITY_PIPE, this, R.layout.pipe_change, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, nameActivity);
         super.onStartList(activity);
 
 
@@ -81,29 +80,29 @@ public class PipeChange extends GeneralCreateChangeViewAct {
         leak_parameter.setText(String.valueOf(act.getLeak_parameter()));
         area.setText(String.valueOf(act.getSpill_area()));
 
-        updateEvents();
+        //updateEvents();
 
-        ArrayAdapter<String> nameA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeNames);
+        ArrayAdapter<String> nameA = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sPipeNames);
         nameA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         name.setAdapter(nameA);
 
-        ArrayAdapter<String> coatingA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeCoatingTypes);
+        ArrayAdapter<String> coatingA = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sPipeCoatingTypes);
         coatingA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         coating.setAdapter(coatingA);
 
-        ArrayAdapter<String> leak_typeA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeLeakTypes);
+        ArrayAdapter<String> leak_typeA = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sPipeLeakTypes);
         leak_typeA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         leak_type.setAdapter(leak_typeA);
 
-        ArrayAdapter<String> substA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeSubstances);
+        ArrayAdapter<String> substA = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sPipeSubstances);
         substA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         subst.setAdapter(substA);
 
-        ArrayAdapter<String> whoA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sEmployees);
+        ArrayAdapter<String> whoA = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sEmployees);
         whoA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         who.setAdapter(whoA);
 
-        ArrayAdapter<String> statusA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sActStatuses);
+        ArrayAdapter<String> statusA = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sActStatuses);
         statusA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         status.setAdapter(statusA);
 
@@ -143,7 +142,7 @@ public class PipeChange extends GeneralCreateChangeViewAct {
         }
         cnt=0;
         for(Employee dir: employees){
-            if(dir.getId() == act.getId_who()){
+            if(dir.getId() == act.getIdWho()){
                 who.setSelection(cnt);
                 break;
             }
@@ -157,6 +156,9 @@ public class PipeChange extends GeneralCreateChangeViewAct {
             }
             cnt++;
         }
+        eventDateTimeList = new ArrayList<View>();
+        eventDateTimeLayout = findViewById(R.id.layoutEvents);
+        drawEvents(act.getEvents());
 
 
     }
@@ -168,16 +170,12 @@ public class PipeChange extends GeneralCreateChangeViewAct {
     }
 
     public void toPlus(View v) {
-        Intent Plus = new Intent(v.getContext(), PipeCreate.class);
-        startActivity(Plus);
+        //Intent Plus = new Intent(v.getContext(), PipeCreate.class);
+        //startActivity(Plus);
     }
 
     public void toEventChange(View v) {
-        Intent events_change = new Intent(v.getContext(), EventDateTimeChange.class);
-        events_change.putExtra(ArrayList.class.getSimpleName(), act.getEvents());
-        startActivity(events_change);
-        act.setEvents(actEvents);
-        updateEvents();
+        drawChangeEvents(act.getEvents());
     }
     @Override
     public void toSave(View v) {

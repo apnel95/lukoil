@@ -1,5 +1,7 @@
 package com.example.lukoil.activity.pump;
 
+import static com.example.lukoil.ListData.pumpActs;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +26,7 @@ public class PumpActs extends ListActs {
         Activity activity = new Activity(General.ID_ACTIVITY_PUMP, this, R.layout.pump_acts, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Акты - насосы");
         super.onStartList(activity);
 
-        drawActs(LIST_ACT_PUMP, 0);
+        drawActs(pumpActs, 0);
 
         changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
         changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
@@ -34,11 +36,11 @@ public class PumpActs extends ListActs {
     public void updateList() {
         WORKPLACE.removeAllViews();
         WORK_PLACE_ELEMENTS.clear();
-        drawActs(LIST_ACT_PUMP, (int)0);
+        drawActs(pumpActs, (int)0);
     }
     public void toView(View v){
         Intent Pump_view = new Intent(v.getContext(), PumpView.class);
-        Pump_view.putExtra(ActPump.class.getSimpleName(), LIST_ACT_PUMP.get((int)v.getTag()));
+        Pump_view.putExtra(ActPump.class.getSimpleName(), pumpActs.get((int)v.getTag()));
         startActivity(Pump_view);
     }
     @Override

@@ -1,9 +1,17 @@
 package com.example.lukoil.activity;
 
+import static com.example.lukoil.ListData.actEventsDoc;
+import static com.example.lukoil.ListData.actEventsPipe;
+import static com.example.lukoil.ListData.actEventsPump;
+import static com.example.lukoil.ListData.docActs;
+import static com.example.lukoil.ListData.docRemarks;
+import static com.example.lukoil.ListData.docWorks;
 import static com.example.lukoil.ListData.employees;
 import static com.example.lukoil.ListData.docDepartments;
 import static com.example.lukoil.ListData.docDepartmentObjects;
 import static com.example.lukoil.ListData.actEventTypes;
+import static com.example.lukoil.ListData.pipeActs;
+import static com.example.lukoil.ListData.pumpActs;
 import static com.example.lukoil.ListData.pumpMarks;
 import static com.example.lukoil.ListData.pipeNames;
 import static com.example.lukoil.ListData.pumpStopReasons;
@@ -12,16 +20,18 @@ import static com.example.lukoil.ListData.actStatuses;
 import static com.example.lukoil.ListData.pipeSubstances;
 import static com.example.lukoil.ListData.pipeLeakTypes;
 import static com.example.lukoil.ListData.pumpPositions;
+import static com.example.lukoil.ListData.pumpWorkTypes;
+import static com.example.lukoil.ListData.pumpWorks;
 import static com.example.lukoil.ListData.updateSArraylists;
 
 import static java.text.DateFormat.getTimeInstance;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.lukoil.GeneraActList;
+import com.example.lukoil.ListData;
 import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.field.Field;
@@ -33,20 +43,49 @@ import com.example.lukoil.entity.act.ActPipe;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.event.EventDateTime;
 import com.example.lukoil.entity.remark.Remark;
-import com.example.lukoil.entity.work.Work;
+import com.example.lukoil.entity.work.WorkDoc;
+import com.example.lukoil.entity.work.WorkPump;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class MainActivity extends GeneraActList {
 
+    ListData listData = new ListData();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        CONTEXT_NOW = this;
         super.onCreate(savedInstanceState);
-        createTestData();
+        initializationData();
+        //createTestData();
+        listData.loadFormSQL();
         initializationActivity(new Activity(ID_ACTIVITY_HOME, this, R.layout.home1, R.id.layoutBlock, new ArrayList<View>(), R.id.layout_menu, getResources().getString(R.string.nameGeneralForm)));
         updateDirsAndActs();
+    }
+
+    private void initializationData() {
+        employees = new ArrayList<>();
+        docDepartments = new ArrayList<>();
+        docDepartmentObjects = new ArrayList<>();
+        actEventTypes = new ArrayList<>();
+        pumpMarks = new ArrayList<>();
+        pipeNames = new ArrayList<>();
+        pumpStopReasons = new ArrayList<>();
+        pipeCoatingTypes = new ArrayList<>();
+        actStatuses = new ArrayList<>();
+        pipeSubstances = new ArrayList<>();
+        pipeLeakTypes = new ArrayList<>();
+        pumpPositions = new ArrayList<>();
+        pumpWorkTypes = new ArrayList<>();
+        actEventsPipe = new ArrayList<>();
+        actEventsPump = new ArrayList<>();
+        actEventsDoc = new ArrayList<>();
+        docWorks = new ArrayList<>();
+        pumpWorks = new ArrayList<>();
+        docRemarks = new ArrayList<>();
+        pipeActs = new ArrayList<>();
+        docActs = new ArrayList<>();
+        pumpActs = new ArrayList<>();
     }
 
     private void updateDirsAndActs() {
@@ -62,7 +101,7 @@ public class MainActivity extends GeneraActList {
     private void drawPipeActs() {
         Date dateStopInLastAct = new Date(100000);
         drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, getResources().getString(R.string.pipes)));
-        for (ActPipe act : LIST_ACT_PIPE) {
+        for (ActPipe act : pipeActs) {
             if (CheckAndDrawFields(act, dateStopInLastAct)) dateStopInLastAct = act.getDateTimeStop();
         }
     }
@@ -71,7 +110,7 @@ public class MainActivity extends GeneraActList {
         Date dateStopInLastAct = new Date(100000);
         drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, getResources().getString(R.string.pumps)));
 
-        for (ActPump act : LIST_ACT_PUMP) {
+        for (ActPump act : pumpActs) {
             if (CheckAndDrawFields(act, dateStopInLastAct)) dateStopInLastAct = act.getDateTimeStop();
         }
     }
@@ -81,13 +120,14 @@ public class MainActivity extends GeneraActList {
 
         drawNewFieldForAct(new Field(R.layout.custom_block_type_name, R.id.textName, getResources().getString(R.string.docs)));
 
-        for (ActDoc act : LIST_ACT_DOC) {
+        for (ActDoc act : docActs) {
             if (CheckAndDrawFields(act, dateStopInLastAct)) dateStopInLastAct = act.getDateTimeStop();
         }
     }
 
     private boolean CheckAndDrawFields(ActPipe act, Date dateStopInLastAct) {
         if ((act.getIdStatus() == ACT_STATUS_JOB)) {
+            Log.d("ActPipe_CheckAndDrawFields","id: "+act.getId()+" Act dateTimeStop: "+act.getDateTimeStop()+" LastAct dateStop: "+dateStopInLastAct);
             if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
                 drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
             }
@@ -127,68 +167,13 @@ public class MainActivity extends GeneraActList {
         return "";
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //listData.saveToSQL();
+    }
+
     private void createTestData() {
-
-        LIST_ACT_PIPE.clear();
-        LIST_ACT_DOC.clear();
-        LIST_ACT_PUMP.clear();
-
-        ArrayList<EventDateTime> events = new ArrayList<EventDateTime>();
-        events.add(new EventDateTime(1, 1, 2, new Date((2002-1900), 10, 23, 4, 12)));
-        events.add(new EventDateTime(2, 0, 3, new Date((2023-1900), 5, 10)));
-        events.add(new EventDateTime(3, 0, 0, new Date((2023-1900), 4, 1, 18, 56)));
-        events.add(new EventDateTime(4, 0, 1, new Date()));
-        LIST_ACT_PIPE.add(new ActPipe(1, 1, 10, 12, 2, 40, 1, 56, 5, 0, ACT_STATUS_JOB, 2, 24, events ));
-        ArrayList<EventDateTime> events2 = new ArrayList<EventDateTime>();
-        events2.add(new EventDateTime(1, 2, 3, new Date((2002-1900), 10, 23)));
-        events2.add(new EventDateTime(2, 2, 1, new Date((2023-1900), 5, 10)));
-        events2.add(new EventDateTime(3, 2, 0, new Date((2023-1900), 4, 24, 23, 49)));
-        events2.add(new EventDateTime(4, 2, 2, new Date()));
-        LIST_ACT_PIPE.add(new ActPipe(2, 1, 10, 12, 1, 23, 1, 56, 5, 1, ACT_STATUS_READY, 1, 10, events2));
-        ArrayList<EventDateTime> events3 = new ArrayList<EventDateTime>();
-        events3.add(new EventDateTime(1, 1, 2, new Date((2002-1900), 10, 23)));
-        events3.add(new EventDateTime(2, 1, 1, new Date((2023-1900), 5, 5)));
-        events3.add(new EventDateTime(3, 1, 3, new Date()));
-        events3.add(new EventDateTime(4, 1, 0, new Date()));
-        LIST_ACT_PIPE.add(new ActPipe(3, 2, 4, 10, 1, 23, 1, 56, 5, 1, ACT_STATUS_JOB, 1, 10, events3));
-        ArrayList<EventDateTime> works3 = new ArrayList<EventDateTime>();
-        works3.add(new EventDateTime(1, 3, 3, new Date((2002-1900), 10, 23)));
-        works3.add(new EventDateTime(4, 3, 2, new Date()));
-
-        ArrayList<Integer> list_reade = new ArrayList<Integer>();
-        list_reade.add(1);
-        list_reade.add(2);
-
-        ArrayList<Remark> remarks1 = new ArrayList<Remark>();
-        ArrayList<Remark> remarks2 = new ArrayList<Remark>();
-        remarks1.add(new Remark(1, 1, "Ошибка В1346"));
-        remarks1.add(new Remark(2, 2, "Ошибка В166"));
-        remarks1.add(new Remark(3, 2, "Ошибка A1"));
-        remarks2.add(new Remark(4, 2, "Ошибка В161"));
-
-        ArrayList<Work> work12 = new ArrayList<Work>();
-        work12.add(new Work(1, 1, "Работа Вх46", "Первый"));
-        work12.add(new Work(2, 2, "Работа Вх6", "Первый3"));
-
-        LIST_ACT_DOC.add(new ActDoc(1, 0, 1, 1, 1, events3, new ArrayList<Remark>(), new ArrayList<Work>(), "Михалил"));
-        LIST_ACT_DOC.add(new ActDoc(2, 1, 3, 2, 2, events2, remarks1, work12, "Свет"));
-        LIST_ACT_DOC.add(new ActDoc(3, 0, 7, 1, 2, works3, remarks2, new ArrayList<Work>(), "Щило"));
-
-        LIST_ACT_PUMP.add(new ActPump(1, 1,1, 1, 1, "aaa", events, list_reade));
-        LIST_ACT_PUMP.add(new ActPump(2, 2,2, 2, 2, "DFAfakfioajf", events3, list_reade));
-
-        employees = new ArrayList<>();
-        docDepartments = new ArrayList<>();
-        docDepartmentObjects = new ArrayList<>();
-        actEventTypes = new ArrayList<>();
-        pumpMarks = new ArrayList<>();
-        pipeNames = new ArrayList<>();
-        pumpStopReasons = new ArrayList<>();
-        pipeCoatingTypes = new ArrayList<>();
-        actStatuses = new ArrayList<>();
-        pipeSubstances = new ArrayList<>();
-        pipeLeakTypes = new ArrayList<>();
-        pumpPositions = new ArrayList<>();
 
         employees.add(new Employee(0, 1, 1, "Василий Утка"));
         employees.add(new Employee(1, 1, 1, "Петр Руки-Лопаты"));
@@ -225,9 +210,9 @@ public class MainActivity extends GeneraActList {
         pumpStopReasons.add(new Dir(2, "Ремонт"));
         pumpStopReasons.add(new Dir(3, "Перерыв"));
 
-        pipeCoatingTypes.add(new Dir(1, "Маленький"));
-        pipeCoatingTypes.add(new Dir(2, "Средний"));
-        pipeCoatingTypes.add(new Dir(3, "Большой"));
+        pipeCoatingTypes.add(new Dir(1, "Бетон"));
+        pipeCoatingTypes.add(new Dir(2, "Железо"));
+        pipeCoatingTypes.add(new Dir(3, "Пластик"));
 
         actStatuses.add(new Dir(1, "Готово"));
         actStatuses.add(new Dir(2, "В работе"));
@@ -236,14 +221,77 @@ public class MainActivity extends GeneraActList {
         pipeSubstances.add(new Dir(2, "Вода"));
         pipeSubstances.add(new Dir(3, "Молоко"));
 
-        pipeLeakTypes.add(new Dir(1, "Бетон"));
-        pipeLeakTypes.add(new Dir(2, "Железо"));
-        pipeLeakTypes.add(new Dir(3, "Пластик"));
+        pipeLeakTypes.add(new Dir(1, "Маленький"));
+        pipeLeakTypes.add(new Dir(2, "Средний"));
+        pipeLeakTypes.add(new Dir(3, "Большой"));
 
         pumpPositions.add(new Dir(1, "НПЗ 1"));
         pumpPositions.add(new Dir(2, "НПЗ 2"));
         pumpPositions.add(new Dir(3, "НПЗ 3"));
 
+        actStatuses.add(new Dir(ACT_STATUS_READY, "Готово"));
+        actStatuses.add(new Dir(ACT_STATUS_JOB, "В работе"));
+
+        pumpWorkTypes.add(new Dir(1, "Починка главного оборудования"));
+        pumpWorkTypes.add(new Dir(2, "Починка резервного оборудования"));
+        pumpWorkTypes.add(new Dir(3, "Осмотр"));
+
+        actEventsPipe = new ArrayList<>();
+        actEventsPipe.add(new EventDateTime(1, 1, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsPipe.add(new EventDateTime(2, 1, 3, new Date((2023-1900), 5, 10)));
+        actEventsPipe.add(new EventDateTime(3, 1, 0, new Date((2023-1900), 4, 1, 18, 56)));
+        actEventsPipe.add(new EventDateTime(4, 1, 1, new Date()));
+        actEventsPipe.add(new EventDateTime(5, 2, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsPipe.add(new EventDateTime(6, 2, 3, new Date((2023-1900), 5, 10)));
+        actEventsPipe.add(new EventDateTime(7, 3, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsPipe.add(new EventDateTime(8, 3, 3, new Date((2023-1900), 5, 10)));
+
+        actEventsPump.add(new EventDateTime(1, 1, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsPump.add(new EventDateTime(2, 1, 3, new Date((2023-1900), 5, 10)));
+        actEventsPump.add(new EventDateTime(3, 1, 0, new Date((2023-1900), 4, 1, 18, 56)));
+        actEventsPump.add(new EventDateTime(4, 1, 1, new Date()));
+        actEventsPump.add(new EventDateTime(5, 2, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsPump.add(new EventDateTime(6, 2, 3, new Date((2023-1900), 5, 10)));
+        actEventsPump.add(new EventDateTime(7, 3, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsPump.add(new EventDateTime(8, 3, 3, new Date((2023-1900), 5, 10)));
+
+        actEventsDoc.add(new EventDateTime(1, 1, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsDoc.add(new EventDateTime(2, 1, 3, new Date((2023-1900), 5, 10)));
+        actEventsDoc.add(new EventDateTime(3, 1, 0, new Date((2023-1900), 4, 1, 18, 56)));
+        actEventsDoc.add(new EventDateTime(4, 1, 1, new Date()));
+        actEventsDoc.add(new EventDateTime(5, 2, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsDoc.add(new EventDateTime(6, 2, 3, new Date((2023-1900), 5, 10)));
+        actEventsDoc.add(new EventDateTime(7, 3, 2, new Date((2002-1900), 10, 23, 4, 12)));
+        actEventsDoc.add(new EventDateTime(8, 3, 3, new Date((2023-1900), 5, 10)));
+
+        docWorks.add(new WorkDoc(1, 1,  "text", "name"));
+        docWorks.add(new WorkDoc(2, 2, "text2", "name3"));
+        docWorks.add(new WorkDoc(2, 2, "text", "name"));
+
+        docWorks.add(new WorkDoc(3, 3, "text", "name"));
+
+        pumpWorks.add(new WorkPump(1, 1, 1));
+        pumpWorks.add(new WorkPump(1, 2, 2));
+        pumpWorks.add(new WorkPump(1, 3, 1));
+
+        docRemarks.add(new Remark(1,1, "Text"));
+        docRemarks.add(new Remark(1,1, "Text2"));
+        docRemarks.add(new Remark(1,1, "Text3"));
+        docRemarks.add(new Remark(1,2, "Text"));
+        docRemarks.add(new Remark(1,3, "Text"));
+
+
+        pipeActs.add(new ActPipe(1, 1, 10, 12, 2, 40, 1, 56, 5, 0, ACT_STATUS_JOB, 2, 24));
+        pipeActs.add(new ActPipe(2, 1, 10, 12, 1, 23, 1, 56, 5, 1, ACT_STATUS_READY, 1, 10));
+        pipeActs.add(new ActPipe(3, 2, 4, 10, 1, 23, 1, 56, 5, 1, ACT_STATUS_JOB, 1, 10));
+
+
+        docActs.add(new ActDoc(1, 1, 1, 1, "Михалил"));
+        docActs.add(new ActDoc(2, 2, 2, 2, "Свет"));
+        docActs.add(new ActDoc(3, 3, 1, 2, "Щило"));
+
+        pumpActs.add(new ActPump(1, 1,1, 1, 1, "aaa"));
+        pumpActs.add(new ActPump(2, 2,2, 2, 2, "DFAfakfioajf"));
         updateSArraylists();
     }
 }

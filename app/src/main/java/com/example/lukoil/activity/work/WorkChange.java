@@ -11,20 +11,20 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.lukoil.activity.Activity;
 import com.example.lukoil.R;
 import com.example.lukoil.activity.GeneralCreateChangeViewAct;
-import com.example.lukoil.entity.work.Work;
+import com.example.lukoil.entity.work.WorkDoc;
 
 import java.util.ArrayList;
 
 public class WorkChange extends GeneralCreateChangeViewAct {
     View view;
-    ArrayList<Work> works;
+    ArrayList<WorkDoc> works;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle arguments = getIntent().getExtras();
-        works = (ArrayList<Work>) arguments.getSerializable(ArrayList.class.getSimpleName());
+        works = (ArrayList<WorkDoc>) arguments.getSerializable(ArrayList.class.getSimpleName());
 
         Activity activity = new Activity(ID_ACTIVITY_EVENT, this, R.layout.work_change, R.id.layoutBlock, new ArrayList<View>(), R.id.layout_menu, "Изменение списка");
         super.onStartList(activity);
@@ -36,11 +36,11 @@ public class WorkChange extends GeneralCreateChangeViewAct {
 
         drawEvents();
     }
-    private void drawEvents() {
+    protected void drawEvents() {
         WORKPLACE.removeAllViews();
         WORK_PLACE_ELEMENTS.clear();
         int cnt = 0;
-        if (works != null) for (Work wrk: works) {
+        if (works != null) for (WorkDoc wrk: works) {
             view = getLayoutInflater().inflate(R.layout.custom_event_date_time_change, null);
             TextView textName = view.findViewById(R.id.textName);
             textName.setText(String.valueOf(wrk.getName()));
@@ -84,7 +84,7 @@ public class WorkChange extends GeneralCreateChangeViewAct {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (works == null) works = new ArrayList<>();
-            works.add((Work) data.getExtras().getSerializable(Work.class.getSimpleName()));
+            works.add((WorkDoc) data.getExtras().getSerializable(WorkDoc.class.getSimpleName()));
             drawEvents();
         }
     }

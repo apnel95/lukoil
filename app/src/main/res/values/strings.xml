@@ -63,6 +63,18 @@
     <string name="piketash">Пикетаж:</string>
     <string name="typeCoating">Внутреннее покрытие:</string>
     <string name="wallThickness">Толщина стенки:</string>
-    <string name="diametr">Диаметр:</string>
+    <string name="diameter">Диаметр:</string>
+    <string name="general">Главная</string>
+    <string name="actsPipe">Акты - трубопровод</string>
+    <string name="actsPump">Акты - насосы</string>
+    <string name="docsList">Список предписаний</string>
+    <string name="changeAct">Изменение акта</string>
+    <string name="createAct">Создание акта</string>
+    <string name="viewAct">Просмотр акта</string>
+    <string name="changeDoc">Изменение предписания</string>
+    <string name="createDoc">Создание предписания</string>
+    <string name="viewDoc">Просмотр предписания</string>
+    <string name="selectTypeEvent">Выберите тип события</string>
+
 
 </resources>

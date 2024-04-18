@@ -23,7 +23,8 @@
             android:text="@string/type_event"
             android:textColor="#000000"
             android:textSize="@dimen/text_event_size"
-            android:layout_margin="3sp"/>
+            android:layout_margin="3sp"
+            android:onClick="setTypeEvent"/>
 
         <TextView
             android:id="@+id/textDateTime"
@@ -32,7 +33,8 @@
             android:text="@string/date_and_time"
             android:textColor="#000000"
             android:textSize="@dimen/text_event_size"
-            android:layout_margin="3sp"/>
+            android:layout_margin="3sp"
+            android:onClick="setDate"/>
 
     </LinearLayout>
 

@@ -18,6 +18,7 @@ import com.example.lukoil.R;
 import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.event.EventDateTime;
+import com.example.lukoil.entity.work.WorkPump;
 
 import java.util.ArrayList;
 
@@ -46,9 +47,9 @@ public class PumpView extends GeneralCreateChangeViewAct {
         events = findViewById(R.id.events);
         works = findViewById(R.id.works);
 
-        name.setText(String.valueOf(act.getId_pump()));
-        mark.setText(String.valueOf(act.getId_mark()));
-        reason_stop.setText(String.valueOf(act.getId_reason_stop()));
+        name.setText(String.valueOf(act.getIdPump()));
+        mark.setText(String.valueOf(act.getIdMark()));
+        reason_stop.setText(String.valueOf(act.getIdReasonStop()));
         note.setText(String.valueOf(act.getNote()));
         status.setText(String.valueOf(act.getIdStatus()));
 
@@ -60,14 +61,14 @@ public class PumpView extends GeneralCreateChangeViewAct {
         events.setText(textForEvents);
 
         String textForWorks = "";
-        for (Integer wrk : act.getWorks_ready()) {
-            textForWorks += wrk + "\n";
+        for (WorkPump wrk : act.getWorks_ready()) {
+            textForWorks += wrk.getIdTypeWork() + "\n";
         }
         works.setText(textForWorks);
 
         int cnt=0;
         for(Dir dir: pumpPositions){
-            if(dir.getId() == act.getId_pump()){
+            if(dir.getId() == act.getIdPump()){
                 name.setText(dir.getName());
                 break;
             }
@@ -76,7 +77,7 @@ public class PumpView extends GeneralCreateChangeViewAct {
 
         cnt=0;
         for(Dir dir: pumpMarks){
-            if(dir.getId() == act.getId_mark()){
+            if(dir.getId() == act.getIdMark()){
                 mark.setText(dir.getName());
                 break;
             }
@@ -85,7 +86,7 @@ public class PumpView extends GeneralCreateChangeViewAct {
 
         cnt=0;
         for(Dir dir: pumpStopReasons){
-            if(dir.getId() == act.getId_reason_stop()){
+            if(dir.getId() == act.getIdReasonStop()){
                 reason_stop.setText(dir.getName());
                 break;
             }

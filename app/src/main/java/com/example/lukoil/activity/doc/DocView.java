@@ -21,7 +21,7 @@ import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.event.EventDateTime;
 import com.example.lukoil.entity.remark.Remark;
-import com.example.lukoil.entity.work.Work;
+import com.example.lukoil.entity.work.WorkDoc;
 
 import java.util.ArrayList;
 
@@ -62,7 +62,7 @@ public class DocView extends GeneralCreateChangeViewAct {
         events.setText(textForEvents);
 
         String textForWorks = "";
-        if (act.getWorks() != null) for (Work wrks : act.getWorks()) textForWorks += wrks.getName() + ": " + (wrks.getText()) + "\n";
+        if (act.getWorks() != null) for (WorkDoc wrks : act.getWorks()) textForWorks += wrks.getName() + ": " + (wrks.getText()) + "\n";
         works.setText(textForWorks);
 
         String textForRemark = "";
