@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.example.lukoil.activity.Activity;
@@ -109,7 +108,7 @@ public class PipeCreate extends GeneralCreateChangeViewAct {
         act.setSpill_area(Double.parseDouble(area.getText().toString()));
         ArrayList<EventDateTime> events = new ArrayList<>();
         events.add( new EventDateTime(0,0, ID_DATE_TIME_STOP_WORK, dateAndTime.getTime()));
-        act.setWorks(events);
+        act.setEvents(events);
         getNewActTrub();
         finish();
     }

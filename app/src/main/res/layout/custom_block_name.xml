@@ -4,42 +4,52 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:clickable="true"
-    android:onClick="toViewAct">
+    android:onClick="toViewAct"
+    android:focusable="true">
 
     <TextView
         android:id="@+id/textTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="3sp"
         android:background="@drawable/block_time"
-        android:text="23:23"
-        android:padding="10dp"
+        android:text="@string/time"
+        android:padding="3sp"
         android:textAlignment="center"
         android:textColor="#000"
-        android:textSize="29sp"
-        android:layout_weight="0"></TextView>
+        android:layout_margin="3sp"
+        android:textSize="@dimen/time_size"
+        android:layout_weight="0"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/textName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10sp"
+        android:layout_marginTop="3sp"
         android:background="@drawable/block_time"
-        android:padding="10dp"
-        android:text="long long name"
+        android:padding="3sp"
+        android:text="@string/name_act"
         android:textColor="#000"
-        android:textSize="29sp"
-        android:layout_weight="1"></TextView>
+        android:textSize="@dimen/name_act_size"
+        android:layout_margin="3sp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
     <ImageView
         android:id="@+id/status"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:src="@drawable/job_red"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="0">
+        android:layout_marginStart="3sp"
+        android:layout_marginTop="3sp"
+        android:layout_margin="3sp"
+        android:layout_weight="0"
+        android:contentDescription="@string/text"
+        android:scaleType="centerInside">
     </ImageView>
 
 </LinearLayout>

@@ -51,8 +51,9 @@ public class EventDateTime implements Serializable {
         this.id_type_event = id_type_event;
         this.date_time = date_time;
     }
-    public String getName(ArrayList<Dir> events){
+    public String getNameTypeEvent(ArrayList<Dir> events){
         if (events != null) for (Dir dr: events) if(dr.getId() == this.id_type_event) return dr.getName();
         return "";
     }
+
 }

@@ -24,6 +24,8 @@ public class PumpActs extends ListActs {
         Activity activity = new Activity(General.ID_ACTIVITY_PUMP, this, R.layout.pump_acts, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Акты - насосы");
         super.onStartList(activity);
 
+        drawActs(LIST_ACT_PUMP, 0);
+
         changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
         changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
 

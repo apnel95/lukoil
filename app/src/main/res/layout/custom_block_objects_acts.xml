@@ -2,85 +2,86 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutObjects"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/layoutObjects">
+    android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/buttonNH1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="НШ №1"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:textColor="@color/black"
+            android:layout_margin="3sp"
+            android:layout_weight="1"
             android:background="@drawable/custom_button_1"
-            android:textSize="20sp"
-            app:cornerRadius="30dp"
             android:onClick="toNH1"
-            android:layout_weight="1"/>
+            android:padding="3sp"
+            android:text="@string/nh1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonNH2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="НШ №2"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:background="@drawable/custom_button_1"
-        android:textSize="20sp"
-        app:cornerRadius="30dp"
-        android:onClick="toNH2"
-        android:layout_weight="1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonNH2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3sp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_1"
+            android:onClick="toNH2"
+            android:padding="3sp"
+            android:text="@string/nh2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonNH3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="НШ №3"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:background="@drawable/custom_button_1"
-        android:textSize="20sp"
-        app:cornerRadius="30dp"
-        android:onClick="toNH3"
-        android:layout_weight="1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonNH3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3sp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_1"
+            android:onClick="toNH3"
+            android:padding="3sp"
+            android:text="@string/nh3"
+            android:textColor="@color/black"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonCPPN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ЦППН"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:background="@drawable/custom_button_1"
-        android:textSize="20sp"
-        app:cornerRadius="30dp"
-        android:onClick="toCPPN"
-        android:layout_weight="1"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonCPPN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3sp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_1"
+            android:onClick="toCPPN"
+            android:padding="3sp"
+            android:text="@string/cppn"
+            android:textColor="@color/black"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/buttonCPPD"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ЦППД"
-        android:layout_margin="10dp"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:background="@drawable/custom_button_1"
-        android:textSize="20sp"
-        app:cornerRadius="30dp"
-        android:onClick="toCPPD"
-        android:layout_weight="1"/>
-        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonCPPD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="3sp"
+            android:layout_weight="1"
+            android:background="@drawable/custom_button_1"
+            android:onClick="toCPPD"
+            android:padding="3sp"
+            android:text="@string/cppd"
+            android:textColor="@color/black"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp" />
+    </LinearLayout>
 
 </LinearLayout>

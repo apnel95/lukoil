@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lukoil.activity.Activity;
@@ -39,7 +38,7 @@ public class PipeView extends GeneralCreateChangeViewAct {
         Bundle arguments = getIntent().getExtras();
         act = (ActPipe) Objects.requireNonNull(arguments).getSerializable(ActPipe.class.getSimpleName());
 
-        Activity activity = new Activity(ID_ACTIVITY_PIPE, getApplicationContext(), R.layout.trub_view, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Просмотр акта");
+        Activity activity = new Activity(ID_ACTIVITY_PIPE, getApplicationContext(), R.layout.pipe_view, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Просмотр акта");
         super.onStartList(activity);
 
         name = findViewById(R.id.name);
@@ -71,7 +70,7 @@ public class PipeView extends GeneralCreateChangeViewAct {
         status.setText(String.valueOf(act.getIdStatus()));
 
         String textForEvents = "";
-        if (act.getWorks() != null) for (EventDateTime wrk : act.getWorks()) textForEvents += wrk.getName(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
+        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getNameTypeEvent(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         for(Dir dir: pipeNames){

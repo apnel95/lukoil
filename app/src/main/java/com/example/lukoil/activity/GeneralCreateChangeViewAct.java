@@ -20,6 +20,8 @@ import java.util.Calendar;
 
 public class GeneralCreateChangeViewAct extends General {
 
+    public int ID_ACT;
+
     protected void onStartList(Activity activity) {
         super.initializationActivity(activity);
     }
@@ -30,13 +32,14 @@ public class GeneralCreateChangeViewAct extends General {
     }
     public void toLoadPhoto(View v){
         System.out.println("aaaaaaa");
+//!!!!!!!!!!!!!!!!!!
     }
     public void toEventChange(View v){
-
     }
     public void toNewPhoto(View v) {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
+        photoPickerIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivityForResult(photoPickerIntent, 100);
 
     }
@@ -67,33 +70,6 @@ public class GeneralCreateChangeViewAct extends General {
         LIST_ACT_DOC.remove((LinearLayout)v.getParent());
     }
     public void toSave(View v){
-
     }
-
-    public void setDate(View v) {
-
-        new DatePickerDialog(v.getContext(), d, dateAndTime.get(Calendar.YEAR), dateAndTime.get(Calendar.MONTH), dateAndTime.get(Calendar.DAY_OF_MONTH)).show();
-    }
-    public void setTime(View v) {
-        new TimePickerDialog(v.getContext(), t, dateAndTime.get(Calendar.HOUR_OF_DAY), dateAndTime.get(Calendar.MINUTE), true).show();
-    }
-    private void setInitialDateTime() {
-//!!!!!!!!!        dateTime.setText(DateUtils.formatDateTime(this, dateAndTime.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_SHOW_TIME));
-    }
-    TimePickerDialog.OnTimeSetListener t=new TimePickerDialog.OnTimeSetListener() {
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            dateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
-            dateAndTime.set(Calendar.MINUTE, minute);
-            setInitialDateTime();
-        }
-    };
-    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            dateAndTime.set(Calendar.YEAR, year);
-            dateAndTime.set(Calendar.MONTH, monthOfYear);
-            dateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            setInitialDateTime();
-        }
-    };
 
 }

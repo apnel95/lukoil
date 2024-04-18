@@ -1,5 +1,6 @@
 package com.example.lukoil.activity.event;
 
+import static com.example.lukoil.ListData.actEventTypes;
 import static com.example.lukoil.ListData.actEvents;
 
 import android.content.Intent;
@@ -10,15 +11,14 @@ import android.widget.TextView;
 
 import com.example.lukoil.activity.Activity;
 import com.example.lukoil.R;
+import com.example.lukoil.activity.CreateWorksEvents;
 import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.entity.event.EventDateTime;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EventDateTimeChange extends GeneralCreateChangeViewAct {
-    View view;
+public class EventDateTimeChange extends CreateWorksEvents {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +37,17 @@ public class EventDateTimeChange extends GeneralCreateChangeViewAct {
     private void drawEvents() {
         WORKPLACE.removeAllViews();
         WORK_PLACE_ELEMENTS.clear();
-        int cnt = 0;
         if (actEvents != null) for (EventDateTime wrk: actEvents) {
             view = getLayoutInflater().inflate(R.layout.custom_event_date_time_change, null);
-            TextView textDate = (TextView) view.findViewById(R.id.textDateTime);
-            TextView textName = (TextView) view.findViewById(R.id.textName);
-            textName.setText(String.valueOf(wrk.getId_type_event()));
+            textDate = view.findViewById(R.id.textDateTime);
+            textName = view.findViewById(R.id.textName);
+            textName.setText(String.valueOf(wrk.getNameTypeEvent(actEventTypes)));
             Date  nowDate = wrk.getDateTime();
-            view.setTag((int)wrk.getId());
+            view.setTag(wrk.getId());
             String date = DateToText(nowDate);
-            SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
-            textDate.setText(String.valueOf(date+", "+formatForDate.format(nowDate)));
+            textDate.setText(String.format("%s, %s", date, FORMAT_FOR_DATE.format(nowDate)));
             WORKPLACE.addView(view);
             WORK_PLACE_ELEMENTS.add(view);
-            cnt++;
         }
 
     }
@@ -58,6 +55,7 @@ public class EventDateTimeChange extends GeneralCreateChangeViewAct {
         try {
             WORKPLACE.removeView((LinearLayout)v.getParent());
             WORK_PLACE_ELEMENTS.remove((LinearLayout)v.getParent());
+            actEvents.remove((int)v.getTag());
         } catch(IndexOutOfBoundsException ex) {
             ex.printStackTrace();
         }

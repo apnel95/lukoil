@@ -39,7 +39,7 @@ public class RemarkChange extends GeneralCreateChangeViewAct {
             view = getLayoutInflater().inflate(R.layout.custom_remark_change, null);
             TextView textName = view.findViewById(R.id.text);
             textName.setText(String.valueOf(wrk.getText()));
-            Button b = view.findViewById(R.id.b);
+            Button b = view.findViewById(R.id.toDelete);
             b.setTag(cnt);
             WORKPLACE.addView(view);
             WORK_PLACE_ELEMENTS.add(view);

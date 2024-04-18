@@ -58,7 +58,7 @@ public class DocView extends GeneralCreateChangeViewAct {
         works = findViewById(R.id.works);
 
         String textForEvents = "";
-        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getName(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
+        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getNameTypeEvent(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         String textForWorks = "";

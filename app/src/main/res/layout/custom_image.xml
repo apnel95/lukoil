@@ -12,15 +12,15 @@
 
     <Button
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:id="@+id/buttonNewEvent"
-        android:text="удалить"
+        android:text="@string/delete"
         android:layout_gravity="center"
         android:layout_margin="10dp"
         android:padding="15dp"
         android:textColor="@color/black"
         android:background="@drawable/red_frame"
-        android:textSize="20sp"
+        android:textSize="@dimen/text_button_size"
         android:onClick="toDeletePhoto"
         android:layout_weight="1" />
 

@@ -1,6 +1,7 @@
 package com.example.lukoil.activity.pipe;
 
 import static com.example.lukoil.ListData.actEventTypes;
+import static com.example.lukoil.ListData.actEvents;
 import static com.example.lukoil.ListData.actStatuses;
 import static com.example.lukoil.ListData.employees;
 import static com.example.lukoil.ListData.pipeCoatingTypes;
@@ -30,7 +31,6 @@ import com.example.lukoil.entity.act.ActPipe;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.activity.event.EventDateTimeChange;
-import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.event.EventDateTime;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ public class PipeChange extends GeneralCreateChangeViewAct {
         Bundle arguments = getIntent().getExtras();
         act = (ActPipe) arguments.getSerializable(ActPipe.class.getSimpleName());
 
-        Activity activity = new Activity(ID_ACTIVITY_PIPE, this, R.layout.trub_change, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Изменение акта");
+        Activity activity = new Activity(ID_ACTIVITY_PIPE, this, R.layout.pipe_change, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Изменение акта");
         super.onStartList(activity);
 
 
@@ -81,9 +81,7 @@ public class PipeChange extends GeneralCreateChangeViewAct {
         leak_parameter.setText(String.valueOf(act.getLeak_parameter()));
         area.setText(String.valueOf(act.getSpill_area()));
 
-        String textForEvents = "";
-        if (act.getWorks() != null) for (EventDateTime wrk : act.getWorks()) textForEvents += wrk.getName(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
-        events.setText(textForEvents);
+        updateEvents();
 
         ArrayAdapter<String> nameA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sPipeNames);
         nameA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -163,6 +161,12 @@ public class PipeChange extends GeneralCreateChangeViewAct {
 
     }
 
+    private void updateEvents() {
+        String textForEvents = "";
+        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getNameTypeEvent(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
+        events.setText(textForEvents);
+    }
+
     public void toPlus(View v) {
         Intent Plus = new Intent(v.getContext(), PipeCreate.class);
         startActivity(Plus);
@@ -170,8 +174,10 @@ public class PipeChange extends GeneralCreateChangeViewAct {
 
     public void toEventChange(View v) {
         Intent events_change = new Intent(v.getContext(), EventDateTimeChange.class);
-        events_change.putExtra(ArrayList.class.getSimpleName(), act.getWorks());
+        events_change.putExtra(ArrayList.class.getSimpleName(), act.getEvents());
         startActivity(events_change);
+        act.setEvents(actEvents);
+        updateEvents();
     }
     @Override
     public void toSave(View v) {

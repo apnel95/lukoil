@@ -9,9 +9,8 @@ import java.util.Date;
 public class ActPipe extends Act {
     int id_trub, diameter, wall, id_type_coating, piketash, id_leak_type, leak_parameter, leak_position, id_substance, id_who;
     double spill_area;
-    ArrayList<EventDateTime> works;
 
-    public ActPipe(int id, int id_trub, int diameter, int wall, int id_type_coating, int piketash, int id_leak_type, int leak_parameter, int leak_position, int id_substance, int idStatus, int id_who, double spill_area, ArrayList<EventDateTime> works) {
+    public ActPipe(int id, int id_trub, int diameter, int wall, int id_type_coating, int piketash, int id_leak_type, int leak_parameter, int leak_position, int id_substance, int idStatus, int id_who, double spill_area, ArrayList<EventDateTime> events) {
         this.id = id;
         this.id_trub = id_trub;
         this.diameter = diameter;
@@ -25,8 +24,8 @@ public class ActPipe extends Act {
         this.idStatus = idStatus;
         this.id_who = id_who;
         this.spill_area = spill_area;
-        this.works = works;
-        for (EventDateTime wrk: works){
+        this.events = events;
+        for (EventDateTime wrk: events){
             if (wrk.getId_type_event() == 0){
                 this.dateTimeStop = wrk.getDateTime();
                 break;
@@ -100,10 +99,6 @@ public class ActPipe extends Act {
         this.spill_area = spill_area;
     }
 
-    public void setWorks(ArrayList<EventDateTime> works) {
-        this.works = works;
-    }
-
     public int getIdPipe() {
         return id_trub;
     }
@@ -144,15 +139,15 @@ public class ActPipe extends Act {
         return spill_area;
     }
 
-    public ArrayList<EventDateTime> getWorks() {
-        return works;
+    public ArrayList<EventDateTime> getEvents() {
+        return events;
     }
 
-    public ActPipe(int id, ArrayList<EventDateTime> works) {
+    public ActPipe(int id, ArrayList<EventDateTime> events) {
         this.id = id;
-        this.works = works;
+        this.events = events;
         this.dateTimeStop = new Date();
-        for (EventDateTime wrk: works){
+        for (EventDateTime wrk: events){
             if (wrk.getId_type_event() == 0){
                 this.dateTimeStop = wrk.getDateTime();
                 break;
@@ -162,6 +157,15 @@ public class ActPipe extends Act {
     public String getName(ArrayList<Dir> trubs){
         if (trubs != null) for (Dir dr: trubs) if(dr.getId() == this.id_trub) return dr.getName();
         return "";
+    }
+
+    public void println() {
+        for (EventDateTime wrk: this.events){
+            System.out.println(wrk.getDateTime());
+        }
+    }
+
+    public void setEvents(ArrayList<EventDateTime> actEvents) {
     }
 }
 

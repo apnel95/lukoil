@@ -18,6 +18,7 @@ import com.example.lukoil.entity.act.ActDoc;
 import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.act.ActPipe;
 import com.example.lukoil.entity.Dictionary;
+import com.example.lukoil.entity.event.EventDateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,19 +30,22 @@ public class General extends AppCompatActivity {
     public static Context CONTEXT_NOW;
     final public static int ACT_STATUS_JOB = 2, ACT_STATUS_READY = 1;
     final public static int ID_ACTIVITY_HOME = 0, ID_ACTIVITY_PIPE = 1, ID_ACTIVITY_PUMP = 2, ID_ACTIVITY_DOC = 3, ID_ACTIVITY_PIPE_PLUS = 11, ID_ACTIVITY_PUMP_PLUS = 12, ID_ACTIVITY_DOC_PLUS = 13, ID_ACTIVITY_EVENT = 4;
-    final  public static int ID_DATE_TIME_STOP_WORK = 2, ID_DATE_TIME_STOP_WORK_DOC = 3;
+    final public static int ID_DATE_TIME_STOP_WORK = 2, ID_DATE_TIME_STOP_WORK_DOC = 3;
     public static boolean AUTO_UPDATE_DIRS = true;
-    public static int NH1, NH2, NH3, CPPD, CPPN;
+
+    public final static int ONLINE_STATUS = 1, OFFLINE_STATUS = 2;
+    public static int LINE_STATUS = 2;
     final public static int PORT = 29170;
     final public static int UP_PORT = 29171;
     final public static String HOST = "192.168.0.16";
-    public ArrayList<ActPump> LIST_ACT_PUMP = new ArrayList<>();
-    public ArrayList<ActDoc> LIST_ACT_DOC = new ArrayList<>();
-    public ArrayList<ActPipe> LIST_ACT_PIPE = new ArrayList<>();
+    public static ArrayList<ActPump> LIST_ACT_PUMP = new ArrayList<>();
+    public static ArrayList<ActDoc> LIST_ACT_DOC = new ArrayList<>();
+    public static ArrayList<ActPipe> LIST_ACT_PIPE = new ArrayList<>();
 
     public Context CONTEXT;
     public Dictionary DICTIONARY;
 
+    public SimpleDateFormat FORMAT_FOR_DATE = new SimpleDateFormat("HH:mm");
 
     Drawable topHome, topPipe, topPump, topDoc, topMenu, topPlus;
     boolean statusMenu;
@@ -123,21 +127,25 @@ public class General extends AppCompatActivity {
 
     public void toHome(View v) {
         Intent Home = new Intent(v.getContext(), MainActivity.class);
+        Home.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(Home);
     }
 
     public void toPipe(View v) {
         Intent Trub = new Intent(v.getContext(), PipeActs.class);
+        Trub.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(Trub);
     }
 
     public void toPump(View v) {
         Intent Pump = new Intent(v.getContext(), PumpActs.class);
+        Pump.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(Pump);
     }
 
     public void toDoc(View v) {
         Intent Doc = new Intent(v.getContext(), DocActs.class);
+        Doc.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(Doc);
     }
 
@@ -198,5 +206,12 @@ public class General extends AppCompatActivity {
         SimpleDateFormat formatForDate = new SimpleDateFormat("dd");
         newDate += ", " + formatForDate.format(date);
         return newDate;
+    }
+    protected int newId_(ArrayList<EventDateTime> actEvents) {
+        int newId = 0;
+        for (EventDateTime event: actEvents){
+            if (event.getId()>newId) newId = event.getId();
+        }
+        return newId;
     }
 }

@@ -3,7 +3,6 @@ package com.example.lukoil.activity.pipe;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import androidx.core.content.ContextCompat;
 
@@ -20,7 +19,7 @@ public class PipeActs extends ListActs {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Activity activity = new Activity(ID_ACTIVITY_PIPE, this, R.layout.trub_acts, R.id.layoutEvent, new ArrayList<View>(), R.id.layout_menu, "Акты - трубопровод");
+        Activity activity = new Activity(ID_ACTIVITY_PIPE, this, R.layout.pipe_acts, R.id.layoutForActs, new ArrayList<View>(), R.id.layout_menu, "Акты - трубопровод");
         super.onStartList(activity);
 
         drawActs(LIST_ACT_PIPE);

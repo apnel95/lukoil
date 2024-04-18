@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="red_lukoil">#FFED1C35</color>
     <color name="dark_lukoil">#FF221E20</color>
+    <color name="not_activ">#B0000000</color>
+    <color name="text">#FFFFFF</color>
 </resources>

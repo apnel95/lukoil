@@ -11,11 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="OBJECT"
-        android:padding="10dp"
+        android:text="@string/object_name"
+        android:padding="10sp"
         android:textAlignment="center"
-        android:textColor="#221E20"
-        android:textSize="35sp"></TextView>
+        android:textColor="@color/white"
+        android:textSize="@dimen/name_act_size" />
 
 
 </LinearLayout>

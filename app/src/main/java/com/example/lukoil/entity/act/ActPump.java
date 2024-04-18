@@ -12,6 +12,8 @@ public class ActPump extends Act {
     int id_pump, id_mark, id_reason_stop;
     String note;
 
+    ArrayList<Integer> works_ready;
+
     public ActPump() {
     }
 
@@ -54,9 +56,6 @@ public class ActPump extends Act {
     public void setNote(String note) {
         this.note = note;
     }
-
-    ArrayList<EventDateTime> events;
-    ArrayList<Integer> works_ready;
 
     public int getId_mark() {
         return id_mark;

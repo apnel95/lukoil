@@ -13,12 +13,7 @@
 
         <include
             layout="@layout/custom_upp"
-            android:visibility="visible"></include>
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minWidth="600dp">
+            android:visibility="visible" />
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -30,10 +25,11 @@
 
                     <include
                         layout="@layout/custom_block_time_status_act"
-                        android:visibility="visible"></include>
+                        android:visibility="visible" />
+
                     <include
                         layout="@layout/custom_block_objects_acts"
-                        android:visibility="visible"></include>
+                        android:visibility="visible" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -82,7 +78,6 @@
                     </include>
                 </LinearLayout>
             </ScrollView>
-        </HorizontalScrollView>
 
     </LinearLayout>
 
@@ -93,7 +88,8 @@
         android:layout_alignParentBottom="true"
         android:clickable="true"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:focusable="true">
 
         <include
             layout="@layout/custom_bottom"

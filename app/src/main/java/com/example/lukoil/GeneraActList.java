@@ -3,6 +3,8 @@ package com.example.lukoil;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.lukoil.activity.General;
 import com.example.lukoil.activity.doc.DocChange;
@@ -18,12 +20,16 @@ import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.act.ActDoc;
 import com.example.lukoil.entity.act.ActPipe;
 import com.example.lukoil.entity.act.ActPump;
+import com.example.lukoil.entity.field.ActField;
+import com.example.lukoil.entity.field.Field;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 public class GeneraActList extends General {
+
+
     public void toViewAct(View v) {
         Dir tag = (Dir) v.getTag();
         startNewActivity(v.getContext(),  tag.getName()+"View", tag.getId());
@@ -128,6 +134,29 @@ public class GeneraActList extends General {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTime();
+    }
+
+    protected void drawNewAct(ActField fieldAct) {
+        final View view = getLayoutInflater().inflate(fieldAct.getIdView(), null);
+        TextView textName = view.findViewById(fieldAct.getIdTextView());
+        TextView textSecond = view.findViewById(fieldAct.getIdSecondTextView());
+        ImageView status = view.findViewById(fieldAct.getIdStatusLayout());
+        view.setTag(fieldAct.getTag());
+        textName.setText(String.format("%s", fieldAct.getTextForTextView()));
+        textSecond.setText(fieldAct.getTextForSecondTextView());
+        if (fieldAct.getIdStatusAct() == ACT_STATUS_READY) status.setImageResource(R.drawable.job_green);
+        WORK_PLACE_ELEMENTS.add(view);
+        WORKPLACE.addView(view);
+    }
+    protected boolean isDatesNotEquivalent(Date dateTimeStop, Date dateStopLastAct) {
+        return (!(trim(dateTimeStop).equals(trim(dateStopLastAct))));
+    }
+    protected void drawNewFieldForAct(Field field) {
+        final View view = getLayoutInflater().inflate(field.getIdView(), null);
+        TextView textView = view.findViewById(field.getIdTextView());
+        textView.setText(field.getTextForTextView());
+        WORK_PLACE_ELEMENTS.add(view);
+        WORKPLACE.addView(view);
     }
 
 }

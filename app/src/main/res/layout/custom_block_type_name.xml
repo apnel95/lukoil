@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:layout_margin="10sp">
 
     <TextView
         android:id="@+id/textName"
@@ -11,13 +11,15 @@
         android:layout_height="wrap_content"
         android:background="@drawable/block_upp"
         android:fontFamily="sans-serif-medium"
-        android:text="TEXT"
-        android:padding="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
+        android:text="@string/text"
+        android:padding="3sp"
+        android:layout_marginBottom="10sp"
+        android:layout_marginTop="3sp"
         android:textAlignment="center"
-        android:textColor="#ED1C35"
-        android:textSize="35sp"></TextView>
+        android:textColor="@color/red_lukoil"
+        android:textSize="@dimen/name_type_size"
+        android:gravity="center"
+        android:layout_gravity="center"/>
 
 
 </LinearLayout>

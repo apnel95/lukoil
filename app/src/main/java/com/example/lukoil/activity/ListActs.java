@@ -2,28 +2,30 @@ package com.example.lukoil.activity;
 
 import static com.example.lukoil.GeneraActList.trim;
 import static com.example.lukoil.ListData.pipeNames;
+import static com.example.lukoil.ListData.pumpMarks;
 import static com.example.lukoil.ListData.pumpPositions;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
+import com.example.lukoil.GeneraActList;
 import com.example.lukoil.R;
+import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.act.ActPipe;
 import com.example.lukoil.entity.comparation.ActPumpComparatot;
 import com.example.lukoil.entity.comparation.ActPipeComparatot;
+import com.example.lukoil.entity.field.ActField;
+import com.example.lukoil.entity.field.Field;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
-public class ListActs extends General {
+public class ListActs extends GeneraActList {
 
     public int statusNow = 0;
     public int timeNow = 0;
@@ -35,102 +37,105 @@ public class ListActs extends General {
     Button bReady;
     Button bAll1;
     View viewTimeStatus;
+    public static int TODAY = 0, WEEK = 1, MONTH = 2, ALL_DAYS = 3;
+    public static int IN_WORK = 0, READY = 1, ALL_TYPE_STATUS = 2;
+
 
     protected void onStartList(Activity activity) {
         super.initializationActivity(activity);
 
         viewTimeStatus = findViewById(R.id.timeStatus);
 
-        bToday = (Button) viewTimeStatus.findViewById(R.id.buttonToday);
-        bWeek = (Button) viewTimeStatus.findViewById(R.id.buttonWeek);
-        bMonth = (Button) viewTimeStatus.findViewById(R.id.buttonMonth);
-        bAll = (Button) viewTimeStatus.findViewById(R.id.buttonAll);
-        bJob = (Button) viewTimeStatus.findViewById(R.id.buttonJob);
-        bReady = (Button) viewTimeStatus.findViewById(R.id.buttonReady);
-        bAll1 = (Button) viewTimeStatus.findViewById(R.id.buttonAll1);
+        bToday = viewTimeStatus.findViewById(R.id.buttonToday);
+        bWeek =viewTimeStatus.findViewById(R.id.buttonWeek);
+        bMonth = viewTimeStatus.findViewById(R.id.buttonMonth);
+        bAll = viewTimeStatus.findViewById(R.id.buttonAll);
+        bJob = viewTimeStatus.findViewById(R.id.buttonJob);
+        bReady =  viewTimeStatus.findViewById(R.id.buttonReady);
+        bAll1 = viewTimeStatus.findViewById(R.id.buttonAll1);
     }
 
     public void toToday(View v){
-        if (timeNow == 0){return;}
+        if (timeNow == TODAY){return;}
         else{
             changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-            if (timeNow == 1) changeStyleButton(bWeek, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            else if (timeNow == 2) changeStyleButton(bMonth, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            if (timeNow == WEEK) changeStyleButton(bWeek, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            else if (timeNow == MONTH) changeStyleButton(bMonth, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
             else changeStyleButton(bAll, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            timeNow = 0;
+            timeNow = TODAY;
             updateList();
         }
         return;
     }
 
     public void toWeek(View v){
-        if (timeNow == 1){return;}
+        if (timeNow == WEEK){return;}
         else{
             changeStyleButton(bWeek, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-            if (timeNow == 0) changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            else if (timeNow == 2) changeStyleButton(bMonth, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            if (timeNow == TODAY) changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            else if (timeNow == MONTH) changeStyleButton(bMonth, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
             else changeStyleButton(bAll, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            timeNow = 1;
+            timeNow = WEEK;
             updateList();
         }
         return;
     }
 
     public void toMonth(View v){
-        if (timeNow == 2){return;}
+        if (timeNow == MONTH){return;}
         else{
             changeStyleButton(bMonth, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-            if (timeNow == 1) changeStyleButton(bWeek, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            else if (timeNow == 0) changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            if (timeNow == WEEK) changeStyleButton(bWeek, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            else if (timeNow == TODAY) changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
             else changeStyleButton(bAll, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            timeNow = 2;
+            timeNow = MONTH;
             updateList();
         }
         return;
     }
 
     public void toAll(View v){
-        if (timeNow == 3){return;}
+        if (timeNow == ALL_DAYS){return;}
         else{
             changeStyleButton(bAll, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-            if (timeNow == 1) changeStyleButton(bWeek, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            else if (timeNow == 2) changeStyleButton(bMonth, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            if (timeNow == WEEK) changeStyleButton(bWeek, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            else if (timeNow == MONTH) changeStyleButton(bMonth, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
             else changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            timeNow = 3;
+            timeNow = ALL_DAYS;
             updateList();
         }
         return;
     }
     public void toJob(View v){
-        if (statusNow == 0){return;}
+        if (statusNow == IN_WORK){return;}
         else{
             changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-            if (statusNow == 1) changeStyleButton(bReady, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            if (statusNow == READY) changeStyleButton(bReady, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
             else changeStyleButton(bAll1, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            statusNow = 0;
+            statusNow = IN_WORK;
             updateList();
         }
         return;
     }
     public void toReady(View v){
-        if (statusNow == 1){return;}
+        if (statusNow == READY){return;}
         else{
             changeStyleButton(bReady, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-            if (statusNow == 0) changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
+            if (statusNow == IN_WORK) changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
             else changeStyleButton(bAll1, ContextCompat.getColor(CONTEXT, R.color.black), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1));
-            statusNow = 1;
+            statusNow = READY;
             updateList();
         }
         return;
     }
 
     public void toAll1(View v){
-        if (statusNow == 2){return;}
+        if (statusNow == ALL_TYPE_STATUS){return;}
         else{
             changeStyleButton(bAll1, ContextCompat.getColor(v.getContext(), R.color.white), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1_click));
-            if (statusNow == 1) changeStyleButton(bReady, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
+            if (statusNow == READY) changeStyleButton(bReady, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
             else changeStyleButton(bJob, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
-            statusNow = 2;
+            statusNow = ALL_TYPE_STATUS;
             updateList();
         }
         return;
@@ -145,65 +150,31 @@ public class ListActs extends General {
     }
 
     public void drawActs(ArrayList<ActPipe> acts){
+        for (ActPipe act:acts) if(act.getDateTimeStop() == null) act.setDateTimeStop(new Date());
         Collections.sort(acts, new ActPipeComparatot());
         Date nowDate = new Date(0,0,1);
         int cnt = 0;
+        Date dateStopInLastAct = new Date(1);
         for (ActPipe act: acts) {
-            if ((statusNow == 2 || statusNow == ((act.getIdStatus() == ACT_STATUS_JOB)?0:1) || statusNow == ((act.getIdStatus() == ACT_STATUS_READY)?1:0)) && ((timeNow == 3) || ((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000)) || ((timeNow == 1) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000*7))||((timeNow == 2) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<2678400000L)))) {
-                if (trim(act.getDateTimeStop()).equals(trim(nowDate))) {
-                } else {
-                    final View view = getLayoutInflater().inflate(R.layout.custom_block_date, null);
-                    TextView textDate = (TextView) view.findViewById(R.id.dateText);
-                    nowDate = act.getDateTimeStop();
-                    textDate.setText(DateToText(nowDate));
-                    WORK_PLACE_ELEMENTS.add(view);
-                    WORKPLACE.addView(view);
+            if ((statusNow == ALL_TYPE_STATUS || statusNow == ((act.getIdStatus() == ACT_STATUS_JOB)?IN_WORK:READY) || statusNow == ((act.getIdStatus() == ACT_STATUS_READY)?READY:IN_WORK)) && ((timeNow == ALL_DAYS) || ((timeNow == TODAY) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000)) || ((timeNow == WEEK) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000*7))||((timeNow == MONTH) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<2678400000L)))) {
+                if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
+                    drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
                 }
-                nowDate = act.getDateTimeStop();
-                final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
-                TextView textTime = (TextView) view1.findViewById(R.id.textTime);
-                TextView textName = (TextView) view1.findViewById(R.id.textName);
-                ImageView status = (ImageView) view1.findViewById(R.id.status);
-                view1.setTag((int) cnt);
-                if (act.getIdStatus() == ACT_STATUS_READY) status.setImageResource(R.drawable.job_green);
-                textName.setText(act.getName(pipeNames)+"");
-                SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
-                textTime.setText(formatForDate.format(nowDate));
-                WORK_PLACE_ELEMENTS.add(view1);
-                WORKPLACE.addView(view1);
-                cnt++;
+                drawNewAct(new ActField(R.layout.custom_block_name, R.id.textName, act.getName(pipeNames), R.id.textTime, FORMAT_FOR_DATE.format(act.getDateTimeStop()), R.id.status, act.getIdStatus(), new Dir(act.getId(), "Pipe")));
+                dateStopInLastAct = act.getDateTimeStop();
             }
         }
     }
     public void drawActs(ArrayList<ActPump> acts, int i){
         for (ActPump act:acts) if(act.getDateTimeStop() == null) act.setDateTimeStop(new Date());
         Collections.sort(acts, new ActPumpComparatot());
-        Date nowDate = new Date(0,0,1);
-        int cnt = 0;
         for (ActPump act: acts) {
-            if ((statusNow == 2 || statusNow == ((act.getIdStatus() == ACT_STATUS_JOB)?0:1) || statusNow == ((act.getIdStatus() == ACT_STATUS_READY)?1:0)) && ((timeNow==3)||((timeNow == 0) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000)) || ((timeNow == 1) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000*7))||((timeNow == 2) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<2678400000L)))) {
-                if (trim(act.getDateTimeStop()).equals(trim(nowDate))) {
-                } else {
-                    final View view = getLayoutInflater().inflate(R.layout.custom_block_date, null);
-                    TextView textDate = (TextView) view.findViewById(R.id.dateText);
-                    nowDate = act.getDateTimeStop();
-                    textDate.setText(DateToText(nowDate));
-                    WORK_PLACE_ELEMENTS.add(view);
-                    WORKPLACE.addView(view);
+            if ((statusNow == ALL_TYPE_STATUS || statusNow == ((act.getIdStatus() == ACT_STATUS_JOB)?IN_WORK:READY) || statusNow == ((act.getIdStatus() == ACT_STATUS_READY)?READY:IN_WORK)) && ((timeNow==ALL_DAYS)||((timeNow == TODAY) && ((long) ((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000)) || ((timeNow == WEEK) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<86400000*7))||((timeNow == MONTH) && ((long)((trim(new Date())).getTime() - trim(act.getDateTimeStop()).getTime())<2678400000L)))) {
+                Date dateStopInLastAct = act.getDateTimeStop();
+                if (isDatesNotEquivalent(act.getDateTimeStop(), dateStopInLastAct)) {
+                    drawNewFieldForAct(new Field(R.layout.custom_block_date, R.id.dateText, DateToText(act.getDateTimeStop())));
                 }
-                nowDate = act.getDateTimeStop();
-                final View view1 = getLayoutInflater().inflate(R.layout.custom_block_name, null);
-                TextView textTime = (TextView) view1.findViewById(R.id.textTime);
-                TextView textName = (TextView) view1.findViewById(R.id.textName);
-                ImageView status = (ImageView) view1.findViewById(R.id.status);
-                view1.setTag((int) cnt);
-                if (act.getIdStatus() == ACT_STATUS_READY) status.setImageResource(R.drawable.job_green);
-                textName.setText(act.getName(pumpPositions)+"");
-                SimpleDateFormat formatForDate = new SimpleDateFormat("HH:mm");
-                textTime.setText(formatForDate.format(nowDate));
-                WORK_PLACE_ELEMENTS.add(view1);
-                WORKPLACE.addView(view1);
-                cnt++;
+                drawNewAct(new ActField(R.layout.custom_block_name, R.id.textName, act.getName(pumpPositions) +", "+ act.getName(pumpMarks), R.id.textTime, FORMAT_FOR_DATE.format(act.getDateTimeStop()), R.id.status, act.getIdStatus(), new Dir(act.getId(), "Pump")));
             }
         }
     }

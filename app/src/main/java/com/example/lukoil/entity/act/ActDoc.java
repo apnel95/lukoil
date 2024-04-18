@@ -11,7 +11,6 @@ import java.util.Date;
 
 public class ActDoc extends Act {
     int idDepartment, idDepartmentObject, idEmployee, idStatus;
-    ArrayList<EventDateTime> events;
     ArrayList<Remark> remarks;
 
     ArrayList<Work> works;
@@ -111,4 +110,39 @@ public class ActDoc extends Act {
         this.FIO_senging = FIO_senging;
     }
 
+    public void println() {
+        System.out.println("ActDoc");
+        System.out.println("id " +this.id);
+        System.out.println("idDepartment " +this.idDepartment);
+        System.out.println("idDepartmentObject " +this.idDepartmentObject);
+        System.out.println("idEmployee " +this.idEmployee);
+        System.out.println("idStatus " +this.idStatus);
+        System.out.println("events " +this.events);
+        System.out.println("remarks " +this.remarks);
+        System.out.println("works " +this.works);
+        System.out.println("FIO_senging " +this.FIO_senging);
+        System.out.println("dateTimeStop " +this.dateTimeStop);
+
+        for (EventDateTime event: this.events) {
+            System.out.println("event ");
+            System.out.println("id " +event.getId());
+            System.out.println("idAct "+event.getId_act());
+            System.out.println("idTypeEvent "+event.getId_type_event());
+            System.out.println("idDateTime "+event.getDateTime());
+        }
+
+        for (Remark remark: this.remarks) {
+            System.out.println("remark ");
+            System.out.println("id " +remark.getId());
+            System.out.println("Id_Doc " +remark.getId_Doc());
+            System.out.println("Text " +remark.getText());
+        }
+        for (Work work: this.works) {
+            System.out.println("work" );
+            System.out.println("id " +work.getId());
+            System.out.println("Id_Doc " +work.getId_Doc());
+            System.out.println("Name " +work.getName());
+            System.out.println("Text " +work.getText());
+        }
+    }
 }

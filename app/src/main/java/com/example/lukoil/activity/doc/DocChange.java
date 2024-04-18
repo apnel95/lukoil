@@ -1,6 +1,7 @@
 package com.example.lukoil.activity.doc;
 
 import static com.example.lukoil.ListData.actEventTypes;
+import static com.example.lukoil.ListData.actEvents;
 import static com.example.lukoil.ListData.actStatuses;
 import static com.example.lukoil.ListData.docDepartmentObjects;
 import static com.example.lukoil.ListData.docDepartments;
@@ -70,7 +71,7 @@ public class DocChange extends GeneralCreateChangeViewAct {
         FIO_sending = findViewById(R.id.FIO_sending);
 
         String textForEvents = "";
-        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getName(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
+        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getNameTypeEvent(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
         events.setText(textForEvents);
 
         String textForWorks = "";
@@ -83,7 +84,7 @@ public class DocChange extends GeneralCreateChangeViewAct {
 
         FIO_sending.setText(String.valueOf(act.getFIOSending()));
 
-        ArrayAdapter<String> structA = new ArrayAdapter(this, android.R.layout.simple_spinner_item, sDocDepartments);
+        ArrayAdapter<String> structA = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sDocDepartments);
         structA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         struct.setAdapter(structA);
 
@@ -162,8 +163,8 @@ public class DocChange extends GeneralCreateChangeViewAct {
 
     public void toEventChange(View v) {
         Intent events_change = new Intent(v.getContext(), EventDateTimeChange.class);
-        events_change.putExtra(ArrayList.class.getSimpleName(), act.getEvents());
-        startActivityForResult(events_change, 3);
+        actEvents = act.getEvents();
+        //startActivityForResult(events_change, 3);
         startActivity(events_change);
     }
     public void toChangeRemarks(View v) {

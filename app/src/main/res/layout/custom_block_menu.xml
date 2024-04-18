@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="200dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="200sp"
     android:layout_height="match_parent"
     android:layout_gravity="right"
     android:gravity="right"
     android:orientation="vertical"
     android:id="@+id/menu"
     android:padding="12dp"
-    >
+    tools:ignore="RtlHardcoded"
+    android:background="@drawable/upp_v">
 
     <TextView
         android:layout_gravity="center"
@@ -15,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="6"
         android:textColor="@color/black"
-        android:textSize="20dp" />
+        android:textSize="@dimen/text_menu_size" />
     <TextView
         android:layout_gravity="center"
         android:id="@+id/Setting"
@@ -23,11 +25,12 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="@dimen/text_menu_size"
         android:gravity="left|center"
-        android:text="Обновить справочники"
+        android:text="@string/updateDirs"
         android:clickable="true"
-        android:onClick="getDirs"/>
+        android:onClick="getDirs"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/Help"
@@ -36,9 +39,9 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:textColor="@color/black"
-        android:text="Помощь"
+        android:text="@string/help"
         android:gravity="left|center"
-        android:textSize="20dp" />
+        android:textSize="@dimen/text_menu_size" />
     <TextView
         android:layout_gravity="center"
         android:id="@+id/about"
@@ -46,14 +49,14 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:layout_weight="1"
-        android:textSize="20dp"
+        android:textSize="@dimen/text_menu_size"
         android:gravity="left|center"
-        android:text="О программе" />
+        android:text="@string/about" />
     <TextView
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:textColor="@color/black"
         android:layout_height="wrap_content"
         android:layout_weight="6"
-        android:textSize="20dp" />
+        android:textSize="@dimen/text_menu_size" />
 </LinearLayout>
