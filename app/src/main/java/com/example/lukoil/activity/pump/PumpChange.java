@@ -5,12 +5,15 @@ import static com.example.lukoil.ListData.actStatuses;
 import static com.example.lukoil.ListData.pumpMarks;
 import static com.example.lukoil.ListData.pumpPositions;
 import static com.example.lukoil.ListData.pumpStopReasons;
+import static com.example.lukoil.ListData.pumpWorkTypes;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -23,6 +26,8 @@ import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.activity.event.EventDateTimeChange;
 import com.example.lukoil.entity.event.EventDateTime;
+import com.example.lukoil.entity.remark.Remark;
+import com.example.lukoil.entity.work.WorkDoc;
 import com.example.lukoil.entity.work.WorkPump;
 
 import java.io.IOException;
@@ -33,6 +38,7 @@ import java.net.UnknownHostException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PumpChange extends GeneralCreateChangeViewAct {
 
@@ -40,6 +46,8 @@ public class PumpChange extends GeneralCreateChangeViewAct {
     EditText note;
     Spinner name, mark, reason_stop, status;
     TextView events, works;
+    protected List<View> workList;
+    protected LinearLayout workLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +114,19 @@ public class PumpChange extends GeneralCreateChangeViewAct {
             cnt++;
         }
 
+        eventDateTimeList = new ArrayList<View>();
+        eventDateTimeLayout = findViewById(R.id.layoutEvents);
+        drawEvents(act.getEvents(), R.layout.custom_event_date_time_view);
+
+        workList = new ArrayList<>();
+        workLayout = findViewById(R.id.layoutWorks);
+        drawPumpWorks(act.getWorks_ready(), R.layout.custom_remark_view);
+
     }
 
     public void toPlus(View v) {
-        Intent Plus = new Intent(v.getContext(), PumpCreate.class);
-        startActivity(Plus);
+        //Intent Plus = new Intent(v.getContext(), PumpCreate.class);
+        //startActivity(Plus);
     }
 
     public void toNewEvent(View v) {
@@ -123,6 +139,9 @@ public class PumpChange extends GeneralCreateChangeViewAct {
         events_change.putExtra(ArrayList.class.getSimpleName(), act.getWorks_ready());
         startActivity(events_change);
     }
+
+    public void toWorksPumpChange(View v) { drawPumpWorks(act.getWorks_ready(), R.layout.custom_remark_change); }
+    public void toEventChange(View v) { drawEvents(act.getEvents(), R.layout.custom_event_date_time_change); }
     @Override
     public void toSave(View v) {
         getIds();
@@ -135,6 +154,29 @@ public class PumpChange extends GeneralCreateChangeViewAct {
         for (Dir dir: pumpMarks) if(dir.getName().equals(mark.getSelectedItem().toString())) act.setId_mark(dir.getId());
         for (Dir dir: pumpStopReasons) if(dir.getName().equals(reason_stop.getSelectedItem().toString())) act.setId_reason_stop(dir.getId());
         for (Dir dir: actStatuses) if(dir.getName().equals(status.getSelectedItem().toString())) act.setIdStatus(dir.getId());
+    }
+
+    private void drawPumpWorks(ArrayList<WorkPump> wrk, int idLayout) {
+        workLayout.removeAllViews();
+        workList.clear();
+        int cnt = 0;
+        if (wrk != null) for (WorkPump w : wrk) {
+            View view = getLayoutInflater().inflate(idLayout, null);
+            TextView textName = view.findViewById(R.id.textName);
+            textName.setText(String.valueOf(w.getNameWorkById(pumpWorkTypes)));
+            Button delete = view.findViewById(R.id.toDelete);
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toWorksPumpChange(v);
+                }
+            });
+            view.setTag(w.getId());
+            view.setId(cnt);
+            workLayout.addView(view);
+            workList.add(view);
+            cnt++;
+        }
     }
 
     private void updateAct() {

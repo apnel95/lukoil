@@ -26,6 +26,7 @@ import java.util.Objects;
 public class EventDateTimeCreate extends CreateWorksEvents {
     EventDateTime event;
     Spinner name;
+    int ID_ACT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

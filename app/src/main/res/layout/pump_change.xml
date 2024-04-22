@@ -103,13 +103,20 @@
                         android:textSize="@dimen/text_button_size"
                         android:text="@string/listEvents" />
 
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="3">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/layoutEvents"
-                        android:layout_columnSpan="3"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:maxHeight="400dp">
                     </LinearLayout>
+
+                    </ScrollView>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_gravity="center"
@@ -140,13 +147,20 @@
                         android:textSize="@dimen/text_button_size"
                         android:text="@string/listWorksReady" />
 
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="3">
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/layoutWorks"
-                        android:layout_columnSpan="3"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:maxHeight="400dp">
                     </LinearLayout>
+
+                    </ScrollView>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_gravity="center"
@@ -166,41 +180,27 @@
                         android:layout_columnSpan="3"/>
 
                     <TextView
-                        android:id="@+id/notes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_columnSpan="3"
                         android:layout_gravity="fill"
+                        android:text="@string/listNotes"
                         android:textColor="@color/text"
-                        android:gravity="top|center"
-                        android:layout_marginBottom="8sp"
-                        android:textSize="@dimen/text_button_size"
-                        android:text="@string/listNotes" />
+                        android:textSize="@dimen/text_name_parameter_size" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/layoutNotes"
-                        android:layout_columnSpan="3"
-                        android:orientation="vertical">
-                    </LinearLayout>
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:layout_gravity="center"
-                        android:layout_width="wrap_content"
-                        android:id="@+id/buttonNewNote"
-                        android:padding="10sp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/changeList"
-                        android:layout_margin="4sp"
+                    <EditText
+                        android:id="@+id/editNotes"
                         android:textColor="@color/black"
-                        android:background="@drawable/block_time_status_act_frame"
-                        android:textSize="@dimen/text_button_size"
-                        app:cornerRadius="30dp"
-                        android:onClick="toChangeWorks"
-                        android:layout_marginBottom="15sp"
-                        android:layout_column="0"
-                        android:layout_columnSpan="3"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_columnSpan="2"
+                        android:layout_gravity="fill"
+                        android:layout_marginBottom="8sp"
+                        android:textSize="@dimen/editText_name_parameter_size"
+                        />
+
+
+
+
 
                     <TextView
                         android:layout_width="wrap_content"

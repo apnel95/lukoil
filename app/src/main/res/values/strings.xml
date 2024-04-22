@@ -49,7 +49,7 @@
     <string name="mark">Марка:</string>
     <string name="reasonStop">Причина остановки:</string>
     <string name="listWorksReady">Выполненные работы:</string>
-    <string name="listNotes">Примечания:</string>
+    <string name="listNotes">Примечаниe:</string>
     <string name="naming">Наименование:</string>
     <string name="mm">мм</string>
     <string name="inHoursForPipe">В часах по трубе</string>
@@ -75,6 +75,8 @@
     <string name="createDoc">Создание предписания</string>
     <string name="viewDoc">Просмотр предписания</string>
     <string name="selectTypeEvent">Выберите тип события</string>
+    <string name="name2">Название</string>
+    <string name="description">Описание</string>
 
 
 </resources>

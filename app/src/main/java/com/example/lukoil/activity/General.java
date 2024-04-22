@@ -1,5 +1,8 @@
 package com.example.lukoil.activity;
 
+import static com.example.lukoil.ListData.actEvents;
+import static com.example.lukoil.ListData.actStatuses;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +19,7 @@ import com.example.lukoil.R;
 import com.example.lukoil.activity.doc.DocActs;
 import com.example.lukoil.activity.pipe.PipeActs;
 import com.example.lukoil.activity.pump.PumpActs;
+import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.act.ActDoc;
 import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.act.ActPipe;
@@ -154,8 +158,6 @@ public class General extends AppCompatActivity {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     public void toMenu(View v) {
-        ListData listData = new ListData();
-        listData.saveToSQL();
         if (!statusMenu) {
             menu.setCompoundDrawablesWithIntrinsicBounds(null, getResources().getDrawable(R.drawable.menu_red), null, null);
             linearLayoutMenu.setVisibility(View.VISIBLE);

@@ -34,7 +34,6 @@ import java.util.List;
 
 public class GeneralCreateChangeViewAct extends General implements Removable {
 
-    public int ID_ACT;
 
     protected void onStartList(Activity activity) {
         super.initializationActivity(activity);
@@ -94,30 +93,12 @@ public class GeneralCreateChangeViewAct extends General implements Removable {
     public void toSave(View v){
     }
 
-    protected void drawEvents(ArrayList<EventDateTime> events) {
-        eventDateTimeLayout.removeAllViews();
-        eventDateTimeList.clear();
-        if (events != null) for (EventDateTime wrk: events) {
-            View view = getLayoutInflater().inflate(R.layout.custom_event_date_time_view, null);
-            TextView textDate = view.findViewById(R.id.textDateTime);
-            TextView textName = view.findViewById(R.id.textName);
-            textName.setText(String.valueOf(wrk.getNameTypeEvent(actEventTypes)));
-            Date nowDate = wrk.getDateTime();
-            view.setTag(wrk.getId());
-            String date = DateToText(nowDate);
-            textDate.setText(String.format("%s, %s", date, FORMAT_FOR_DATE.format(nowDate)));
-            eventDateTimeLayout.addView(view);
-            eventDateTimeList.add(view);
-        }
-
-    }
-
-    protected void drawChangeEvents(ArrayList<EventDateTime> events) {
+    protected void drawEvents(ArrayList<EventDateTime> events, int idLayout) {
         eventDateTimeLayout.removeAllViews();
         eventDateTimeList.clear();
         int cnt = 0;
         if (events != null) for (EventDateTime wrk: events) {
-            View view = getLayoutInflater().inflate(R.layout.custom_event_date_time_change, null);
+            View view = getLayoutInflater().inflate(idLayout, null);
             TextView textDate = view.findViewById(R.id.textDateTime);
             TextView textName = view.findViewById(R.id.textName);
             textName.setText(String.valueOf(wrk.getNameTypeEvent(actEventTypes)));
@@ -130,6 +111,7 @@ public class GeneralCreateChangeViewAct extends General implements Removable {
             eventDateTimeList.add(view);
             cnt++;
         }
+
     }
     public void setDate(View v) {
         textDate = v.findViewById(R.id.textDateTime);

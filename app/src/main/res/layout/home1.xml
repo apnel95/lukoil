@@ -31,8 +31,9 @@
                     android:layout_height="match_parent"
                     android:text="@string/inWork"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
+                    android:textColor="@color/text"
                     android:textSize="@dimen/in_work_size"
+                    android:layout_marginTop="5sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView3" />
                 <LinearLayout

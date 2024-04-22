@@ -158,7 +158,7 @@ public class PipeChange extends GeneralCreateChangeViewAct {
         }
         eventDateTimeList = new ArrayList<View>();
         eventDateTimeLayout = findViewById(R.id.layoutEvents);
-        drawEvents(act.getEvents());
+        drawEvents(act.getEvents(), R.layout.custom_event_date_time_view);
 
 
     }
@@ -175,7 +175,7 @@ public class PipeChange extends GeneralCreateChangeViewAct {
     }
 
     public void toEventChange(View v) {
-        drawChangeEvents(act.getEvents());
+        drawEvents(act.getEvents(), R.layout.custom_event_date_time_change);
     }
     @Override
     public void toSave(View v) {

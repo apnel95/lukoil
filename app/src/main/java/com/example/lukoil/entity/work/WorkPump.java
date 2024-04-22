@@ -1,5 +1,10 @@
 package com.example.lukoil.entity.work;
 
+import com.example.lukoil.entity.Dir;
+import com.example.lukoil.entity.act.ActDoc;
+
+import java.util.ArrayList;
+
 public class WorkPump {
     int id, idAct, idTypeWork;
 
@@ -31,5 +36,12 @@ public class WorkPump {
 
     public void setIdTypeWork(int idTypeWork) {
         this.idTypeWork = idTypeWork;
+    }
+
+    public String getNameWorkById(ArrayList<Dir> works) {
+        for (Dir dir: works){
+            if (dir.getId() == this.getIdTypeWork()) return dir.getName();
+        }
+        return "";
     }
 }

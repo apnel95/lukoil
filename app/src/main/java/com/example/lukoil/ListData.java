@@ -493,6 +493,7 @@ public class ListData {
         loadPumpActs();
         loadDocs();
         dbHelper.close();
+        updateSArraylists();
     }
 
     private void loadEvents() {
@@ -684,6 +685,9 @@ public class ListData {
             int id_department = c.getColumnIndex("id_status_act");
             int name_ = c.getColumnIndex("name_");
             actStatuses.clear();
+//            actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
+//            c.moveToNext();
+//            actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
             do  {
                 actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
                 Log.d(nameTable+"load", "loaded: "+c.getInt(id_department)+" "+c.getString(name_));

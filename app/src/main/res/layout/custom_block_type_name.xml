@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="10sp">
+    android:layout_margin="10sp"
+    >
 
     <TextView
         android:id="@+id/textName"
@@ -14,12 +15,12 @@
         android:text="@string/text"
         android:padding="3sp"
         android:layout_marginBottom="10sp"
-        android:layout_marginTop="3sp"
+        android:layout_marginTop="20sp"
         android:textAlignment="center"
         android:textColor="@color/red_lukoil"
         android:textSize="@dimen/name_type_size"
         android:gravity="center"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center" />
 
 
 </LinearLayout>
