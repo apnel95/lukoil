@@ -1,25 +1,18 @@
 package com.example.lukoil.entity.work;
 
+import com.example.lukoil.entity.Dir;
+
 import java.io.Serializable;
 
-public class WorkDoc implements Serializable {
-    int id, id_Doc;
-    String text, name;
-
-    public int getId() {
-        return id;
+public class WorkDoc extends Dir implements Serializable {
+    int idDoc;
+    String text;
+    public int getIdDoc() {
+        return idDoc;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getId_Doc() {
-        return id_Doc;
-    }
-
-    public void setId_Doc(int id_Doc) {
-        this.id_Doc = id_Doc;
+    public void setIdDoc(int idDoc) {
+        this.idDoc = idDoc;
     }
 
     public String getText() {
@@ -30,17 +23,10 @@ public class WorkDoc implements Serializable {
         this.text = text;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public WorkDoc(int id, int id_Doc, String text, String name) {
+    public WorkDoc(int id, int idDoc, String text, String name) {
         this.id = id;
-        this.id_Doc = id_Doc;
+        this.idDoc = idDoc;
         this.text = text;
         this.name = name;
     }

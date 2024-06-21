@@ -13,62 +13,70 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
+
+        <TextView
             android:id="@+id/buttonToday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/today"
             android:layout_margin="3sp"
-            android:padding="3sp"
+            android:padding="6sp"
             android:textColor="@color/black"
             android:background="@drawable/custom_button_1"
             android:textSize="@dimen/filter_text_size"
             app:cornerRadius="30sp"
             android:onClick="toToday"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/buttonWeek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/week"
             android:layout_margin="3sp"
-            android:padding="3sp"
+            android:padding="6sp"
             android:textColor="@color/black"
             android:background="@drawable/custom_button_1"
             android:textSize="@dimen/filter_text_size"
             app:cornerRadius="30sp"
+            android:onClick="toWeek"
             android:layout_weight="1"
-            android:onClick="toWeek"/>
+            android:textAlignment="center"
+            />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/buttonMonth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/month"
             android:layout_margin="3sp"
-            android:padding="3sp"
+            android:padding="6sp"
             android:textColor="@color/black"
             android:background="@drawable/custom_button_1"
             android:textSize="@dimen/filter_text_size"
             app:cornerRadius="30sp"
+            android:onClick="toMonth"
             android:layout_weight="1"
-            android:onClick="toMonth"/>
+            android:textAlignment="center"
+            />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/buttonAll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/all"
             android:layout_margin="3sp"
-            android:padding="3sp"
+            android:padding="6sp"
             android:textColor="@color/black"
             android:background="@drawable/custom_button_1"
             android:textSize="@dimen/filter_text_size"
             app:cornerRadius="30sp"
+            android:onClick="toAll"
             android:layout_weight="1"
-            android:onClick="toAll"/>
-
+            android:textAlignment="center"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -77,48 +85,50 @@
         android:layout_gravity="center"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/buttonJob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/inWork"
             android:layout_margin="3sp"
-            android:padding="3sp"
+            android:padding="6sp"
             android:textColor="@color/black"
             android:background="@drawable/custom_button_1"
             android:textSize="@dimen/filter_text_size"
             app:cornerRadius="30sp"
+            android:onClick="toJob"
             android:layout_weight="1"
-            android:onClick="toJob"/>
+            android:textAlignment="center"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/buttonReady"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ready"
             android:layout_margin="3sp"
-            android:padding="3sp"
+            android:padding="6sp"
             android:textColor="@color/black"
             android:background="@drawable/custom_button_1"
             android:textSize="@dimen/filter_text_size"
             app:cornerRadius="30sp"
+            android:onClick="toReady"
             android:layout_weight="1"
-            android:onClick="toReady"/>
+            android:textAlignment="center"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <TextView
             android:id="@+id/buttonAll1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/all"
             android:layout_margin="3sp"
-            android:padding="3sp"
+            android:padding="6sp"
             android:textColor="@color/black"
             android:background="@drawable/custom_button_1"
             android:textSize="@dimen/filter_text_size"
             app:cornerRadius="30sp"
+            android:onClick="toAll1"
             android:layout_weight="1"
-            android:onClick="toAll1"/>
-
+            android:textAlignment="center"/>
     </LinearLayout>
 
 </LinearLayout>

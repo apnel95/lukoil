@@ -1,22 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/timeStatus">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/toChange"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/edit"
         android:layout_gravity="center"
-        android:layout_margin="5sp"
-        android:padding="10sp"
-        android:textColor="@color/black"
-        android:background="@drawable/red_frame"
-        android:textSize="@dimen/text_button_size"
-        app:cornerRadius="30dp"
-        android:onClick="toChange"
-        android:layout_weight="1"/>
+        android:orientation="horizontal">
+        
+        
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/today"
+            android:layout_margin="3sp"
+            android:padding="6sp"
+            android:textColor="@color/black"
+            android:background="@drawable/custom_button_1"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp"
+            android:onClick="toToday"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/week"
+            android:layout_margin="3sp"
+            android:padding="6sp"
+            android:textColor="@color/black"
+            android:background="@drawable/custom_button_1"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp"
+            android:onClick="toWeek"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/month"
+            android:layout_margin="3sp"
+            android:padding="6sp"
+            android:textColor="@color/black"
+            android:background="@drawable/custom_button_1"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp"
+            android:onClick="toMonth"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/all"
+            android:layout_margin="3sp"
+            android:padding="6sp"
+            android:textColor="@color/black"
+            android:background="@drawable/custom_button_1"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp"
+            android:onClick="toAll"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/buttonJob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/inWork"
+            android:layout_margin="3sp"
+            android:padding="6sp"
+            android:textColor="@color/black"
+            android:background="@drawable/custom_button_1"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp"
+            android:onClick="toJob"
+            android:layout_weight="1"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/buttonReady"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ready"
+            android:layout_margin="3sp"
+            android:padding="6sp"
+            android:textColor="@color/black"
+            android:background="@drawable/custom_button_1"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp"
+            android:onClick="toReady"
+            android:layout_weight="1"
+            android:textAlignment="center"/>
+
+        <TextView
+            android:id="@+id/buttonAll1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/all"
+            android:layout_margin="3sp"
+            android:padding="6sp"
+            android:textColor="@color/black"
+            android:background="@drawable/custom_button_1"
+            android:textSize="@dimen/filter_text_size"
+            app:cornerRadius="30sp"
+            android:onClick="toAll1"
+            android:layout_weight="1"
+            android:textAlignment="center"/>
+    </LinearLayout>
 
 </LinearLayout>

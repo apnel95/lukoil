@@ -1,6 +1,5 @@
 package com.example.lukoil.entity.act;
 
-import static com.example.lukoil.ListData.actEventsPipe;
 import static com.example.lukoil.ListData.actEventsPump;
 import static com.example.lukoil.ListData.pumpWorks;
 import static com.example.lukoil.activity.General.ID_DATE_TIME_STOP_WORK;
@@ -109,7 +108,7 @@ public class ActPump extends Act {
         this.events = events;
     }
 
-    public ArrayList<WorkPump> getWorks_ready() {
+    public ArrayList<WorkPump> getWorksReady() {
         return works_ready;
     }
 

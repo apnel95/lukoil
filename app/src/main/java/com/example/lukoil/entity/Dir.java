@@ -1,17 +1,24 @@
 package com.example.lukoil.entity;
 
+import androidx.annotation.NonNull;
+
 import java.io.Serializable;
 
 public class Dir implements Serializable {
-    int id;
-    String name;
+    protected int id;
+    protected String name;
 
-    public Dir() {
+    public Dir(Dir dir) {
+        this.id = dir.getId();
+        this.name = dir.getName();
     }
 
     public Dir(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Dir() {
     }
 
     public int getId() {
@@ -30,6 +37,7 @@ public class Dir implements Serializable {
         this.name = name;
     }
 
+    @NonNull
     @Override
     public String toString(){
         return getName();

@@ -97,9 +97,9 @@ public class PipeCreate extends GeneralCreateChangeViewAct {
     public void toPlus(View v) {
         finish();
     }
-    @Override
+
     public void toSave(View v){
-        getIds();
+        setDataToAct();
         act.setDiameter(Integer.parseInt(diameter.getText().toString()));
         act.setWall(Integer.parseInt(wall.getText().toString()));
         act.setPiketash(Integer.parseInt(piketach.getText().toString()));
@@ -113,7 +113,7 @@ public class PipeCreate extends GeneralCreateChangeViewAct {
         finish();
     }
 
-    private void getIds() {
+    protected void setDataToAct() {
         for (Dir dir: pipeNames) if(dir.getName() == name.getSelectedItem()) act.setIdPipe(dir.getId());
         for (Dir dir: pipeCoatingTypes) if(dir.getName().equals(coating.getSelectedItem().toString())) act.setId_type_coating(dir.getId());
         for (Dir dir: pipeLeakTypes) if(dir.getName().equals(leak_type.getSelectedItem().toString())) act.setId_leak_type(dir.getId());

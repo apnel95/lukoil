@@ -15,6 +15,7 @@ public class EventDateTime implements Serializable {
     }
 
     public EventDateTime() {
+
     }
 
     public void setId(int id) {

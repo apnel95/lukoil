@@ -24,6 +24,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 public class ListData {
+
+    public static int NEW_ID_EVENT, NEW_ID_DOC_WORK, NEW_ID_PUMP_WORK, NEW_ID_REMARK;
     public static ArrayList<ActPipe> pipeActs;
     public static ArrayList<ActPump> pumpActs;
     public static ArrayList<ActDoc> docActs;
@@ -153,11 +155,11 @@ public class ListData {
         removeDataToTable(nameTable);
         for (WorkDoc work: docWorks){
             cv.put("id_prescription_work",work.getId());
-            cv.put("id_prescription",work.getId_Doc());
+            cv.put("id_prescription",work.getIdDoc());
             cv.put("name_work",work.getName());
             cv.put("description_work",work.getText());
             db.insert(nameTable, null, cv);
-            Log.d(nameTable+" save", "saved: "+work.getId()+" "+work.getId_Doc()+" "+work.getName()+" "+work.getText());
+            Log.d(nameTable+" save", "saved: "+work.getId()+" "+work.getIdDoc()+" "+work.getName()+" "+work.getText());
         }
         Log.d("AllSaved", nameTable + "was saved");
 
@@ -181,10 +183,10 @@ public class ListData {
         removeDataToTable(nameTable);
         for (Remark remark: docRemarks){
             cv.put("id_prescription_remark",remark.getId());
-            cv.put("id_prescription",remark.getId_Doc());
+            cv.put("id_prescription",remark.getIdDoc());
             cv.put("text",remark.getText());
             db.insert(nameTable, null, cv);
-            Log.d(nameTable+" save", "saved: "+remark.getId()+" "+remark.getId_Doc()+" "+remark.getText());
+            Log.d(nameTable+" save", "saved: "+remark.getId()+" "+remark.getIdDoc()+" "+remark.getText());
         }
         Log.d("AllSaved", nameTable + "was saved");
     }
@@ -288,19 +290,19 @@ public class ListData {
             cv.put("id_pipeline",actPipe.getIdPipe());
             cv.put("diameter_pipeline",actPipe.getDiameter());
             cv.put("wall_thickness",actPipe.getWall());
-            cv.put("id_type_coating",actPipe.getId_type_coating());
+            cv.put("id_type_coating",actPipe.getIdTypeCoating());
             cv.put("piketash",actPipe.getPiketash());
-            cv.put("id_leak_type",actPipe.getId_leak_type());
+            cv.put("id_leak_type",actPipe.getIdLeakType());
             cv.put("leak_parameter",actPipe.getLeak_parameter());
             cv.put("leak_position",actPipe.getLeak_position());
-            cv.put("id_substance",actPipe.getId_substance());
+            cv.put("id_substance",actPipe.getIdSubstance());
             cv.put("spill_area",actPipe.getSpill_area());
             cv.put("id_status",actPipe.getIdStatus());
             cv.put("id_employee",actPipe.getIdWho());
             db.insert(nameTable, null, cv);
             Log.d(nameTable+" save", "saved: "+actPipe.getId()+" "+actPipe.getIdPipe()+" "+actPipe.getDiameter()+" "+actPipe.getWall()+ " "
-                    +actPipe.getId_type_coating()+" "+actPipe.getPiketash()+" "+actPipe.getId_leak_type()+" "+actPipe.getLeak_parameter() +" "
-                    +actPipe.getLeak_position()+ " "+actPipe.getId_substance()+" "+actPipe.getSpill_area()+" "+actPipe.getIdStatus()+" "+actPipe.getIdWho());
+                    +actPipe.getIdTypeCoating()+" "+actPipe.getPiketash()+" "+actPipe.getIdLeakType()+" "+actPipe.getLeak_parameter() +" "
+                    +actPipe.getLeak_position()+ " "+actPipe.getIdSubstance()+" "+actPipe.getSpill_area()+" "+actPipe.getIdStatus()+" "+actPipe.getIdWho());
         }
         Log.d("AllSaved", nameTable + "was saved");
     }
@@ -432,10 +434,10 @@ public class ListData {
         removeDataToTable(nameTable);
         for (DepartmentObject departmentObject: docDepartmentObjects){
             cv.put("id_department_object",departmentObject.getId());
-            cv.put("id_department",departmentObject.getId_dep());
+            cv.put("id_department",departmentObject.getIdDep());
             cv.put("name_",departmentObject.getName());
             db.insert(nameTable, null, cv);
-            Log.d(nameTable+" save", "saved: "+departmentObject.getId()+" "+departmentObject.getId_dep()+" "+departmentObject.getName());
+            Log.d(nameTable+" save", "saved: "+departmentObject.getId()+" "+departmentObject.getIdDep()+" "+departmentObject.getName());
         }
         Log.d("AllSaved", nameTable + "was saved");
     }
@@ -497,6 +499,7 @@ public class ListData {
     }
 
     private void loadEvents() {
+        int maxIdEvent = 0;
 
         String nameTable = "Event_date_time_pipeline";
         Cursor c = db.query(nameTable, null, null, null, null, null, null);
@@ -509,6 +512,7 @@ public class ListData {
             do  {
                 actEventsPipe.add( new EventDateTime(c.getInt(id_list_date_time_pipeline), c.getInt(id_act_pipeline), c.getInt(id_event_date_time_for), new Date(c.getInt(date_time)*1000)));
                 Log.d(nameTable+"load", "loaded: "+c.getInt(id_list_date_time_pipeline)+" "+c.getString(id_act_pipeline)+" "+c.getString(id_event_date_time_for)+" "+new Date(c.getInt(date_time)*1000));
+                if (c.getInt(id_list_date_time_pipeline) > maxIdEvent) maxIdEvent = c.getInt(id_list_date_time_pipeline);
             }while (c.moveToNext());
         } else
             Log.d(nameTable+"load", "0 rows");
@@ -521,9 +525,11 @@ public class ListData {
             int id_act_pipeline = c.getColumnIndex("id_act_pump");
             int id_event_date_time_for = c.getColumnIndex("id_event_date_time_for");
             int date_time = c.getColumnIndex("date_time");
+
             actEventsPump.clear();
             do  {
                 actEventsPump.add( new EventDateTime(c.getInt(id_list_date_time_pipeline), c.getInt(id_act_pipeline), c.getInt(id_event_date_time_for), new Date(c.getInt(date_time)* 1000L)));
+                if (c.getInt(id_list_date_time_pipeline) > maxIdEvent) maxIdEvent = c.getInt(id_list_date_time_pipeline);
                 Log.d(nameTable+"load", "loaded: "+c.getInt(id_list_date_time_pipeline)+" "+c.getString(id_act_pipeline)+" "+c.getString(id_event_date_time_for)+" "+new Date(c.getInt(date_time)* 1000L));
             }while (c.moveToNext());
         } else
@@ -537,17 +543,22 @@ public class ListData {
             int id_act_pipeline = c.getColumnIndex("id_prescription");
             int id_event_date_time_for = c.getColumnIndex("id_event_date_time_for");
             int date_time = c.getColumnIndex("date_time");
+
             actEventsDoc.clear();
             do  {
                 actEventsDoc.add( new EventDateTime(c.getInt(id_list_date_time_pipeline), c.getInt(id_act_pipeline), c.getInt(id_event_date_time_for), new Date(c.getInt(date_time)* 1000L)));
+                if (c.getInt(id_list_date_time_pipeline) > maxIdEvent) maxIdEvent = c.getInt(id_list_date_time_pipeline);
                 Log.d(nameTable+"load", "loaded: "+c.getInt(id_list_date_time_pipeline)+" "+c.getString(id_act_pipeline)+" "+c.getString(id_event_date_time_for)+" "+new Date(c.getInt(date_time)* 1000L));
             }while (c.moveToNext());
         } else
             Log.d(nameTable+"load", "0 rows");
         c.close();
+        NEW_ID_EVENT = maxIdEvent;
     }
 
     private void loadWorks() {
+        int maxIdWorkDoc = 0;
+        int maxIdWorkPump = 0;
 
         String nameTable = "Work_pump_completed";
         Cursor c = db.query(nameTable, null, null, null, null, null, null);
@@ -555,9 +566,11 @@ public class ListData {
             int id_prescription_remark = c.getColumnIndex("id_completed_work_pump");
             int name_ = c.getColumnIndex("id_act_pump");
             int text = c.getColumnIndex("id_type_work");
+
             pumpWorks.clear();
             do  {
                 pumpWorks.add(new WorkPump(c.getInt(id_prescription_remark), c.getInt(name_), c.getInt(text)));
+                if (c.getInt(id_prescription_remark) > maxIdWorkPump) maxIdWorkPump = c.getInt(id_prescription_remark);
                 Log.d(nameTable+"load", "loaded: "+c.getInt(id_prescription_remark)+" "+c.getString(name_));
             }while (c.moveToNext());
         } else
@@ -574,28 +587,37 @@ public class ListData {
             docWorks.clear();
             do  {
                 docWorks.add( new WorkDoc(c.getInt(id_prescription_remark), c.getInt(name_), c.getString(text), c.getString(name)));
+                if (c.getInt(id_prescription_remark) > maxIdWorkDoc) maxIdWorkPump = c.getInt(id_prescription_remark);
                 Log.d(nameTable+"load", "loaded: "+c.getInt(id_prescription_remark)+" "+c.getString(name_));
             }while (c.moveToNext());
         } else
             Log.d(nameTable+"load", "0 rows");
         c.close();
+
+        NEW_ID_DOC_WORK = maxIdWorkDoc;
+        NEW_ID_PUMP_WORK = maxIdWorkPump;
     }
 
     private void loadRemarks() {
+        int maxIdRemark = 0;
         String nameTable = "Prescription_remark";
         Cursor c = db.query(nameTable, null, null, null, null, null, null);
         if (c.moveToFirst()) {
             int id_prescription_remark = c.getColumnIndex("id_prescription_remark");
             int name_ = c.getColumnIndex("id_prescription");
             int text = c.getColumnIndex("text");
+
             docRemarks.clear();
             do  {
                 docRemarks.add( new Remark(c.getInt(id_prescription_remark), c.getInt(name_), c.getString(text)));
+                if (c.getInt(id_prescription_remark) > maxIdRemark) maxIdRemark = c.getInt(id_prescription_remark);
                 Log.d(nameTable+"load", "loaded: "+c.getInt(id_prescription_remark)+" "+c.getString(name_));
             }while (c.moveToNext());
         } else
             Log.d(nameTable+"load", "0 rows");
         c.close();
+
+        NEW_ID_REMARK = maxIdRemark;
     }
 
     private void loadEventStatuses() {
@@ -685,13 +707,13 @@ public class ListData {
             int id_department = c.getColumnIndex("id_status_act");
             int name_ = c.getColumnIndex("name_");
             actStatuses.clear();
-//            actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
-//            c.moveToNext();
-//            actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
-            do  {
-                actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
-                Log.d(nameTable+"load", "loaded: "+c.getInt(id_department)+" "+c.getString(name_));
-            }while (c.moveToNext());
+            actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
+            c.moveToNext();
+            actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
+//            do  {
+//                actStatuses.add( new Dir(c.getInt(id_department), c.getString(name_)));
+//                Log.d(nameTable+"load", "loaded: "+c.getInt(id_department)+" "+c.getString(name_));
+//            }while (c.moveToNext());
         } else
             Log.d(nameTable+"load", "0 rows");
         c.close();

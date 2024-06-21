@@ -1,16 +1,13 @@
 package com.example.lukoil.activity.doc;
 
-import static com.example.lukoil.GeneraActList.trim;
 import static com.example.lukoil.ListData.docActs;
 import static com.example.lukoil.ListData.docDepartmentObjects;
 import static com.example.lukoil.ListData.docDepartments;
 import static com.example.lukoil.ListData.employees;
-import static java.lang.Math.pow;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +23,6 @@ import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.comparation.ActDocComparatot;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -37,7 +33,7 @@ public class DocActs extends ListActs {
     int departmentNow;
 
     ArrayList <Integer> idDepartment;
-    Button bNH1, bNH2, bNH3, bCPPN, bCPPD;
+    TextView bNH1, bNH2, bNH3, bCPPN, bCPPD;
     public static int NH1 = 0, NH2 = 1, NH3 = 2, CPPD = 3, CPPN = 4;
 
 
@@ -52,11 +48,11 @@ public class DocActs extends ListActs {
 
         viewObjects = findViewById(R.id.layoutObjects);
 
-        bNH1 = (Button) viewObjects.findViewById(R.id.buttonNH1);
-        bNH2 = (Button) viewObjects.findViewById(R.id.buttonNH2);
-        bNH3 = (Button) viewObjects.findViewById(R.id.buttonNH3);
-        bCPPN = (Button) viewObjects.findViewById(R.id.buttonCPPN);
-        bCPPD = (Button) viewObjects.findViewById(R.id.buttonCPPD);
+        bNH1 = viewObjects.findViewById(R.id.buttonNH1);
+        bNH2 =  viewObjects.findViewById(R.id.buttonNH2);
+        bNH3 =  viewObjects.findViewById(R.id.buttonNH3);
+        bCPPN =  viewObjects.findViewById(R.id.buttonCPPN);
+        bCPPD =  viewObjects.findViewById(R.id.buttonCPPD);
 
         viewNH1 = (LinearLayout) findViewById(R.id.layoutForNH1);
         viewNH2 = (LinearLayout) findViewById(R.id.layoutForNH2);
@@ -72,14 +68,14 @@ public class DocActs extends ListActs {
 
         updateList();
 
-        changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-        changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
 
-        changeStyleButton(bNH1, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-        changeStyleButton(bNH2, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-        changeStyleButton(bNH3, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-        changeStyleButton(bCPPN, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-        changeStyleButton(bCPPD, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bNH1, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bNH2, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bNH3, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bCPPN, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bCPPD, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
 
     }
     @Override
@@ -104,55 +100,55 @@ public class DocActs extends ListActs {
     public void toNH1(View v){
 
         if ((departmentNow &1)==1){
-            changeStyleButton(bNH1, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
+            changeStyleTextView(bNH1, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
             departmentNow &=0b11110;
         }
         else{
-            changeStyleButton(bNH1, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+            changeStyleTextView(bNH1, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=1;
         }
         updateList();
     }
     public void toNH2(View v){
         if ((departmentNow &2)==2){
-            changeStyleButton(bNH2, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
+            changeStyleTextView(bNH2, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
             departmentNow &=0b11101;
         }
         else{
-            changeStyleButton(bNH2, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+            changeStyleTextView(bNH2, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=2;
         }
         updateList();
     }
     public void toNH3(View v){
         if ((departmentNow &4)==4){
-            changeStyleButton(bNH3, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
+            changeStyleTextView(bNH3, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
             departmentNow &=0b11011;
         }
         else{
-            changeStyleButton(bNH3, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+            changeStyleTextView(bNH3, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=4;
         }
         updateList();
     }
     public void toCPPN(View v){
         if ((departmentNow &8)==8){
-            changeStyleButton(bCPPN, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
+            changeStyleTextView(bCPPN, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
             departmentNow &=0b10111;
         }
         else{
-            changeStyleButton(bCPPN, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+            changeStyleTextView(bCPPN, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=8;
         }
         updateList();
     }
     public void toCPPD(View v){
         if ((departmentNow &16)==16){
-            changeStyleButton(bCPPD, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
+            changeStyleTextView(bCPPD, ContextCompat.getColor(v.getContext(), R.color.black), ContextCompat.getDrawable(v.getContext(), R.drawable.custom_button_1));
             departmentNow &=0b01111;
         }
         else{
-            changeStyleButton(bCPPD, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+            changeStyleTextView(bCPPD, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
             departmentNow |=16;
         }
         updateList();

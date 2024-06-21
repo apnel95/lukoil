@@ -371,7 +371,6 @@
                         android:background="@drawable/red_frame"
                         android:textSize="@dimen/text_button_size"
                         app:cornerRadius="30dp"
-                        android:onClick="toSave"
                         android:layout_weight="1"
                         tools:ignore="RtlHardcoded" />
 

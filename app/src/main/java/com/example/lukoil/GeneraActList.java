@@ -6,6 +6,7 @@ import static com.example.lukoil.ListData.pumpActs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,73 +59,64 @@ public class GeneraActList extends General {
 
     private void startActivityDocChange(Context context,  int idAct) {
         Intent newIntent = new Intent(context, DocChange.class);
-        ActDoc act1 = new ActDoc();
-        for (ActDoc act: docActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActDoc.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.createDoc));
         startActivity(newIntent);
     }
 
     private void startActivityDocCreate(Context context,  int idAct) {
         Intent newIntent = new Intent(context, DocCreate.class);
-        ActDoc act1 = new ActDoc();
-        for (ActDoc act: docActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActDoc.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.createAct));
         startActivity(newIntent);
     }
 
     private void startActivityDocView(Context context,  int idAct) {
         Intent newIntent = new Intent(context, DocView.class);
-        ActDoc act1 = new ActDoc();
-        for (ActDoc act: docActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActDoc.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.viewDoc));
         startActivity(newIntent);
     }
 
     private void startActivityPumpChange(Context context,  int idAct) {
         Intent newIntent = new Intent(context, PumpChange.class);
-        ActPump act1 = new ActPump();
-        for (ActPump act: pumpActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActPump.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.changeAct));
         startActivity(newIntent);
     }
 
     private void startActivityPumpCreate(Context context,  int idAct) {
         Intent newIntent = new Intent(context, PumpCreate.class);
-        ActPump act1 = new ActPump();
-        for (ActPump act: pumpActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActPump.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.createAct));
         startActivity(newIntent);
     }
 
     private void startActivityPumpView(Context context,  int idAct) {
         Intent newIntent = new Intent(context, PumpView.class);
-        ActPump act1 = new ActPump();
-        for (ActPump act: pumpActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActPump.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.viewAct));
         startActivity(newIntent);
     }
 
     private void startActivityPipeChange(Context context,  int idAct) {
         Intent newIntent = new Intent(context, PipeChange.class);
-        ActPipe act1 = new ActPipe();
-        for (ActPipe act: pipeActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActPipe.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.changeAct));
         startActivity(newIntent);
     }
 
     private void startActivityPipeCreate(Context context,  int idAct) {
         Intent newIntent = new Intent(context, PipeCreate.class);
-        ActPipe act1 = new ActPipe();
-        for (ActPipe act: pipeActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActPipe.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.createAct));
         startActivity(newIntent);
     }
 
     private void startActivityPipeView(Context context,  int idAct) {
         Intent newIntent = new Intent(context, PipeView.class);
-        ActPipe act1 = new ActPipe();
-        for (ActPipe act: pipeActs) if (act.getId() == idAct){ act1 = act; break;}
-        newIntent.putExtra(ActPipe.class.getSimpleName(), act1);
+        newIntent.putExtra("idAct", idAct);
+        newIntent.putExtra("nameActivity", getResources().getString(R.string.viewAct));
         startActivity(newIntent);
     }
 

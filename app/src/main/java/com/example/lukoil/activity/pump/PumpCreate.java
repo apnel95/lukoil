@@ -67,19 +67,7 @@ public class PumpCreate extends GeneralCreateChangeViewAct {
         statusA.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         status.setAdapter(statusA);
     }
-    @Override
-    public void toPlus(View v) {
-        finish();
-    }
-
-    @Override
-    public void toSave(View v){
-        getIds();
-        act.setNote(note.getText().toString());
-        getNewActPump();
-        finish();
-    }
-    private void getIds() {
+    /*protected void setDataToAct() {
         for (Dir dir: pumpPositions) if(dir.getName() == name.getSelectedItem()) act.setId_pump(dir.getId());
         for (Dir dir: pumpMarks) if(dir.getName().equals(mark.getSelectedItem().toString())) act.setId_mark(dir.getId());
         for (Dir dir: pumpStopReasons) if(dir.getName().equals(reason_stop.getSelectedItem().toString())) act.setId_reason_stop(dir.getId());
@@ -131,5 +119,5 @@ public class PumpCreate extends GeneralCreateChangeViewAct {
         } catch (Exception e) {
             Log.d("Clown", e.toString());
         }
-    }
+    }*/
 }

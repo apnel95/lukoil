@@ -2,46 +2,22 @@ package com.example.lukoil.entity;
 
 import java.io.Serializable;
 
-public class DepartmentObject implements Serializable {
+public class DepartmentObject extends Dir implements Serializable {
     public DepartmentObject() {
     }
+    int idDep;
 
-    int id, id_dep;
-    String name;
-
-    public int getId_dep() {
-        return id_dep;
+    public int getIdDep() {
+        return idDep;
     }
 
-    public void setId_dep(int id_dep) {
-        this.id_dep = id_dep;
+    public void setIdDep(int idDep) {
+        this.idDep = idDep;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
+    public DepartmentObject(int id, int idDep, String name) {
         this.id = id;
-    }
-
-    public DepartmentObject(int id, int id_dep, String name) {
-        this.id = id;
-        this.id_dep = id_dep;
+        this.idDep = idDep;
         this.name = name;
-    }
-
-    @Override
-    public String toString(){
-        return (getName());
-
     }
 }

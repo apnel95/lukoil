@@ -1,38 +1,24 @@
 package com.example.lukoil.entity.remark;
 
+import com.example.lukoil.entity.Dir;
+
 import java.io.Serializable;
 
-public class Remark implements Serializable {
-    int id, id_Doc;
-    String text;
+public class Remark extends Dir implements Serializable {
+    int idDoc;
 
-    public int getId() {
-        return id;
+
+    public int getIdDoc() {
+        return idDoc;
     }
 
-    public void setId(int id) {
+    public void setIdDoc(int idDoc) {
+        this.idDoc = idDoc;
+    }
+
+    public Remark(int id, int idDoc, String name) {
         this.id = id;
-    }
-
-    public int getId_Doc() {
-        return id_Doc;
-    }
-
-    public void setId_Doc(int id_Doc) {
-        this.id_Doc = id_Doc;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Remark(int id, int id_Doc, String text) {
-        this.id = id;
-        this.id_Doc = id_Doc;
-        this.text = text;
+        this.idDoc = idDoc;
+        this.name = name;
     }
 }

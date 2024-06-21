@@ -4,11 +4,14 @@ import static com.example.lukoil.ListData.actEventsPipe;
 import static com.example.lukoil.activity.General.ID_DATETIMESTOP;
 import static com.example.lukoil.activity.General.ID_DATE_TIME_STOP_WORK;
 
+import android.util.Log;
+
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.event.EventDateTime;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class ActPipe extends Act {
     int idPipe, diameter, wall, id_type_coating, piketash, id_leak_type, leak_parameter, leak_position, id_substance, id_who;
@@ -127,13 +130,13 @@ public class ActPipe extends Act {
     public int getWall() {
         return wall;
     }
-    public int getId_type_coating() {
+    public int getIdTypeCoating() {
         return id_type_coating;
     }
     public int getPiketash() {
         return piketash;
     }
-    public int getId_leak_type() {
+    public int getIdLeakType() {
         return id_leak_type;
     }
     public int getLeak_parameter() {
@@ -142,7 +145,7 @@ public class ActPipe extends Act {
     public int getLeak_position() {
         return leak_position;
     }
-    public int getId_substance() {
+    public int getIdSubstance() {
         return id_substance;
     }
     public double getSpill_area() {
@@ -171,6 +174,7 @@ public class ActPipe extends Act {
 
     public void setEvents(ArrayList<EventDateTime> actEvents) {
     }
+
 }
 
 

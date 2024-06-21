@@ -34,6 +34,7 @@ import com.example.lukoil.GeneraActList;
 import com.example.lukoil.ListData;
 import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
+import com.example.lukoil.entity.act.Act;
 import com.example.lukoil.entity.field.Field;
 import com.example.lukoil.entity.field.ActField;
 import com.example.lukoil.R;
@@ -57,10 +58,10 @@ public class MainActivity extends GeneraActList {
         CONTEXT_NOW = this;
         super.onCreate(savedInstanceState);
         initializationData();
-        createTestData();
+        //createTestData();
         listData.loadFormSQL();
         initializationActivity(new Activity(ID_ACTIVITY_HOME, this, R.layout.home1, R.id.layoutBlock, new ArrayList<View>(), R.id.layout_menu, getResources().getString(R.string.nameGeneralForm)));
-        updateDirsAndActs();
+        drawActs();
     }
 
     private void initializationData() {
@@ -88,15 +89,13 @@ public class MainActivity extends GeneraActList {
         pumpActs = new ArrayList<>();
     }
 
-    private void updateDirsAndActs() {
-        drawActs();
-    }
-
     private void drawActs() {
         drawPipeActs();
         drawPumpActs();
         drawDocActs();
     }
+
+
 
     private void drawPipeActs() {
         Date dateStopInLastAct = new Date(100000);
@@ -162,8 +161,8 @@ public class MainActivity extends GeneraActList {
     private String getNameById(ArrayList<Employee> employees, int idEmployee) {
         for (Employee emp: employees)
             if(emp.getId() == idEmployee)
-                return emp.getFIO();
-        System.out.println("Не найден id "+ idEmployee + " в списке employees");
+                return emp.getName();
+        System.out.println("Not found id "+ idEmployee + " in list employees");
         return "";
     }
 
@@ -241,7 +240,7 @@ public class MainActivity extends GeneraActList {
         actEventsPipe.add(new EventDateTime(2, 1, 3, new Date((2023-1900), 5, 10)));
         actEventsPipe.add(new EventDateTime(3, 1, 0, new Date((2023-1900), 4, 1, 18, 56)));
         actEventsPipe.add(new EventDateTime(4, 1, 1, new Date()));
-        actEventsPipe.add(new EventDateTime(5, 2, 2, new Date((2002-1900), 1, 3, 7, 01)));
+        actEventsPipe.add(new EventDateTime(5, 2, 2, new Date((2002-1900), 1, 3, 7, 1)));
         actEventsPipe.add(new EventDateTime(6, 2, 3, new Date()));
         actEventsPipe.add(new EventDateTime(7, 3, 2, new Date()));
         actEventsPipe.add(new EventDateTime(8, 3, 3, new Date((2024-1900), 8, 19)));

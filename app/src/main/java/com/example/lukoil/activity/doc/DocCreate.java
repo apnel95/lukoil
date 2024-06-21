@@ -93,7 +93,7 @@ public class DocCreate extends GeneralCreateChangeViewAct {
         for(Dir dep: docDepartments) if(dep.getName().equals(struct.getSelectedItem().toString())){ id = dep.getId();break;}
         System.out.println(id);
         new_Sdepartment_objects = new ArrayList<>();
-        for (DepartmentObject dir: docDepartmentObjects) if(dir.getId_dep() ==  id) new_Sdepartment_objects.add(dir.getName());
+        for (DepartmentObject dir: docDepartmentObjects) if(dir.getIdDep() ==  id) new_Sdepartment_objects.add(dir.getName());
         System.out.println(new_Sdepartment_objects);
         objectA.clear();
         objectA.addAll(new_Sdepartment_objects);
@@ -129,9 +129,8 @@ public class DocCreate extends GeneralCreateChangeViewAct {
             }
         }
     }
-    @Override
     public void toSave(View v) {
-        getIds();
+        setDataToAct();
         act.setFIO_senging(FIO_sending.getText().toString());
         ArrayList<EventDateTime> events1 = new ArrayList<>();
         events1.add( new EventDateTime(0,0, ID_DATE_TIME_STOP_WORK, dateAndTime.getTime()));
@@ -140,7 +139,7 @@ public class DocCreate extends GeneralCreateChangeViewAct {
         finish();
     }
 
-    private void getIds() {
+    protected void setDataToAct() {
         for (DepartmentObject dir: docDepartmentObjects) if(dir.getName() == object.getSelectedItem()) act.setIdDepartmentObject(dir.getId());
         for (Dir dir: actStatuses) if(dir.getName().equals(status.getSelectedItem().toString())) act.setIdStatus(dir.getId());
         for (Employee dir: employees) if(dir.getFIO().equals(employee.getSelectedItem().toString().substring(0 , employee.getSelectedItem().toString().indexOf(",")))) act.setIdEmployee(dir.getId());

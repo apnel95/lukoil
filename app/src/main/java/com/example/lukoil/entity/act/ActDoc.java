@@ -1,18 +1,15 @@
 package com.example.lukoil.entity.act;
 
 import static com.example.lukoil.ListData.actEventsDoc;
-import static com.example.lukoil.ListData.actEventsPump;
 import static com.example.lukoil.ListData.docDepartmentObjects;
 import static com.example.lukoil.ListData.docRemarks;
 import static com.example.lukoil.ListData.docWorks;
-import static com.example.lukoil.ListData.pumpWorks;
 import static com.example.lukoil.activity.General.ID_DATE_TIME_STOP_WORK_DOC;
 
 import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.event.EventDateTime;
 import com.example.lukoil.entity.remark.Remark;
 import com.example.lukoil.entity.work.WorkDoc;
-import com.example.lukoil.entity.work.WorkPump;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,7 +55,7 @@ public class ActDoc extends Act {
         this.idDepartmentObject = idDepartmentObject;
 
         this.idDepartment = 0;
-        for (DepartmentObject departmentObject: docDepartmentObjects) if (departmentObject.getId() == idDepartmentObject) this.idDepartment = departmentObject.getId_dep();
+        for (DepartmentObject departmentObject: docDepartmentObjects) if (departmentObject.getId() == idDepartmentObject) this.idDepartment = departmentObject.getIdDep();
 
         this.idEmployee = idEmployee;
         this.idStatus = idStatus;
@@ -80,7 +77,7 @@ public class ActDoc extends Act {
         this.idDepartmentObject = idDepartmentObject;
 
         this.idDepartment = 0;
-        for (DepartmentObject departmentObject: docDepartmentObjects) if (departmentObject.getId() == idDepartmentObject) this.idDepartment = departmentObject.getId_dep();
+        for (DepartmentObject departmentObject: docDepartmentObjects) if (departmentObject.getId() == idDepartmentObject) this.idDepartment = departmentObject.getIdDep();
 
         this.idEmployee = idEmployee;
         this.idStatus = idStatus;
@@ -92,9 +89,9 @@ public class ActDoc extends Act {
 
         for (EventDateTime evd: actEventsDoc) if (evd.getId_act() == id) this.events.add(evd);
 
-        for (WorkDoc dw: docWorks) if (dw.getId_Doc() == id) this.works.add(dw);
+        for (WorkDoc dw: docWorks) if (dw.getIdDoc() == id) this.works.add(dw);
 
-        for (Remark rd: docRemarks) if (rd.getId_Doc() == id) this.remarks.add(rd);
+        for (Remark rd: docRemarks) if (rd.getIdDoc() == id) this.remarks.add(rd);
 
         this.dateTimeStop = new Date();
         for (EventDateTime wrk: events){
@@ -194,13 +191,13 @@ public class ActDoc extends Act {
         for (Remark remark: this.remarks) {
             System.out.println("remark ");
             System.out.println("id " +remark.getId());
-            System.out.println("Id_Doc " +remark.getId_Doc());
+            System.out.println("Id_Doc " +remark.getIdDoc());
             System.out.println("Text " +remark.getText());
         }
         for (WorkDoc work: this.works) {
             System.out.println("work" );
             System.out.println("id " +work.getId());
-            System.out.println("Id_Doc " +work.getId_Doc());
+            System.out.println("Id_Doc " +work.getIdDoc());
             System.out.println("Name " +work.getName());
             System.out.println("Text " +work.getText());
         }

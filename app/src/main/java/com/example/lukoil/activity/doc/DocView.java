@@ -5,31 +5,40 @@ import static com.example.lukoil.ListData.actStatuses;
 import static com.example.lukoil.ListData.docDepartmentObjects;
 import static com.example.lukoil.ListData.docDepartments;
 import static com.example.lukoil.ListData.employees;
+import static com.example.lukoil.ListData.pipeCoatingTypes;
+import static com.example.lukoil.ListData.pipeLeakTypes;
+import static com.example.lukoil.ListData.pipeNames;
+import static com.example.lukoil.ListData.pipeSubstances;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.lukoil.activity.Activity;
 import com.example.lukoil.activity.GeneralCreateChangeViewAct;
 import com.example.lukoil.R;
+import com.example.lukoil.activity.pump.PumpChange;
 import com.example.lukoil.entity.act.ActDoc;
 import com.example.lukoil.entity.DepartmentObject;
 import com.example.lukoil.entity.Dir;
 import com.example.lukoil.entity.Employee;
+import com.example.lukoil.entity.act.ActPump;
 import com.example.lukoil.entity.event.EventDateTime;
 import com.example.lukoil.entity.remark.Remark;
 import com.example.lukoil.entity.work.WorkDoc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class DocView extends GeneralCreateChangeViewAct {
 
     ActDoc act;
     EditText struct, object, employee, FIO_sending, status;
-    TextView events, remarks, works;
+    protected List<View> workList, remarkList;
+    protected LinearLayout workLayout, remarkLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,32 +62,11 @@ public class DocView extends GeneralCreateChangeViewAct {
         FIO_sending.setText(String.valueOf(act.getFIOSending()));
         status.setText(String.valueOf(act.getIdStatus()));
 
-        events = findViewById(R.id.events);
-        remarks = findViewById(R.id.remarks);
-        works = findViewById(R.id.works);
-
-        String textForEvents = "";
-        if (act.getEvents() != null) for (EventDateTime wrk : act.getEvents()) textForEvents += wrk.getNameTypeEvent(actEventTypes) + ": " + DateToText(wrk.getDateTime()) + "\n";
-        events.setText(textForEvents);
-
-        String textForWorks = "";
-        if (act.getWorks() != null) for (WorkDoc wrks : act.getWorks()) textForWorks += wrks.getName() + ": " + (wrks.getText()) + "\n";
-        works.setText(textForWorks);
-
-        String textForRemark = "";
-        if (act.getRemarks() != null) for (Remark rmk : act.getRemarks()) textForRemark +=(rmk.getText()) + "\n";
-        remarks.setText(textForRemark);
+        struct.setText(getNameToId(docDepartments, act.getIdDepartment()));
+        status.setText(getNameToId(actStatuses, act.getIdStatus()));
+        employee.setText(getNameToIdForEmployee(employees, act.getIdEmployee()));
 
         int cnt=0;
-        for(Dir dir: docDepartments){
-            if(dir.getId() == act.getIdDepartment()){
-                struct.setText(dir.getName());
-                break;
-            }
-            cnt++;
-        }
-
-        cnt=0;
         for(DepartmentObject dir: docDepartmentObjects){
             if(dir.getId() == act.getIdDepartmentObject()){
                 object.setText(dir.getName());
@@ -86,35 +74,65 @@ public class DocView extends GeneralCreateChangeViewAct {
             }
             cnt++;
         }
+        eventDateTimeList = new ArrayList<>();
+        eventDateTimeLayout = findViewById(R.id.layoutEvents);
+        drawEvents(act.getEvents(), R.layout.custom_event_date_time_view);
 
-        cnt=0;
-        for(Employee dir: employees){
-            if(dir.getId() == act.getIdEmployee()){
-                employee.setText(dir.getFIO());
-                break;
-            }
-            cnt++;
-        }
-        cnt=0;
-        for(Dir dir: actStatuses){
-            if(dir.getId() == act.getIdStatus()){
-                status.setText(dir.getName());
-                break;
-            }
-            cnt++;
-        }
+        workList = new ArrayList<>();
+        workLayout = findViewById(R.id.layoutWorks);
+        drawDocWorks(act.getWorks(), R.layout.custom_work_doc_view);
 
-
-    }
-    public void toChange(View v){
-        Intent Doc_change = new Intent(v.getContext(), DocChange.class);
-        Doc_change.putExtra(ActDoc.class.getSimpleName(), act);
-        startActivity(Doc_change);
+        remarkList = new ArrayList<>();
+        remarkLayout = findViewById(R.id.layoutRemarks);
+        drawRemarks(act.getRemarks(), R.layout.custom_remark_view);
     }
     @Override
-    public void toPlus(View v){
-        Intent Doc_create = new Intent(v.getContext(), DocCreate.class);
-        startActivity(Doc_create);
+    public void toChange(View v){
+        Intent docChange = new Intent(v.getContext(), DocChange.class);
+        docChange.putExtra(ActPump.class.getSimpleName(), act);
+        docChange.putExtra("nameActivity", getResources().getString(R.string.changeDoc));
+        startActivity(docChange);
+    }
+
+    @Override
+    public void toPlus(View v) {
+        Intent docCreate = new Intent(CONTEXT, DocChange.class);
+        docCreate.putExtra(ActPump.class.getSimpleName(), new ActDoc());
+        docCreate.putExtra("nameActivity", getResources().getString(R.string.createDoc));
+        startActivity(docCreate);
+    }
+    private void drawDocWorks(ArrayList<WorkDoc> works, int idLayout) {
+        workLayout.removeAllViews();
+        workList.clear();
+        int cnt = 0;
+        if (works != null) for (WorkDoc wrk : works) {
+            View view = getLayoutInflater().inflate(idLayout, null);
+            TextView textName = view.findViewById(R.id.textName);
+            TextView textDesc = view.findViewById(R.id.textDescription);
+            textName.setText(String.valueOf(wrk.getName()));
+            textDesc.setText(String.valueOf(wrk.getText()));
+            view.setTag(new Dir(wrk.getId(), "docWork"));
+            view.setId(cnt);
+            workLayout.addView(view);
+            workList.add(view);
+            cnt++;
+        }
+    }
+
+    private void drawRemarks(ArrayList<Remark> remarks, int idLayout) {
+        workLayout.removeAllViews();
+        workList.clear();
+        int cnt = 0;
+        if (remarks != null) for (Remark rmk : remarks) {
+            View view = getLayoutInflater().inflate(idLayout, null);
+            TextView textName = view.findViewById(R.id.textName);
+            textName.setText(String.valueOf(rmk.getText()));
+            view.setTag(new Dir(rmk.getId(), "remark"));
+            view.setId(cnt);
+            workLayout.addView(view);
+            workList.add(view);
+            cnt++;
+        }
     }
 
 }

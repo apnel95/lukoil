@@ -26,8 +26,8 @@ public class PipeActs extends ListActs {
 
         drawActs(pipeActs);
 
-        changeStyleButton(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
-        changeStyleButton(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bToday, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
+        changeStyleTextView(bJob, ContextCompat.getColor(CONTEXT, R.color.white), ContextCompat.getDrawable(CONTEXT, R.drawable.custom_button_1_click));
 
     }
     @Override
@@ -38,15 +38,15 @@ public class PipeActs extends ListActs {
     }
     public void toView(View v){
             Intent pipeView = new Intent(v.getContext(), PipeView.class);
-            pipeView.putExtra(ActPipe.class.getSimpleName(), pipeActs.get((int)v.getTag()));
+            pipeView.putExtra("idAct", pipeActs.get((int)v.getTag()).getId());
             startActivity(pipeView);
         }
     @Override
     public void toPlus(View v){
-            Intent pipeChange = new Intent(v.getContext(), PipeChange.class);
-            pipeChange.putExtra(ActPipe.class.getSimpleName(), new ActPipe());
-            pipeChange.putExtra("nameActivity", getResources().getString(R.string.createAct));
-            startActivity(pipeChange);
+        Intent pipeChange = new Intent(CONTEXT, PipeChange.class);
+        pipeChange.putExtra("idAct", -1 );
+        pipeChange.putExtra("nameActivity", getResources().getString(R.string.createAct));
+        startActivity(pipeChange);;
         }
 
 }

@@ -153,7 +153,7 @@ public class General extends AppCompatActivity {
         startActivity(Doc);
     }
 
-    public void toPlus(View v) {
+    protected void toPlus(View v) {
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -211,12 +211,5 @@ public class General extends AppCompatActivity {
         SimpleDateFormat formatForDate = new SimpleDateFormat("dd");
         newDate += ", " + formatForDate.format(date);
         return newDate;
-    }
-    protected int newId_(ArrayList<EventDateTime> actEvents) {
-        int newId = 0;
-        for (EventDateTime event: actEvents){
-            if (event.getId()>newId) newId = event.getId();
-        }
-        return newId;
     }
 }

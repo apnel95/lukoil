@@ -77,6 +77,12 @@
     <string name="selectTypeEvent">Выберите тип события</string>
     <string name="name2">Название</string>
     <string name="description">Описание</string>
+    <string name="ok">OK</string>
+    <string name="Cancel">Отмена</string>
+    <string name="youSureDeleteThisEvent">Вы точно хотите удалить событие?</string>
+    <string name="cancel">Отмена</string>
+    <string name="save">Сохранить</string>
+    <string name="add">Добавить</string>
 
 
 </resources>

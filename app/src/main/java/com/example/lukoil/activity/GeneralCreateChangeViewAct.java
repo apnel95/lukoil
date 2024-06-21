@@ -1,56 +1,69 @@
 package com.example.lukoil.activity;
 
 import static com.example.lukoil.ListData.actEventTypes;
+import static com.example.lukoil.ListData.docActs;
+import static com.example.lukoil.ListData.pipeActs;
+import static com.example.lukoil.ListData.pumpActs;
 import static com.example.lukoil.ListData.sActEventTypes;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.lukoil.R;
-import com.example.lukoil.Removable;
+import com.example.lukoil.entity.act.ActDoc;
+import com.example.lukoil.entity.act.ActPipe;
+import com.example.lukoil.entity.act.ActPump;
+import com.example.lukoil.interfaces.ChangeNameList;
+import com.example.lukoil.entity.Dir;
+import com.example.lukoil.entity.Employee;
 import com.example.lukoil.entity.event.EventDateTime;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class GeneralCreateChangeViewAct extends General implements Removable {
+public class GeneralCreateChangeViewAct extends General implements ChangeNameList {
+    protected List<View> eventDateTimeList;
+    protected LinearLayout eventDateTimeLayout;
+
+    protected TextView textDate, textName;
+    protected Button toDelete, buttonSave;
+    protected Calendar date = new GregorianCalendar();
+
+    public Calendar dateAndTime = Calendar.getInstance();
 
 
     protected void onStartList(Activity activity) {
         super.initializationActivity(activity);
+
+        buttonSave = findViewById(R.id.buttonSave);
+        toDelete = findViewById(R.id.toDelete);
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toSaveAct(v);
+            }
+        });
     }
 
-    protected List<View> eventDateTimeList;
-    protected LinearLayout eventDateTimeLayout;
+    protected void toSaveAct(View v) {
+    }
 
-    protected TextView textDate;
-    protected TextView textName;
-    protected Button toDelete;
-    protected Calendar date = new GregorianCalendar();
-
-
-    public Calendar dateAndTime=Calendar.getInstance();
     public void toChange(View v){
     }
+
     public void toLoadPhoto(View v){
         System.out.println("aaaaaaa");
 //!!!!!!!!!!!!!!!!!!
@@ -64,46 +77,22 @@ public class GeneralCreateChangeViewAct extends General implements Removable {
         startActivityForResult(photoPickerIntent, 100);
 
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
-        switch(requestCode) {
-            case 100:
-                if(resultCode == RESULT_OK){
-                    try {
-                        final Uri imageUri = imageReturnedIntent.getData();
-                        final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                        final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                        final View view1 = getLayoutInflater().inflate(R.layout.custom_image, null);
-                        ImageView img = view1.findViewById(R.id.img);
-                        WORK_PLACE_ELEMENTS.add(view1);
-                        WORKPLACE.addView(view1);
-                        img.setImageBitmap(selectedImage);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-        }}
     public void toDeletePhoto(View v) {
         WORKPLACE.removeView((LinearLayout)v.getParent());
         WORK_PLACE_ELEMENTS.remove((LinearLayout)v.getParent());
-    }
-    public void toSave(View v){
     }
 
     protected void drawEvents(ArrayList<EventDateTime> events, int idLayout) {
         eventDateTimeLayout.removeAllViews();
         eventDateTimeList.clear();
         int cnt = 0;
-        if (events != null) for (EventDateTime wrk: events) {
+        if (events != null) for (EventDateTime evnt: events) {
             View view = getLayoutInflater().inflate(idLayout, null);
             TextView textDate = view.findViewById(R.id.textDateTime);
             TextView textName = view.findViewById(R.id.textName);
-            textName.setText(String.valueOf(wrk.getNameTypeEvent(actEventTypes)));
-            Date nowDate = wrk.getDateTime();
-            view.setTag(wrk.getId());
+            textName.setText(String.valueOf(evnt.getNameTypeEvent(actEventTypes)));
+            Date nowDate = evnt.getDateTime();
+            view.setTag(new Dir(evnt.getId(), "event"));
             view.setId(cnt);
             String date = DateToText(nowDate);
             textDate.setText(String.format("%s, %s", date, FORMAT_FOR_DATE.format(nowDate)));
@@ -111,8 +100,8 @@ public class GeneralCreateChangeViewAct extends General implements Removable {
             eventDateTimeList.add(view);
             cnt++;
         }
-
     }
+
     public void setDate(View v) {
         textDate = v.findViewById(R.id.textDateTime);
         setTime(v);
@@ -143,41 +132,103 @@ public class GeneralCreateChangeViewAct extends General implements Removable {
     };
 
     public void setTypeEvent(View v) {
+        Log.d("setTypeEvent", "start");
+
         textName = v.findViewById(R.id.textName);
 
-        CustomDialog dialog = new CustomDialog();
-
+        CustomDialogForList dialog = new CustomDialogForList();
         Bundle args = new Bundle();
-        args.putStringArrayList("list", sActEventTypes);
 
         View vP = (View) v.getParent().getParent();
+        args.putStringArrayList("list", sActEventTypes);
         args.putInt("viewId", vP.getId());
-        args.putString("typeDialog", "setTypeEvent");
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "custom");
     }
 
-    public void toDelete(View v) {
-        toDelete = v.findViewById(R.id.toDelete);
-        CustomDialog dialog = new CustomDialog();
+    protected void toDeleteView(View v) {
+        Log.d("removeView", "start");
+
+        CustomDialogForList dialog = new CustomDialogForList();
         Bundle args = new Bundle();
+
         View vP = (View) v.getParent();
-        args.putInt("viewId", vP.getId());
-        args.putString("typeDialog", "toDelete");
+        args.putInt("idEvent", ((Dir) vP.getTag()).getId());
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), "custom");
     }
-    @Override
+
+    protected void setDataToAct() {
+    }
+
+    protected void updateAct() {
+    }
+
+    protected String getNameToId(ArrayList<Dir> dir, int id) {
+        for(Dir dr: dir){
+            if(dr.getId() == id){
+                return dr.getName();
+            }
+        }
+        return "";
+    }
+
+    protected String getNameToIdForEmployee(ArrayList<Employee> dir, int id) {
+        for(Employee dr: dir){
+            if(dr.getId() == id){
+                return dr.getFIO();
+            }
+        }
+        return "";
+    }
+
+    protected int getCntToID(ArrayList<Dir> dir, int id) {
+        int cnt=0;
+        for(Dir dr: dir){
+            if(dr.getId() == id){
+                return cnt;
+            }
+            cnt++;
+        }
+        return 0;
+    }
+
+    protected int getCntToIdForEmployee(ArrayList<Employee> emp, int id) {
+        int cnt=0;
+        for(Employee employee: emp){
+            if(employee.getId() == id){
+                return cnt;
+            }
+            cnt++;
+        }
+        return 0;
+    }
+
     public void removeEventDateView(int vId) {
-        System.out.println(vId);
         eventDateTimeList.remove(findViewById(vId));
         eventDateTimeLayout.removeView(findViewById(vId));
+    }
 
+    private void deleteEventToAct() {
     }
 
     @Override
     public void changeNameEventDateList(int vId, String name) {
         textName = eventDateTimeLayout.findViewById(vId).findViewById(R.id.textName);
         textName.setText(name);
+    }
+
+    public ActPipe getActPipeForCnt(int idAct) {
+        Log.d("getActPipeForCnt", idAct+"");
+        for (ActPipe actPipe: pipeActs) if (actPipe.getId() == idAct) return actPipe;
+        return new ActPipe();
+    }
+    public ActPump getActPumpForCnt(int idAct) {
+        for (ActPump actPipe: pumpActs) if (actPipe.getId() == idAct) return actPipe;
+        return new ActPump();
+    }
+    public ActDoc getActDocForCnt(int idAct) {
+        for (ActDoc actPipe: docActs) if (actPipe.getId() == idAct) return actPipe;
+        return new ActDoc();
     }
 }
